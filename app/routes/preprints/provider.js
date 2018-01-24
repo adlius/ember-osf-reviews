@@ -19,9 +19,7 @@ export default Route.extend({
     },
 
     afterModel(model, transition) {
-        if (!model.get('permissions').includes('view_submissions')) {
-            this.replaceWith('forbidden');
-        } else if (!model.get('reviewsWorkflow') && transition.targetName !== 'preprints.provider.setup') {
+        if (!model.get('reviewsWorkflow') && transition.targetName !== 'preprints.provider.setup') {
             this.replaceWith('preprints.provider.setup', model);
         }
     },

@@ -1,2 +1,6 @@
-{{moderation-base}}
-{{outlet}}
+{{#if hasPermission}}
+    {{moderation-base}}
+    {{outlet}}
+{{else}}
+    {{error-page error='forbidden'}}
+{{/if}}

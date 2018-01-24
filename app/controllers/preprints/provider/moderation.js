@@ -1,3 +1,4 @@
+import { computed } from '@ember/object';
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 
@@ -5,7 +6,6 @@ import QueryParams from 'ember-parachute';
 import { task } from 'ember-concurrency';
 
 import Analytics from 'ember-osf/mixins/analytics';
-
 
 export const moderationQueryParams = new QueryParams({
     page: {
@@ -25,6 +25,10 @@ export const moderationQueryParams = new QueryParams({
 export default Controller.extend(Analytics, moderationQueryParams.Mixin, {
     store: service(),
     theme: service(),
+
+    hasPermission: computed('model', function () {
+        return this.get('model.permissions').includes('view_submissions');
+    }),
 
     actions: {
         statusChanged(status) {
