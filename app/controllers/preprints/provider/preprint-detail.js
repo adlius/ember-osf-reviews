@@ -94,6 +94,8 @@ export default Controller.extend({
             .replace(/\s+\S*$/, '');
     }),
 
+    hasPermission: false,
+
     actions: {
         toggleShowLicense() {
             this.toggleProperty('showLicense');
@@ -157,6 +159,8 @@ export default Controller.extend({
 
         // required for breadcrumbs
         this.set('model.breadcrumbTitle', response.get('title'));
+        let hasPermission = this.get('preprint.providers.permissions').include('view_submissions');
+        this.set('hasPermission', hasPermission);
     }),
 
     loadMathJax: task(function* () {

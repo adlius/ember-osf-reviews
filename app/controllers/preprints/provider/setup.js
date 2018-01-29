@@ -20,6 +20,10 @@ export default Controller.extend({
         return settings;
     }),
 
+    hasPermission: computed('model.permissions', function () {
+        return this.get('model.permissions').includes('set_up_moderation');
+    }),
+
     actions: {
         cancel() {
             this.transitionToRoute('index');

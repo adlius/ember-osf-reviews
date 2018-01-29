@@ -2,9 +2,7 @@ import Route from '@ember/routing/route';
 
 export default Route.extend({
     afterModel(model/* , transition */) {
-        if (!model.get('permissions').contains('set_up_moderation')) {
-            this.replaceWith('index');
-        } else if (model.get('reviewsWorkflow')) {
+        if (model.get('reviewsWorkflow')) {
             this.replaceWith('preprints.provider', model);
         }
     },

@@ -26,10 +26,6 @@ export default Controller.extend(Analytics, moderationQueryParams.Mixin, {
     store: service(),
     theme: service(),
 
-    hasPermission: computed('model', function () {
-        return this.get('model.permissions').includes('view_submissions');
-    }),
-
     actions: {
         statusChanged(status) {
             this.resetQueryParams(['page']);
