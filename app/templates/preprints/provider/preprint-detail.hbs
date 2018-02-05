@@ -90,11 +90,15 @@
                         </div>
 
                         <section class="p-t-xs">
-                            {{#if preprint.preprintDoiUrl}}
-                                <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
-                                <a href={{preprint.preprintDoiUrl}}>{{extract-doi preprint.preprintDoiUrl}}</a>
-                            {{else if (not preprint.isPublished)}}
-                                <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
+                            <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
+                            {{#if preprint.isPublished}}
+                                {{#if preprintDoiCreated}}
+                                    <a href={{preprint.preprintDoiUrl}}>{{extract-doi preprint.preprintDoiUrl}}</a>
+                                {{else}}
+                                    <p> {{extract-doi preprint.preprintDoiUrl}} </p>
+                                    <p> {{t "content.preprintPendingDOIMinted"}} </p>
+                                {{/if}}
+                            {{else}}
                                 {{t 'content.preprintPendingDOI'}}
                             {{/if}}
                         </section>

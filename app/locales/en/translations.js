@@ -159,6 +159,7 @@ export default {
         version: 'Version',
         preprintDOI: '{{provider.type.singularCapitalized}} DOI',
         preprintPendingDOI: 'DOI created after moderator approval',
+        preprintPendingDOIMinted: 'DOIs are minted by a third party, and may take up to 24 hours to be registered.',
         articleDOI: 'Peer-reviewed Publication DOI',
         citations: 'Citations',
         disciplines: 'Disciplines',
