@@ -92,7 +92,7 @@
                         <section class="p-t-xs">
                             <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
                             {{#if preprint.isPublished}}
-                                {{#if preprintDoiCreated}}
+                                {{#if preprint.preprintDoiCreated}}
                                     <a href={{preprint.preprintDoiUrl}}>{{extract-doi preprint.preprintDoiUrl}}</a>
                                 {{else}}
                                     <p> {{extract-doi preprint.preprintDoiUrl}} </p>
