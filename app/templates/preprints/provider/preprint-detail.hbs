@@ -24,7 +24,7 @@
                         {{t "content.orphan_preprint"}}
                     </div>
                 {{else}}
-                    {{preprint-file-browser primaryFile=model.primaryFile preprint=model chooseFile=(action 'chooseFile')}}
+                    {{preprint-file-browser primaryFile=model.primaryFile preprint=model fileDownloadURL=fileDownloadURL chooseFile=(action 'chooseFile')}}
                     <button class="expand-mfr-carrot hidden-xs hidden-sm" {{action 'expandMFR'}}>
                         <i class="fa fa-chevron-{{if fullScreenMFR 'left' 'right'}}"></i>
                     </button>

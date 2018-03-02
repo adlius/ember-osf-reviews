@@ -298,13 +298,13 @@ test('fileDownloadURL computed property - non-branded provider', function (asser
             description: 'test description',
         });
 
-        const preprint = this.store.createRecord('preprint', {
+        const model = this.store.createRecord('preprint', {
             provider,
             node,
         });
 
-        ctrl.setProperties({ preprint });
-        ctrl.set('preprint.id', '6gtu');
+        ctrl.setProperties({ model });
+        ctrl.set('model.id', '6gtu');
 
         assert.strictEqual(ctrl.get('fileDownloadURL'), 'http://localhost:4201/6gtu/download');
     });
@@ -328,13 +328,13 @@ test('fileDownloadURL computed property - branded provider', function(assert) {
             description: 'test description',
         });
 
-        const preprint = this.store.createRecord('preprint', {
+        const model = this.store.createRecord('preprint', {
             provider,
             node,
         });
 
-        ctrl.setProperties({ preprint });
-        ctrl.set('preprint.id', '6gtu');
+        ctrl.setProperties({ model });
+        ctrl.set('model.id', '6gtu');
 
         const { location: { origin } } = window;
 

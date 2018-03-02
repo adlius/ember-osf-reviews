@@ -50,12 +50,12 @@ export default Controller.extend({
         },
     }),
 
-    fileDownloadURL: computed('preprint', function() {
+    fileDownloadURL: computed('model', function() {
         const { location: { origin } } = window;
         return [
             origin,
             this.get('theme.id') !== 'osf' ? `preprints/${this.get('theme.id')}` : null,
-            this.get('preprint.id'),
+            this.get('model.id'),
             'download',
         ].filter(part => !!part).join('/');
     }),
