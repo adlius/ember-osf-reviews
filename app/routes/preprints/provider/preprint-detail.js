@@ -1,32 +1,19 @@
 import { isArray } from '@ember/array';
-import $ from 'jquery';
-import { scheduleOnce } from '@ember/runloop';
-import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+import ConfirmationMixin from 'ember-onbeforeunload/mixins/confirmation';
 
-export default Route.extend({
+
+export default Route.extend(ConfirmationMixin, {
     theme: service(),
-    currentUser: service(),
 
     model(params) {
-        return this.store.findRecord(
-            'preprint',
-            params.preprint_id,
-            { include: ['node', 'license', 'review_actions'] },
-        );
+        return { preprintId: params.preprint_id };
     },
 
-    afterModel(model) {
-        return model.get('node').then(this._checkNodePublic.bind(this));
-    },
-
-    setupController() {
-        scheduleOnce('afterRender', this, function() {
-            if (!MathJax) return;
-            MathJax.Hub.Queue(['Typeset', MathJax.Hub, [$('.abstract')[0], $('#preprintTitle')[0]]]);
-        });
-
-        return this._super(...arguments);
+    setupController(controller, model) {
+        this._super(...arguments);
+        controller.get('fetchData').perform(model.preprintId);
     },
 
     renderTemplate(controller, model) {
@@ -45,11 +32,37 @@ export default Route.extend({
                 return this.intermediateTransitionTo('page-not-found');
             }
         },
+        willTransition(transition) {
+            const allow = this.shouldCheckIsPageDirty(transition);
+            if (!allow && this.isPageDirty()) {
+                this.controller.set('showWarning', true);
+                this.controller.set('previousTransition', transition);
+                transition.abort();
+            }
+        },
     },
 
-    _checkNodePublic(node) {
-        if (!node.get('public')) {
-            this.transitionTo('page-not-found');
+    isPageDirty() {
+        // If true, shows a confirmation message when leaving the page
+        // True if the reviewer has any unsaved changes including comment edit or state change.
+        return this.controller.get('userHasEnteredReview');
+    },
+
+    shouldCheckIsPageDirty(transition) {
+        // Allows the 'preprints.provider.moderation' route as an exception
+        // to the dirty message upon review decision/comment submit
+        const isChildRouteTransition = this._super(...arguments);
+        const submitRoute = 'preprints.provider.moderation';
+        const savingAction = this.controller.get('savingAction');
+
+        if (transition.targetName === submitRoute) {
+            if (!savingAction) {
+                return isChildRouteTransition;
+            }
+            this.controller.toggleProperty('savingAction');
+            return true;
         }
+
+        return isChildRouteTransition;
     },
 });

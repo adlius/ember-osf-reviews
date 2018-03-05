@@ -7,15 +7,15 @@ import { task } from 'ember-concurrency';
 
 import latestAction from 'reviews/utils/latest-action';
 
-const PENDING = 'pending';
 const ACCEPTED = 'accepted';
 const REJECTED = 'rejected';
 
+const submittedOnLabel = {
+    gtDay: 'components.moderationListRow.submission.submittedOn',
+    ltDay: 'components.moderationListRow.submission.submitted',
+};
+
 const ACTION_LABELS = Object.freeze({
-    [PENDING]: {
-        gtDay: 'components.moderationListRow.submission.submittedOn',
-        ltDay: 'components.moderationListRow.submission.submitted',
-    },
     [ACCEPTED]: {
         gtDay: 'components.moderationListRow.submission.acceptedOn',
         ltDay: 'components.moderationListRow.submission.accepted',
@@ -39,35 +39,39 @@ export default Component.extend({
 
     noActions: computed.not('submission.reviewActions.length'),
 
+    // latest action attempted on the preprint
     latestAction: computed('submission.reviewActions.[]', function() {
         return latestAction(this.get('submission.reviewActions'));
     }),
 
+    // first three contributors to the preprint
     firstContributors: computed('submission.node.contributors', function() {
         return this.get('submission.node.contributors').slice(0, 3);
     }),
 
+    // count of contributors in-addition to the first three
     additionalContributors: computed('submission.node.contributors', function() {
         return this.get('submission.node.contributors.content.meta.pagination.total') - 3;
     }),
 
-    gtDay: computed('submission.dateLastTransitioned', function() {
-        return moment().diff(this.get('submission.dateLastTransitioned'), 'days') > 1;
-    }),
-
-    relevantDate: computed('submission.dateLastTransitioned', 'gtDay', function() {
-        return this.get('gtDay') ?
-            moment(this.get('submission.dateLastTransitioned')).format('MMMM DD, YYYY') :
-            moment(Math.min(Date.parse(this.get('submission.dateLastTransitioned')), Date.now())).fromNow();
-    }),
-
-    // translations
-    statusTimeDate: computed('submission.reviewsState', 'gtDay', 'noActions', function() {
+    // translations for moderator action label
+    reviewedOnLabel: computed('submission.{reviewsState,dateLastTransitioned}', 'noActions', 'latestActionCreator', function() {
         const i18n = this.get('i18n');
-        const dayValue = this.get('gtDay') ? 'gtDay' : 'ltDay';
+        const [acceptedRejectedDate, gtDay] = this.formattedDateLabel(this.get('submission.dateLastTransitioned'));
+        const dayValue = gtDay ? 'gtDay' : 'ltDay';
         const timeWording = this.get('noActions') ? `${dayValue}_automatic` : dayValue;
-        const labels = ACTION_LABELS[this.get('submission.reviewsState')][timeWording];
-        return i18n.t(labels, { timeDate: this.get('relevantDate'), moderatorName: this.get('latestActionCreator') });
+        const status = this.get('submission.reviewsState');
+        const labels = ACTION_LABELS[status][timeWording];
+        return i18n.t(labels, { timeDate: acceptedRejectedDate, moderatorName: this.get('latestActionCreator') });
+    }),
+
+    // translations for submitted on label
+    submittedOnLabel: computed('submission.dateCreated', function() {
+        const i18n = this.get('i18n');
+        const [submitDate, gtDaySubmit] = this.formattedDateLabel(this.get('submission.dateCreated'));
+        const dayValue = gtDaySubmit ? 'gtDay' : 'ltDay';
+        const labels = submittedOnLabel[dayValue];
+        return i18n.t(labels, { timeDate: submitDate });
     }),
 
     didReceiveAttrs() {
@@ -77,6 +81,14 @@ export default Component.extend({
             rejected: 'fa-times-circle-o rejected',
         };
         this.get('fetchData').perform();
+    },
+
+    formattedDateLabel(rawDate) {
+        const gtDayAgo = moment().diff(rawDate, 'days') > 1;
+        const formattedDate = gtDayAgo ?
+            moment(rawDate).format('MMMM DD, YYYY') :
+            moment(Math.min(Date.parse(rawDate), Date.now())).fromNow();
+        return [formattedDate, gtDayAgo];
     },
 
     fetchData: task(function* () {

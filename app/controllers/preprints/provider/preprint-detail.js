@@ -2,6 +2,10 @@ import { computed } from '@ember/object';
 import { alias, bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
+
+import { task, waitForQueue } from 'ember-concurrency';
+import $ from 'jquery';
+
 import permissions from 'ember-osf/const/permissions';
 
 
@@ -20,7 +24,6 @@ const PRE_MODERATION = 'pre-moderation';
  * @class Moderation Detail Controller
  */
 export default Controller.extend({
-    currentUser: service(),
     i18n: service(),
     theme: service(),
     toast: service(),
@@ -35,15 +38,23 @@ export default Controller.extend({
     _activeFile: null,
     chosenFile: null,
 
+    userHasEnteredReview: false,
+    showWarning: false,
+    previousTransition: null,
+
     hasTags: bool('node.tags.length'),
     expandedAbstract: navigator.userAgent.includes('Prerender'),
 
-    node: alias('model.node'),
+    node: alias('preprint.node'),
+
+    dummyMetaData: computed(function() {
+        return new Array(7);
+    }),
 
     // The currently selected file (defaults to primary)
-    activeFile: computed('model', {
+    activeFile: computed('preprint', {
         get() {
-            return this.getWithDefault('_activeFile', this.get('model.primaryFile'));
+            return this.getWithDefault('_activeFile', this.get('preprint.primaryFile'));
         },
         set(key, value) {
             return this.set('_activeFile', value);
@@ -60,8 +71,8 @@ export default Controller.extend({
         ].filter(part => !!part).join('/');
     }),
 
-    actionDateLabel: computed('model.provider.reviewsWorkflow', function() {
-        return this.get('model.provider.reviewsWorkflow') === PRE_MODERATION ?
+    actionDateLabel: computed('preprint.provider.reviewsWorkflow', function() {
+        return this.get('preprint.provider.reviewsWorkflow') === PRE_MODERATION ?
             DATE_LABEL.submitted :
             DATE_LABEL.created;
     }),
@@ -105,12 +116,20 @@ export default Controller.extend({
                 activeFile: fileItem,
             });
         },
+        leavePage() {
+            const previousTransition = this.get('previousTransition');
+            if (previousTransition) {
+                this.set('userHasEnteredReview', false);
+                this.set('showWarning', false);
+                previousTransition.retry();
+            }
+        },
         submitDecision(trigger, comment, filter) {
             this.toggleProperty('savingAction');
 
             const action = this.store.createRecord('review-action', {
                 actionTrigger: trigger,
-                target: this.get('model'),
+                target: this.get('preprint'),
             });
 
             if (comment) {
@@ -135,4 +154,28 @@ export default Controller.extend({
     _notifySubmitFailure() {
         this.get('toast').error(this.get('i18n').t('components.preprintStatusBanner.error'));
     },
+
+    fetchData: task(function* (preprintId) {
+        const response = yield this.get('store').findRecord(
+            'preprint',
+            preprintId,
+            { include: ['node', 'license', 'review_actions', 'contributors'] },
+        );
+        const node = yield response.get('node');
+        if (!node.get('public')) {
+            this.transitionToRoute('page-not-found');
+            return;
+        }
+        this.set('preprint', response);
+        this.get('loadMathJax').perform();
+
+        // required for breadcrumbs
+        this.set('model.breadcrumbTitle', response.get('title'));
+    }),
+
+    loadMathJax: task(function* () {
+        if (!MathJax) return;
+        yield waitForQueue('afterRender');
+        yield MathJax.Hub.Queue(['Typeset', MathJax.Hub, [$('.abstract')[0], $('#preprintTitle')[0]]]);
+    }),
 });

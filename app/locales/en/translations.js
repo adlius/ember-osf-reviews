@@ -166,6 +166,14 @@ export default {
             paragraph: 'The project for this paper is available on the OSF.',
             button: 'Visit project',
         },
+        warning: {
+            header: 'Discard your feedback',
+            body: 'Are you sure you want to leave without submitting your feedback? Your feedback will be discarded.',
+            footer: {
+                leave: 'Leave this page',
+                stay: 'Stay on this page',
+            },
+        },
     },
     components: {
         actionFeed: {
@@ -212,14 +220,14 @@ export default {
         },
         moderationListRow: {
             submission: {
-                submittedOn: 'submitted on {{timeDate}} by',
-                submitted: 'submitted {{timeDate}} by',
-                acceptedOn: 'accepted on {{timeDate}} by {{moderatorName}}',
-                accepted: 'accepted {{timeDate}} by {{moderatorName}}',
-                acceptedAutomaticallyOn: 'accepted automatically on {{timeDate}}',
-                acceptedAutomatically: 'accepted automatically {{timeDate}}',
-                rejectedOn: 'rejected on {{timeDate}} by {{moderatorName}}',
-                rejected: 'rejected {{timeDate}} by {{moderatorName}}',
+                submittedOn: 'Submitted on {{timeDate}} by',
+                submitted: 'Submitted {{timeDate}} by',
+                acceptedOn: 'Accepted on {{timeDate}} by {{moderatorName}}',
+                accepted: 'Accepted {{timeDate}} by {{moderatorName}}',
+                acceptedAutomaticallyOn: 'Accepted automatically on {{timeDate}}',
+                acceptedAutomatically: 'Accepted automatically {{timeDate}}',
+                rejectedOn: 'Rejected on {{timeDate}} by {{moderatorName}}',
+                rejected: 'Rejected {{timeDate}} by {{moderatorName}}',
             },
         },
         preprintStatusBanner: {

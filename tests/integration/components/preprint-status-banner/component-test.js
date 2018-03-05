@@ -9,6 +9,7 @@ moduleForComponent('preprint-status-banner', 'Integration | Component | preprint
 
 test('it renders preprint-status-banner', function(assert) {
     this.set('submitDecision', () => {});
+    this.set('setUserEnteredReview', () => {});
     this.set('savingAction', false);
     this.set('submission', {
         dateLastTransitioned: '2017-10-27T19:14:27.816946Z',
@@ -17,7 +18,7 @@ test('it renders preprint-status-banner', function(assert) {
         provider: { reviewsWorkflow: 'pre-moderation' },
         node: { contributors: [{ users: { fullName: 'Mr. Ping' } }, { users: { fullName: 'Mantis' } }] },
     });
-    this.render(hbs`{{preprint-status-banner submission=submission saving=savingAction submitDecision=submitDecision}}`);
+    this.render(hbs`{{preprint-status-banner submission=submission saving=savingAction setUserEnteredReview=setUserEnteredReview submitDecision=submitDecision}}`);
     return wait()
         .then(() => {
             assert.ok(this.$('.flex-container').length);

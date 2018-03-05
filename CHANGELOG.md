@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2018-03-05
+## Added
+- Warning modal when navigating away with unsaved changes
+- Route specific loading page for the moderation-detail page
+- Tests for provider setup controller
+
+## Changed
+- Update language 
+  - Add `Submitted by` along with the `accepted by/rejected by` for the accepted/rejected records in the moderation list
+  - Capitalize first letter (e.g `submitted by` to `Submitted by`) 
+- Upgraded ember-cli to 2.16.2
+
 ## [0.3.1] - 2018-03-01
 ### Added
 - Tests for download URL for branded and un-branded providers
@@ -26,6 +38,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - moderation-list-row component
   - action-feed component
   - action-feed-entry component
+  - preprint-status-banner component
+- Unit tests for
+  - preprint-status-banner component
+  - preprint-detail controller
+  - provider setup controller
+  - provider moderation controller
 - Pending count on Reviews Dashboard
   - Skeleton screens for providers list
 

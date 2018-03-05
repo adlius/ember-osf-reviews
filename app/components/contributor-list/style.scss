@@ -2,19 +2,26 @@
   display: inline;
   list-style: none;
   padding-left: 0;
-  color: white;
+}
 
-  li {
-    display: inline;
-  }
-  li:after {
-    content: ", "
-  }
-  li:last-child:after {
-    content: "";
-  }
+li {
+  display: inline;
+}
 
-  a {
-    color: #6dd1de;
+li::after {
+  content: ', ';
+}
+
+li:last-child::after {
+  content: '';
+}
+
+a {
+  color: $color-text-cyan;
+}
+
+.ember-content-placeholders-text {
+  &__line {
+    background: $ember-content-placeholders-primary-color;
   }
 }
