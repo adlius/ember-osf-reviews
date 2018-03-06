@@ -144,7 +144,7 @@ export default Controller.extend({
         return action.save()
             .then(this._toModerationList.bind(this, { status: filter, page: 1, sort: '-date_last_transitioned' }))
             .catch(this._notifySubmitFailure.bind(this))
-            .finally(() => this.toggleProperty('savingAction'));
+            .finally(() => this.set('savingAction', false));
     },
 
     _toModerationList(queryParams) {
