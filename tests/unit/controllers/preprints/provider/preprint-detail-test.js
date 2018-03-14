@@ -271,10 +271,12 @@ test('submitDecision action', function (assert) {
         const stub = this.stub(ctrl, '_saveAction');
 
         ctrl.send('submitDecision', 'accept', 'yes', 'accepted');
+        assert.strictEqual(ctrl.get('userHasEnteredReview'), false);
         assert.strictEqual(ctrl.get('savingAction'), !initialValue);
         assert.ok(stub.calledWithExactly(action, 'accepted'), 'correct arguments passed to _saveAction');
 
         ctrl.send('submitDecision', 'reject', 'no', 'rejected');
+        assert.strictEqual(ctrl.get('userHasEnteredReview'), false);
         assert.strictEqual(ctrl.get('savingAction'), initialValue);
         assert.ok(stub.calledWithExactly(action, 'rejected'), 'correct arguments passed to _saveAction');
     });
@@ -304,9 +306,11 @@ test('fileDownloadURL computed property - non-branded provider', function (asser
         });
 
         ctrl.setProperties({ model });
-        ctrl.set('model.id', '6gtu');
+        ctrl.set('model.preprintId', '6gtu');
 
-        assert.strictEqual(ctrl.get('fileDownloadURL'), 'http://localhost:4201/6gtu/download');
+        const { location: { port } } = window;
+
+        assert.strictEqual(ctrl.get('fileDownloadURL'), `http://localhost:${port}/6gtu/download`);
     });
 });
 
@@ -334,7 +338,7 @@ test('fileDownloadURL computed property - branded provider', function(assert) {
         });
 
         ctrl.setProperties({ model });
-        ctrl.set('model.id', '6gtu');
+        ctrl.set('model.preprintId', '6gtu');
 
         const { location: { origin } } = window;
 

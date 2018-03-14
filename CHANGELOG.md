@@ -4,17 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.4.2] - 2018-03-14
+### Fixed
+- Download links for moderators
+
 ## [0.4.1] - 2018-03-06
-## Fixed
+### Fixed
 - Updating of decisions immediately after accepting or rejecting
 
 ## [0.4.0] - 2018-03-05
-## Added
+### Added
 - Warning modal when navigating away with unsaved changes
 - Route specific loading page for the moderation-detail page
 - Tests for provider setup controller
 
-## Changed
+### Changed
 - Update language 
   - Add `Submitted by` along with the `accepted by/rejected by` for the accepted/rejected records in the moderation list
   - Capitalize first letter (e.g `submitted by` to `Submitted by`) 

@@ -66,7 +66,7 @@ export default Controller.extend({
         return [
             origin,
             this.get('theme.id') !== 'osf' ? `preprints/${this.get('theme.id')}` : null,
-            this.get('model.id'),
+            this.get('model.preprintId'),
             'download',
         ].filter(part => !!part).join('/');
     }),
@@ -126,7 +126,6 @@ export default Controller.extend({
         },
         submitDecision(trigger, comment, filter) {
             this.toggleProperty('savingAction');
-
             const action = this.store.createRecord('review-action', {
                 actionTrigger: trigger,
                 target: this.get('preprint'),
@@ -148,6 +147,7 @@ export default Controller.extend({
     },
 
     _toModerationList(queryParams) {
+        this.set('userHasEnteredReview', false);
         this.transitionToRoute('preprints.provider.moderation', { queryParams });
     },
 
