@@ -57,6 +57,7 @@ Router.map(function() {
             this.route('moderation', { path: '/' });
             this.route('settings');
             this.route('preprint-detail', { path: ':preprint_id' });
+            this.route('notifications');
         });
     });
     this.route('dashboard');

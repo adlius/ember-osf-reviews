@@ -3,6 +3,10 @@ import { computed, set } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export default Component.extend({
     i18n: service(),
     classNames: ['breadcrumbs'],
@@ -22,7 +26,7 @@ export default Component.extend({
             if (r.context === breadcrumbs[breadcrumbs.length - 1].context) continue;
 
             // Prefer model name or title, fall back to the route name
-            set(r, 'name', r.context.breadcrumbTitle || (r.context.get && r.context.get('name')) || r.part);
+            set(r, 'name', capitalize(r.context.breadcrumbTitle || (r.context.get && r.context.get('name')) || r.part));
 
             // Shorten breadcrumb names longer than 4 words
             const breadcrumbName = r.name.split(' ');

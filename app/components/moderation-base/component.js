@@ -30,6 +30,10 @@ export default Component.extend({
                 nameKey: 'global.settings',
                 route: 'preprints.provider.settings',
             },
+            {
+                nameKey: 'global.notifications',
+                route: 'preprints.provider.notifications',
+            }
         ];
     }),
 });
