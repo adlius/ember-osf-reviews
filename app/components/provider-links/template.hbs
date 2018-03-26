@@ -28,6 +28,11 @@
                     {{t 'global.settings'}}
                 {{/link-to}}
             </li>
+            <li>
+                {{#link-to 'preprints.provider.notifications' provider.id}}
+                    {{t 'global.notifications'}}
+                {{/link-to}}
+            </li>
         {{else}}
             <li>
                 {{#link-to 'preprints.provider.setup' provider.id}}
