@@ -234,7 +234,7 @@ export default {
         notificationList: {
             heading: 'Configure reviews notification preferences',
             helperText: 'To configure other notification preferences please visit your',
-            userSettings: 'user settings'
+            userSettings: 'user settings',
         },
         notificationListRow: {
             instant: 'Instant',

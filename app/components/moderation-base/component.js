@@ -33,7 +33,7 @@ export default Component.extend({
             {
                 nameKey: 'global.notifications',
                 route: 'preprints.provider.notifications',
-            }
+            },
         ];
     }),
 });

@@ -1,23 +1,23 @@
 <div class="flex-container">
-        <div class="notification-title">New pending submissions</div>
-            {{#bs-dropdown as |dd|}}
-                {{#dd.button class="dropdown"}} {{t currentSettingLabel}} <span class="caret"></span>{{/dd.button}}
-                {{#dd.menu classNames="notification-menu" as |menu|}}
-                    {{#menu.item}}
-                        <button class="btn" onclick={{action 'updateFrequency' 'instant'}}>
-                            {{t frequencyLabel.instant}}
-                        </button>
-                    {{/menu.item}}
-                    {{#menu.item}}
-                        <button class="btn" onclick={{action 'updateFrequency' 'daily'}}>
-                            {{t frequencyLabel.daily}}
-                        </button>
-                    {{/menu.item}}
-                    {{#menu.item}}
-                        <button class="btn" onclick={{action 'updateFrequency' 'none'}}>
-                            {{t frequencyLabel.never}}
-                        </button>
-                    {{/menu.item}}
-                {{/dd.menu}}
-            {{/bs-dropdown}}
+    <div class="notification-title">New pending submissions</div>
+    {{#bs-dropdown as |dd|}}
+        {{#dd.button class="dropdown"}} {{t currentSettingLabel}} <span class="caret"></span>{{/dd.button}}
+        {{#dd.menu classNames="notification-menu" as |menu|}}
+            {{#menu.item}}
+                <button class="btn" onclick={{action 'updateFrequency' 'instant'}}>
+                    {{t frequencyLabel.instant}}
+                </button>
+            {{/menu.item}}
+            {{#menu.item}}
+                <button class="btn" onclick={{action 'updateFrequency' 'daily'}}>
+                    {{t frequencyLabel.daily}}
+                </button>
+            {{/menu.item}}
+            {{#menu.item}}
+                <button class="btn" onclick={{action 'updateFrequency' 'none'}}>
+                    {{t frequencyLabel.never}}
+                </button>
+            {{/menu.item}}
+        {{/dd.menu}}
+    {{/bs-dropdown}}
 </div>
