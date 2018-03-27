@@ -4,17 +4,11 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 const storeStub = EmberService.extend({
-    init() {
-        this._super(...arguments);
-        this.subscriptionList = [
-            EmberObject.create({
-                frequency: 'none',
-                eventName: 'new_pending_submissions',
-            }),
-        ];
-    },
-    query() {
-        return this.get('subscriptionList');
+    findRecord() {
+        return EmberObject.create({
+            frequency: 'none',
+            eventName: 'new_pending_submissions',
+        });
     },
 });
 

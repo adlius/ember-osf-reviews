@@ -4,8 +4,9 @@ import { serviceLinks } from 'ember-osf/const/service-links';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-    serviceLinks,
     store: service(),
+
+    serviceLinks,
     classNames: ['content'],
 
     init() {
@@ -14,11 +15,7 @@ export default Component.extend({
     },
 
     fetchData: task(function* (providerId, subscriptionId) {
-        const subscriptions = yield this.get('store').query('subscription', {
-            filter: {
-                id: subscriptionId,
-            },
-        });
-        this.set('subscriptions', subscriptions);
+        const subscriptions = yield this.get('store').findRecord('subscription', subscriptionId);
+        this.set('subscriptions', [subscriptions]);
     }),
 });
