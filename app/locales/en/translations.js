@@ -240,6 +240,7 @@ export default {
             instant: 'Instant',
             daily: 'Daily',
             never: 'Never',
+            errorUpdating: 'Error updating notification settings.',
         },
         preprintStatusBanner: {
             recentActivity: {

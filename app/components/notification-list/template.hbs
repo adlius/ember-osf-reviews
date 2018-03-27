@@ -1,19 +1,27 @@
-<!-- template-lint triple-curlies=false -->
 <div class="container">
     <div class="row">
         <div class="notification-list col-md-8">
-            <div>
+            <div class="notification-list-heading-container">
                 <h4 class="notification-list-heading">{{t 'components.notificationList.heading'}}</h4>
-                <span class="helper-text"> {{t 'components.notificationList.helperText'}} <a href={{serviceLinks.settings}}>{{t 'components.notificationList.userSettings'}}</a>.</span>
+                <span class="helper-text">
+                    {{t 'components.notificationList.helperText'}}
+                    <a href={{serviceLinks.settings}}>
+                        {{t 'components.notificationList.userSettings'}}
+                    </a>.
+                </span>
             </div>
 
-            <div class="notification-list-body">
-                {{#each subscriptions as |subscription|}}
-                    <hr>
-                    {{notification-list-row subscription=subscription}}
-                    <hr>
-                {{/each}}
-            </div>
+            {{#if fetchData.isRunning}}
+                {{loading-indicator classes='ball-dark text-center'}}
+            {{else}}
+                <div class="line-separator"></div>
+                <div class="notification-list-body">
+                    {{#each subscriptions as |subscription|}}
+                        {{notification-list-row subscription=subscription}}
+                        <div class="line-separator"></div>
+                    {{/each}}
+                </div>
+            {{/if}}
         </div>
     </div>
 </div>

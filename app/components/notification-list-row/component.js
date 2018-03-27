@@ -1,34 +1,43 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
 
-const frequencyLabel = {
-    instant: 'components.notificationListRow.instant',
-    daily: 'components.notificationListRow.daily',
-    never: 'components.notificationListRow.never',
-};
+const notificationOptions = [
+    {
+        label: 'components.notificationListRow.instant',
+        value: 'instant',
+    },
+    {
+        label: 'components.notificationListRow.daily',
+        value: 'daily',
+    },
+    {
+        label: 'components.notificationListRow.never',
+        value: 'none',
+    },
+];
 
 export default Component.extend({
     i18n: service(),
+    toast: service(),
 
+    notificationOptions,
     currentSettingLabel: computed('subscription.frequency', function () {
         const frequency = this.get('subscription.frequency');
-        if (frequency === 'instant') {
-            return frequencyLabel.instant;
-        }
-        if (frequency === 'daily') {
-            return frequencyLabel.daily;
-        }
-        if (frequency === 'none') {
-            return frequencyLabel.never;
-        }
+        return this.get('notificationOptions').findBy('value', frequency).label;
     }),
 
-    actions: {
-        updateFrequency: (frequency) => {
-            const subscription = this.get('subscription');
+    updateFrequency: task(function* (frequency) {
+        const subscription = this.get('subscription');
+        try {
             subscription.set('frequency', frequency);
-            subscription.save();
-        },
-    },
+            if (subscription.changedAttributes()) {
+                yield subscription.save();
+            }
+        } catch (e) {
+            subscription.rollbackAttributes();
+            this.get('toast').error(this.get('i18n').t('components.notificationListRow.errorUpdating'));
+        }
+    }),
 });

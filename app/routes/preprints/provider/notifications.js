@@ -7,10 +7,9 @@ export default Route.extend({
     model() {
         const providerId = this.get('theme.id');
         const subscriptionId = `${providerId}_new_pending_submissions`;
-        return this.get('store').query('subscription', {
-            filter: {
-                id: subscriptionId,
-            },
-        });
+        return {
+            providerId,
+            subscriptionId,
+        };
     },
 });
