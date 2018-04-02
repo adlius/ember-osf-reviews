@@ -5,13 +5,16 @@ import { task } from 'ember-concurrency';
 
 export default Component.extend({
     store: service(),
-
-    serviceLinks,
+    theme: service(),
     classNames: ['content'],
 
-    init() {
+    serviceLinks,
+
+    didReceiveAttrs() {
         this._super(...arguments);
-        this.get('fetchData').perform(this.get('model.providerId'), this.get('model.subscriptionId'));
+        const providerId = this.get('theme.id');
+        const subscriptionId = `${providerId}_new_pending_submissions`;
+        this.get('fetchData').perform(providerId, subscriptionId);
     },
 
     fetchData: task(function* (providerId, subscriptionId) {

@@ -12,7 +12,7 @@
             </div>
 
             {{#if fetchData.isRunning}}
-                {{loading-indicator classes='ball-dark text-center'}}
+                {{notification-list-row-skeleton}}
             {{else}}
                 <div class="line-separator"></div>
                 <div class="notification-list-body">

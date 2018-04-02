@@ -1,7 +1,7 @@
-<div class="flex-container">
-    {{#if updateFrequency.isRunning}}
-        {{loading-indicator classes='ball-dark text-center'}}
-    {{else}}
+{{#if updateFrequency.isRunning}}
+    {{notification-list-row-skeleton}}
+{{else}}
+    <div class="flex-container">
         <div class="notification-title">New pending submissions</div>
         {{#bs-dropdown as |dd|}}
             {{#dd.button class="dropdown"}} {{t currentSettingLabel}} <span class="fa fa-caret-down p-l-xs"></span>{{/dd.button}}
@@ -15,5 +15,5 @@
                 {{/each}}
             {{/dd.menu}}
         {{/bs-dropdown}}
-    {{/if}}
-</div>
+    </div>
+{{/if}}
