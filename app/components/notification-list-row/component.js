@@ -39,5 +39,5 @@ export default Component.extend({
             subscription.rollbackAttributes();
             this.get('toast').error(this.get('i18n').t('components.notificationListRow.errorUpdating'));
         }
-    }),
+    }).enqueue(),
 });

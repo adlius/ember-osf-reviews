@@ -27,12 +27,12 @@ export default Component.extend({
                 count: this.get('theme.reviewableStatusCounts.pending'),
             },
             {
-                nameKey: 'global.settings',
-                route: 'preprints.provider.settings',
-            },
-            {
                 nameKey: 'global.notifications',
                 route: 'preprints.provider.notifications',
+            },
+            {
+                nameKey: 'global.settings',
+                route: 'preprints.provider.settings',
             },
         ];
     }),

@@ -3,18 +3,23 @@
         <div class="notification-list col-md-8">
             <div class="notification-list-heading-container">
                 <h4 class="notification-list-heading">{{t 'components.notificationList.heading'}}</h4>
-                <span class="helper-text">
+                <div class="helper-text">
                     {{t 'components.notificationList.helperText'}}
-                    <a href={{serviceLinks.settings}}>
+                    <a href={{serviceLinks.settingsNotifications}}>
                         {{t 'components.notificationList.userSettings'}}
                     </a>.
-                </span>
+                </div>
             </div>
 
+            <div class="line-separator"></div>
             {{#if fetchData.isRunning}}
-                {{notification-list-row-skeleton}}
+                {{#content-placeholders as |placeholder|}}
+                    <div class="notification-title--skeleton">
+                        {{placeholder.text lines=1}}
+                    </div>
+                    <div class="line-separator"></div>
+                {{/content-placeholders}}
             {{else}}
-                <div class="line-separator"></div>
                 <div class="notification-list-body">
                     {{#each subscriptions as |subscription|}}
                         {{notification-list-row subscription=subscription}}

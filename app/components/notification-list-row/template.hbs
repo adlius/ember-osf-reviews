@@ -1,19 +1,15 @@
-{{#if updateFrequency.isRunning}}
-    {{notification-list-row-skeleton}}
-{{else}}
-    <div class="flex-container">
-        <div class="notification-title">New pending submissions</div>
-        {{#bs-dropdown as |dd|}}
-            {{#dd.button class="dropdown"}} {{t currentSettingLabel}} <span class="fa fa-caret-down p-l-xs"></span>{{/dd.button}}
-            {{#dd.menu classNames="notification-menu" as |menu|}}
-                {{#each notificationOptions as |notificationOption| }}
-                    {{#menu.item}}
-                        <button class="btn" onclick={{perform updateFrequency notificationOption.value}}>
-                            {{t notificationOption.label}}
-                        </button>
-                    {{/menu.item}}
-                {{/each}}
-            {{/dd.menu}}
-        {{/bs-dropdown}}
-    </div>
-{{/if}}
+<div class="flex-container">
+    <div class="notification-title">New pending submissions</div>
+    {{#bs-dropdown as |dd|}}
+        {{#dd.button class="dropdown"}} {{t currentSettingLabel}} <span class="fa fa-caret-down p-l-xs"></span>{{/dd.button}}
+        {{#dd.menu classNames="notification-menu" as |menu|}}
+            {{#each notificationOptions as |notificationOption| }}
+                {{#menu.item}}
+                    <button class="btn" onclick={{perform updateFrequency notificationOption.value}}>
+                        {{t notificationOption.label}}
+                    </button>
+                {{/menu.item}}
+            {{/each}}
+        {{/dd.menu}}
+    {{/bs-dropdown}}
+</div>

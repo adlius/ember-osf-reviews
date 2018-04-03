@@ -233,7 +233,7 @@ export default {
         },
         notificationList: {
             heading: 'Configure reviews notification preferences',
-            helperText: 'To configure other notification preferences please visit your',
+            helperText: 'To configure other notification preferences visit your',
             userSettings: 'user settings',
         },
         notificationListRow: {
