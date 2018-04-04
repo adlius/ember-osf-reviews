@@ -57,7 +57,7 @@
                     {{else}}
                         <div class="share-row p-sm osf-box-lt clearfix">
                             <a class="btn btn-primary p-v-xs" href={{fileDownloadURL}}>
-                                {{t "content.share.downloadPreprint"}}
+                                {{t "content.share.downloadPreprint" documentType=preprint.provider.documentType.singular}}
                             </a>
                             <div class="p-v-xs pull-right">
                                 {{t "content.share.downloads"}}: {{preprint.primaryFile.extra.downloads}}
@@ -91,10 +91,10 @@
 
                         <section class="p-t-xs">
                             {{#if preprint.preprintDoiUrl}}
-                                <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
+                                <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI" documentType=preprint.provider.documentType.singularCapitalized}}</strong></h4>
                                 <a href={{preprint.preprintDoiUrl}}>{{extract-doi preprint.preprintDoiUrl}}</a>
                             {{else if (not preprint.isPublished)}}
-                                <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
+                                <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI" documentType=preprint.provider.documentType.singularCapitalized}}</strong></h4>
                                 {{t 'content.preprintPendingDOI'}}
                             {{/if}}
                         </section>

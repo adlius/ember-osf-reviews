@@ -63,7 +63,6 @@ export default Service.extend({
             provider: {
                 id: this.get('provider.id'),
                 name: this.get('provider.name'),
-                type: get(locale, `documentType.${this.get('provider.preprintWord')}`),
             },
         });
         return provider;

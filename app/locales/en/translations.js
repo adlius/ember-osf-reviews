@@ -12,38 +12,6 @@ export default {
         settings: 'Settings',
         moderation: 'Moderation',
     },
-    documentType: {
-        default: {
-            plural: 'documents',
-            pluralCapitalized: 'Documents',
-            singular: 'document',
-            singularCapitalized: 'Document',
-        },
-        paper: {
-            plural: 'papers',
-            pluralCapitalized: 'Papers',
-            singular: 'paper',
-            singularCapitalized: 'Paper',
-        },
-        preprint: {
-            plural: 'preprints',
-            pluralCapitalized: 'Preprints',
-            singular: 'preprint',
-            singularCapitalized: 'Preprint',
-        },
-        none: {
-            plural: '',
-            pluralCapitalized: '',
-            singular: '',
-            singularCapitalized: '',
-        },
-        thesis: {
-            plural: 'theses',
-            pluralCapitalized: 'Theses',
-            singular: 'thesis',
-            singularCapitalized: 'Thesis',
-        },
-    },
     index: {
         feature: {
             title: 'Moderate your collection',
@@ -70,11 +38,11 @@ export default {
             options: {
                 'pre-moderation': {
                     title: 'Pre-moderation',
-                    description: 'All {{provider.type.plural}} are placed in a queue for a moderator to accept or reject. {{provider.type.pluralCapitalized}} are displayed publicly only after approval.',
+                    description: 'All {{documentTypePlural}} are placed in a queue for a moderator to accept or reject. {{documentTypePluralCapitalized}} are displayed publicly only after approval.',
                 },
                 'post-moderation': {
                     title: 'Post-moderation',
-                    description: 'All {{provider.type.plural}} are displayed publicly immediately upon submission. {{provider.type.pluralCapitalized}} also appear in a queue for a moderator to accept or reject. If rejected, the {{provider.type.singular}} is no longer displayed publicly.',
+                    description: 'All {{documentTypePlural}} are displayed publicly immediately upon submission. {{documentTypePluralCapitalized}} also appear in a queue for a moderator to accept or reject. If rejected, the {{documentTypeSingular}} is no longer displayed publicly.',
                 },
             },
         },
@@ -152,12 +120,12 @@ export default {
             download: 'Download',
             downloads: 'Downloads',
             downloadFile: 'Download file',
-            downloadPreprint: 'Download {{provider.type.singular}}',
+            downloadPreprint: 'Download {{documentType}}',
         },
         seeMore: 'See more',
         seeLess: 'See less',
         version: 'Version',
-        preprintDOI: '{{provider.type.singularCapitalized}} DOI',
+        preprintDOI: '{{documentType}} DOI',
         preprintPendingDOI: 'DOI created after moderator approval',
         articleDOI: 'Peer-reviewed Publication DOI',
         citations: 'Citations',
@@ -232,12 +200,12 @@ export default {
         },
         preprintStatusBanner: {
             recentActivity: {
-                pending: 'submitted this {{provider.type.singular}} on',
-                accepted: 'accepted this {{provider.type.singular}} on',
-                rejected: 'rejected this {{provider.type.singular}} on',
+                pending: 'submitted this {{documentType}} on',
+                accepted: 'accepted this {{documentType}} on',
+                rejected: 'rejected this {{documentType}} on',
                 automatic: {
-                    pending: 'This {{provider.type.singular}} was submitted on',
-                    accepted: 'This {{provider.type.singular}} was automatically accepted on',
+                    pending: 'This {{documentType}} was submitted on',
+                    accepted: 'This {{documentType}} was automatically accepted on',
                 },
             },
             message: {
@@ -258,7 +226,7 @@ export default {
                     modifyDecision: 'Modify your decision',
                 },
                 moderator: 'Moderator',
-                base: 'This {{provider.type.singular}} is',
+                base: 'This {{documentType}} is',
                 btn: {
                     submitDecision: 'Submit decision',
                     modifyDecision: 'Modify decision',

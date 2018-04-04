@@ -5,7 +5,7 @@
                 <i class="fa {{icon}} status-icon" aria-hidden="true"></i>
                 <span class="status-badge">{{t status}}</span>
                 {{#bs-tooltip placement="right"}}
-                    {{t feedbackBaseMessage}} {{t statusExplanation}}.
+                    {{t feedbackBaseMessage documentType=submission.provider.documentType.singular}} {{t statusExplanation}}.
                 {{/bs-tooltip}}
             </span>
         </div>
@@ -14,9 +14,9 @@
                 {{loading-indicator classes='ball-dark text-center'}}
             {{else}}
                 {{#if noActions}}
-                    {{t recentActivityLanguage}} {{moment-format submission.dateLastTransitioned "MMMM DD, YYYY"}}
+                    {{t recentActivityLanguage documentType=submission.provider.documentType.singular}} {{moment-format submission.dateLastTransitioned "MMMM DD, YYYY"}}
                 {{else}}
-                    <a href={{creatorProfile}}>{{creatorName}}</a> {{t recentActivityLanguage}} {{moment-format submission.dateLastTransitioned "MMMM DD, YYYY"}}
+                    <a href={{creatorProfile}}>{{creatorName}}</a> {{t recentActivityLanguage documentType=submission.provider.documentType.singular}} {{moment-format submission.dateLastTransitioned "MMMM DD, YYYY"}}
                 {{/if}}
             {{/if}}
         </div>

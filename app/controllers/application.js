@@ -15,14 +15,4 @@ export default Controller.extend(OSFAgnosticAuthControllerMixin, {
     i18n: service(),
     theme: service(),
     navigator: service(),
-
-    init() {
-        // Hack to make the Add Preprint button work.
-        this.get('i18n').addGlobals({
-            preprintWords: {
-                preprint: this.get('i18n').t('documentType.preprint.singularCapitalized'),
-            },
-        });
-        this._super(...arguments);
-    },
 });
