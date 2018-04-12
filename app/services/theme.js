@@ -1,4 +1,3 @@
-import { getOwner } from '@ember/application';
 import { computed } from '@ember/object';
 import { alias, empty, not, equal } from '@ember/object/computed';
 import Service, { inject as service } from '@ember/service';
