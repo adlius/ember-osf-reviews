@@ -1,5 +1,5 @@
 import { getOwner } from '@ember/application';
-import { computed, get } from '@ember/object';
+import { computed } from '@ember/object';
 import { alias, empty, not, equal } from '@ember/object/computed';
 import Service, { inject as service } from '@ember/service';
 
@@ -56,7 +56,6 @@ export default Service.extend({
     },
 
     _onProviderLoad(provider) {
-        const locale = getOwner(this).factoryFor(`locale:${this.get('i18n.locale')}/translations`).class;
         this.set('provider', provider);
         this.set('reviewableStatusCounts', provider.get('reviewableStatusCounts'));
         this.get('i18n').addGlobals({

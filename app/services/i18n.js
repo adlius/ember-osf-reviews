@@ -10,7 +10,7 @@ export default I18nService.extend({
             unknownProperty(key) {
                 const fromHash = Ember.get(hashContext, key);
                 return fromHash === undefined ? Ember.get(objectContext, key) : fromHash;
-            }
+            },
         }).create();
     },
 

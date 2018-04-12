@@ -50,11 +50,7 @@ export default Controller.extend({
         return {
             value: option,
             title: this._t(`${setting.name}.options.${option}.title`),
-            description: this._t(`${setting.name}.options.${option}.description`,
-                {
-                    documentType: this.get('model.documentType'),
-                }
-            ),
+            description: this._t(`${setting.name}.options.${option}.description`, {documentType: this.get('model.documentType'),}),
         };
     },
 
