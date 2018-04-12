@@ -9,7 +9,11 @@ moduleForComponent('contributor-list', 'Integration | Component | contributor-li
         const contributorList = () => ({
             data: [
                 EmberObject.create({ // Records to be returned by queryHasMany
-                    users: { givenName: 'Brian', familyName: 'Nosek', profileURL: 'https://osf.io/12345' },
+                    users: {
+                        givenName: 'Brian',
+                        familyName: 'Nosek',
+                        profileURL: 'https://osf.io/12345',
+                    },
                     unregisteredContributor: null,
                     bibliographic: true,
                 }), EmberObject.create({
@@ -17,25 +21,28 @@ moduleForComponent('contributor-list', 'Integration | Component | contributor-li
                     bibliographic: true,
                 }),
             ],
-            links: { next: null },
+            links: {
+                next: null,
+            },
             toArray() {
                 return this.data;
             },
         });
 
-        const node = EmberObject.create({
+        const submission = EmberObject.create({
             content: {
                 queryHasMany: contributorList,
             },
         });
 
-        this.set('node', node);
+        this.set('preprint', submission);
     },
 });
 
 
 test('it renders contributor-list', function(assert) {
-    this.render(hbs`{{contributor-list contributors=null node=node}}`);
+    this.render(hbs`{{contributor-list contributors=null submission=preprint}}`);
+
     assert.ok(this.$('ul').length);
     assert.equal(
         this.$('ul').text().replace(/\s+/g, ' ').trim(),

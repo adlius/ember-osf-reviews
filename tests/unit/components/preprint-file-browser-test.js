@@ -5,7 +5,6 @@ import test from 'ember-sinon-qunit/test-support/test';
 moduleForComponent('preprint-file-browser', 'Unit | Component | preprint file browser', {
     unit: true,
     needs: [
-        'model:node',
         'model:preprint',
         'model:preprint-provider',
         'model:file-provider',

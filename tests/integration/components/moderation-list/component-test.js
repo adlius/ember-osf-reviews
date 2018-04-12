@@ -63,7 +63,7 @@ test('moderation-list full page submissions', function(assert) {
             }),
         ],
         reviewsState: 'accepted',
-        node: EmberObject.create({ contributors: ['Viper', 'Oogway'] }),
+        contributors: ['Viper', 'Oogway'],
     };
 
     for (let step = 0; step < 10; step++) {

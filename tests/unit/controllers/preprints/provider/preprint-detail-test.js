@@ -73,23 +73,16 @@ test('actionDateLabel computed property', function (assert) {
     const ctrl = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
-        });
-
         const provider = this.store.createRecord('preprint-provider', {
             reviewsWorkflow: 'pre-moderation',
         });
 
-        const preprint = this.store.createRecord('preprint', { node, provider });
+        const preprint = this.store.createRecord('preprint', { provider });
 
         ctrl.setProperties({ preprint });
-
         assert.strictEqual(ctrl.get('actionDateLabel'), 'content.dateLabel.submittedOn');
 
         ctrl.set('preprint.provider.reviewsWorkflow', 'post-moderation');
-
         assert.strictEqual(ctrl.get('actionDateLabel'), 'content.dateLabel.createdOn');
     });
 });
@@ -99,21 +92,18 @@ test('hasShortenedDescription computed property', function (assert) {
     const ctrl = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
+        const preprint = this.store.createRecord('preprint', {
             title: 'test title',
             description: 'test description',
         });
-
-        const preprint = this.store.createRecord('preprint', { node });
         ctrl.setProperties({ preprint });
-        ctrl.set('node.description', 'test description');
 
         assert.strictEqual(
             ctrl.get('hasShortenedDescription'),
             false,
         );
 
-        ctrl.set('node.description', 'Lorem ipsum'.repeat(35));
+        ctrl.set('preprint.description', 'Lorem ipsum'.repeat(35));
         assert.strictEqual(
             ctrl.get('hasShortenedDescription'),
             true,
@@ -126,14 +116,12 @@ test('useShortenedDescription computed property', function (assert) {
     const ctrl = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
+        const preprint = this.store.createRecord('preprint', {
             title: 'test title',
             description: 'test description',
         });
 
-        const preprint = this.store.createRecord('preprint', { node });
         ctrl.setProperties({ preprint });
-        ctrl.set('node.description', 'test description');
         ctrl.set('expandedAbstract', false);
 
         assert.strictEqual(
@@ -142,7 +130,7 @@ test('useShortenedDescription computed property', function (assert) {
         );
 
         ctrl.set('expandedAbstract', false);
-        ctrl.set('node.description', 'Lorem ipsum'.repeat(35));
+        ctrl.set('preprint.description', 'Lorem ipsum'.repeat(35));
         assert.strictEqual(
             ctrl.get('useShortenedDescription'),
             true,
@@ -159,11 +147,9 @@ test('description computed property', function (assert) {
         const input = 'test description length'.repeat(20);
         const expected = 'test description length'.repeat(20).substring(0, 349);
 
-        const node = this.store.createRecord('node', {
+        const preprint = this.store.createRecord('preprint', {
             description: input,
         });
-
-        const preprint = this.store.createRecord('preprint', { node });
         ctrl.setProperties({ preprint });
 
         assert.strictEqual(
@@ -233,12 +219,9 @@ test('activeFile action', function (assert) {
             id: 'test2',
         });
 
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
+        const preprint = this.store.createRecord('preprint', {
+            primaryFile,
         });
-
-        const preprint = this.store.createRecord('preprint', { node, primaryFile });
 
         ctrl.setProperties({ preprint });
 
@@ -296,14 +279,7 @@ test('fileDownloadURL computed property - non-branded provider', function (asser
             reviewsWorkflow: 'pre-moderation',
         });
 
-        const node = this.store.createRecord('node', {
-            description: 'test description',
-        });
-
-        const model = this.store.createRecord('preprint', {
-            provider,
-            node,
-        });
+        const model = this.store.createRecord('preprint', { provider });
 
         ctrl.setProperties({ model });
         ctrl.set('model.preprintId', '6gtu');
@@ -328,14 +304,7 @@ test('fileDownloadURL computed property - branded provider', function(assert) {
             reviewsWorkflow: 'pre-moderation',
         });
 
-        const node = this.store.createRecord('node', {
-            description: 'test description',
-        });
-
-        const model = this.store.createRecord('preprint', {
-            provider,
-            node,
-        });
+        const model = this.store.createRecord('preprint', { provider });
 
         ctrl.setProperties({ model });
         ctrl.set('model.preprintId', '6gtu');
