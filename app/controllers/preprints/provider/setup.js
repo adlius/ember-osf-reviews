@@ -52,9 +52,7 @@ export default Controller.extend({
             title: this._t(`${setting.name}.options.${option}.title`),
             description: this._t(`${setting.name}.options.${option}.description`,
                 {
-                    documentTypePlural: this.get('model.documentType.plural'),
-                    documentTypePluralCapitalized: this.get('model.documentType.pluralCapitalized'),
-                    documentTypeSingular: this.get('model.documentType.singular')
+                    documentType: this.get('model.documentType'),
                 }
             ),
         };

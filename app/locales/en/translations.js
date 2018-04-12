@@ -38,11 +38,11 @@ export default {
             options: {
                 'pre-moderation': {
                     title: 'Pre-moderation',
-                    description: 'All {{documentTypePlural}} are placed in a queue for a moderator to accept or reject. {{documentTypePluralCapitalized}} are displayed publicly only after approval.',
+                    description: 'All {{documentType.plural}} are placed in a queue for a moderator to accept or reject. {{documentType.pluralCapitalized}} are displayed publicly only after approval.',
                 },
                 'post-moderation': {
                     title: 'Post-moderation',
-                    description: 'All {{documentTypePlural}} are displayed publicly immediately upon submission. {{documentTypePluralCapitalized}} also appear in a queue for a moderator to accept or reject. If rejected, the {{documentTypeSingular}} is no longer displayed publicly.',
+                    description: 'All {{documentType.plural}} are displayed publicly immediately upon submission. {{documentType.pluralCapitalized}} also appear in a queue for a moderator to accept or reject. If rejected, the {{documentType.singular}} is no longer displayed publicly.',
                 },
             },
         },
@@ -120,12 +120,12 @@ export default {
             download: 'Download',
             downloads: 'Downloads',
             downloadFile: 'Download file',
-            downloadPreprint: 'Download {{documentType}}',
+            downloadPreprint: 'Download {{documentType.singular}}',
         },
         seeMore: 'See more',
         seeLess: 'See less',
         version: 'Version',
-        preprintDOI: '{{documentType}} DOI',
+        preprintDOI: '{{documentType.singularCapitalized}} DOI',
         preprintPendingDOI: 'DOI created after moderator approval',
         articleDOI: 'Peer-reviewed Publication DOI',
         citations: 'Citations',
@@ -151,10 +151,10 @@ export default {
         },
         actionFeedEntry: {
             actionMessage: {
-                submit: 'submitted a {{documentType}} to {{providerName}}',
-                accept: 'accepted a {{documentType}} in {{providerName}}',
-                reject: 'rejected a {{documentType}} from {{providerName}}',
-                edit_comment: 'edited the comment for a {{documentType}} in {{providerName}}',
+                submit: 'submitted a {{documentType.singular}} to {{providerName}}',
+                accept: 'accepted a {{documentType.singular}} in {{providerName}}',
+                reject: 'rejected a {{documentType.singular}} from {{providerName}}',
+                edit_comment: 'edited the comment for a {{documentType.singular}} in {{providerName}}',
             },
         },
         dashboardSidebar: {
@@ -200,12 +200,12 @@ export default {
         },
         preprintStatusBanner: {
             recentActivity: {
-                pending: 'submitted this {{documentType}} on',
-                accepted: 'accepted this {{documentType}} on',
-                rejected: 'rejected this {{documentType}} on',
+                pending: 'submitted this {{documentType.singular}} on',
+                accepted: 'accepted this {{documentType.singular}} on',
+                rejected: 'rejected this {{documentType.singular}} on',
                 automatic: {
-                    pending: 'This {{documentType}} was submitted on',
-                    accepted: 'This {{documentType}} was automatically accepted on',
+                    pending: 'This {{documentType.singular}} was submitted on',
+                    accepted: 'This {{documentType.singular}} was automatically accepted on',
                 },
             },
             message: {
