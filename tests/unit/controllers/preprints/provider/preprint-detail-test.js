@@ -271,34 +271,78 @@ test('submitDecision action', function (assert) {
         const stub = this.stub(ctrl, '_saveAction');
 
         ctrl.send('submitDecision', 'accept', 'yes', 'accepted');
+        assert.strictEqual(ctrl.get('userHasEnteredReview'), false);
         assert.strictEqual(ctrl.get('savingAction'), !initialValue);
         assert.ok(stub.calledWithExactly(action, 'accepted'), 'correct arguments passed to _saveAction');
 
         ctrl.send('submitDecision', 'reject', 'no', 'rejected');
+        assert.strictEqual(ctrl.get('userHasEnteredReview'), false);
         assert.strictEqual(ctrl.get('savingAction'), initialValue);
         assert.ok(stub.calledWithExactly(action, 'rejected'), 'correct arguments passed to _saveAction');
     });
 });
 
-test('fileDownloadURL computed property', function (assert) {
+test('fileDownloadURL computed property - non-branded provider', function (assert) {
     this.inject.service('store');
     this.inject.service('theme');
+
+    this.theme.id = 'osf';
 
     const ctrl = this.subject();
 
     run(() => {
+        const provider = this.store.createRecord('preprint-provider', {
+            name: 'osf',
+            reviewsWorkflow: 'pre-moderation',
+        });
+
         const node = this.store.createRecord('node', {
             description: 'test description',
         });
 
-        const preprint = this.store.createRecord('preprint', { node });
+        const model = this.store.createRecord('preprint', {
+            provider,
+            node,
+        });
 
-        ctrl.setProperties({ preprint });
-        ctrl.set('preprint.id', '6gtu');
+        ctrl.setProperties({ model });
+        ctrl.set('model.preprintId', '6gtu');
+
+        const { location: { port } } = window;
+
+        assert.strictEqual(ctrl.get('fileDownloadURL'), `http://localhost:${port}/6gtu/download`);
+    });
+});
+
+test('fileDownloadURL computed property - branded provider', function(assert) {
+    this.inject.service('store');
+    this.inject.service('theme');
+
+    this.theme.id = 'engrxiv';
+
+    const ctrl = this.subject();
+
+    run(() => {
+        const provider = this.store.createRecord('preprint-provider', {
+            name: 'engrxiv',
+            reviewsWorkflow: 'pre-moderation',
+        });
+
+        const node = this.store.createRecord('node', {
+            description: 'test description',
+        });
+
+        const model = this.store.createRecord('preprint', {
+            provider,
+            node,
+        });
+
+        ctrl.setProperties({ model });
+        ctrl.set('model.preprintId', '6gtu');
 
         const { location: { origin } } = window;
 
-        assert.strictEqual(ctrl.get('fileDownloadURL'), `${origin}/6gtu/download`);
+        assert.strictEqual(ctrl.get('fileDownloadURL'), `${origin}/preprints/engrxiv/6gtu/download`);
     });
 });
 

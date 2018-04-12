@@ -14,7 +14,6 @@ moduleFor('service:theme', 'Unit | Service | theme', {
         'util:i18n/missing-message',
         'util:i18n/compile-template',
         'config:environment',
-        'service:store',
     ],
     beforeEach() {
         // set the locale and the config

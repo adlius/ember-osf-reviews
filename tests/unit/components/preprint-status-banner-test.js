@@ -213,6 +213,8 @@ test('cancel action', function(assert) {
     const component = this.subject();
 
     run(() => {
+        component.set('setUserEnteredReview', () => {});
+
         const node = this.store.createRecord('node', {
             title: 'test title',
             description: 'test description',

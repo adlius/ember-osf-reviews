@@ -64,7 +64,7 @@ export default Controller.extend(Analytics, moderationQueryParams.Mixin, {
 
     fetchData: task(function* (queryParams) {
         const provider = this.get('theme.provider');
-        const response = yield this.get('store').queryHasMany(provider, 'preprints', {
+        const response = yield provider.queryHasMany('preprints', {
             filter: {
                 reviews_state: queryParams.status,
                 node_is_public: true,

@@ -25,6 +25,7 @@ const PRE_MODERATION = 'pre-moderation';
  */
 export default Controller.extend({
     i18n: service(),
+    theme: service(),
     toast: service(),
     store: service(),
 
@@ -60,11 +61,12 @@ export default Controller.extend({
         },
     }),
 
-    fileDownloadURL: computed('preprint', function() {
+    fileDownloadURL: computed('model', function() {
         const { location: { origin } } = window;
         return [
             origin,
-            this.get('preprint.id'),
+            this.get('theme.id') !== 'osf' ? `preprints/${this.get('theme.id')}` : null,
+            this.get('model.preprintId'),
             'download',
         ].filter(part => !!part).join('/');
     }),
@@ -124,7 +126,6 @@ export default Controller.extend({
         },
         submitDecision(trigger, comment, filter) {
             this.toggleProperty('savingAction');
-
             const action = this.store.createRecord('review-action', {
                 actionTrigger: trigger,
                 target: this.get('preprint'),
@@ -142,10 +143,11 @@ export default Controller.extend({
         return action.save()
             .then(this._toModerationList.bind(this, { status: filter, page: 1, sort: '-date_last_transitioned' }))
             .catch(this._notifySubmitFailure.bind(this))
-            .finally(() => this.toggleProperty('savingAction'));
+            .finally(() => this.set('savingAction', false));
     },
 
     _toModerationList(queryParams) {
+        this.set('userHasEnteredReview', false);
         this.transitionToRoute('preprints.provider.moderation', { queryParams });
     },
 

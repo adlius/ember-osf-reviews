@@ -36,7 +36,7 @@ export default Component.extend({
     }),
 
     loadContributors: task(function* (node, query) {
-        const results = yield this.get('store').queryHasMany(node, 'contributors', query);
+        const results = yield node.queryHasMany('contributors', query);
         this.get('contributorsList').pushObjects(results.toArray());
         return results;
     }),
