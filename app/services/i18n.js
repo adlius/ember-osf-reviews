@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { get } from '@ember/object';
 import { merge } from '@ember/polyfills';
 import I18nService from 'ember-i18n/services/i18n';
 
@@ -8,8 +9,8 @@ export default I18nService.extend({
     mergedContext(objectContext, hashContext) {
         return Ember.Object.extend({
             unknownProperty(key) {
-                const fromHash = Ember.get(hashContext, key);
-                return fromHash === undefined ? Ember.get(objectContext, key) : fromHash;
+                const fromHash = get(hashContext, key);
+                return fromHash === undefined ? get(objectContext, key) : fromHash;
             },
         }).create();
     },
