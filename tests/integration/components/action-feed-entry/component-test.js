@@ -11,7 +11,7 @@ test('it renders action-feed-entry', function(assert) {
     this.set('action', EmberObject.create({
         dateCreated: '2017-10-28T14:57:35.949534Z',
         creator: { fullName: 'Po' },
-        provider: { name: 'viperXiv', preprintWord: 'preprint' },
+        provider: { name: 'viperXiv', documentType: { singular: 'preprint' } },
         actionTrigger: 'submit',
         target: { title: 'Using machine learning for better bambo taste' },
     }));
