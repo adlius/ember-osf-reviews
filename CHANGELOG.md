@@ -8,14 +8,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Added
 - Added `preprintPendingDOIMinted` translation string to show message when DOI is being minted.
+- Added `mergedContext` function in `services/i18n.js` to fix interpolation for translation strings.
 
 ## Changed
 - ember-cli-moment-shim version to `^3.5.3` due to security issues found in `moment` versions before `2.19.3`
 - reviews to use ember-osf version of `queryHasMany`
 - `osf-style` to use the latest version with navbar changes
+- Make use of `provider-service` property `documentType` to unify translations of preprint words.
+
 
 ## Removed
 - Unneeded node calls to reflect divorce changes
+- Some hacks in `applcation.js` that get translations for different preprint words.
 
 ## [0.4.1] - 2018-03-06
 ## Fixed
