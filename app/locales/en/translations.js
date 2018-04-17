@@ -227,7 +227,7 @@ export default {
                     modifyDecision: 'Modify your decision',
                 },
                 moderator: 'Moderator',
-                base: 'This {{documentType}} is',
+                base: 'This {{documentType.singular}} is',
                 btn: {
                     submitDecision: 'Submit decision',
                     modifyDecision: 'Modify decision',
