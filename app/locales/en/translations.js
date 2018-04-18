@@ -132,7 +132,7 @@ export default {
         citations: 'Citations',
         disciplines: 'Disciplines',
         projectButton: {
-            paragraph: 'The project for this paper is available on the OSF.',
+            paragraph: 'The project for this {{documentType.singular}} is available on the OSF.',
             button: 'Visit project',
         },
         warning: {
