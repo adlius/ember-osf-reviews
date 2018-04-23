@@ -1,7 +1,6 @@
 import { filterBy } from '@ember/object/computed';
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-
 import { task } from 'ember-concurrency';
 
 
@@ -9,7 +8,6 @@ export default Component.extend({
     store: service(),
 
     tagName: 'ul',
-    node: null,
 
     bibliographicContributors: filterBy('contributorsList', 'bibliographic', true),
 
@@ -21,22 +19,22 @@ export default Component.extend({
     },
 
     fetchData: task(function* () {
-        const node = this.get('node.content');
+        const submission = this.get('submission');
         const query = {
             'page[size]': 100,
             page: 1,
         };
 
-        let response = yield this.get('loadContributors').perform(node, query);
+        let response = yield this.get('loadContributors').perform(submission, query);
 
         while (response.links.next) {
             query.page++;
-            response = yield this.get('loadContributors').perform(node, query);
+            response = yield this.get('loadContributors').perform(submission, query);
         }
     }),
 
-    loadContributors: task(function* (node, query) {
-        const results = yield this.get('store').queryHasMany(node, 'contributors', query);
+    loadContributors: task(function* (submission, query) {
+        const results = yield submission.queryHasMany('contributors', query);
         this.get('contributorsList').pushObjects(results.toArray());
         return results;
     }),

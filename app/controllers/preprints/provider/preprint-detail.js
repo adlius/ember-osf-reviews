@@ -25,6 +25,7 @@ const PRE_MODERATION = 'pre-moderation';
  */
 export default Controller.extend({
     i18n: service(),
+    theme: service(),
     toast: service(),
     store: service(),
 
@@ -41,7 +42,7 @@ export default Controller.extend({
     showWarning: false,
     previousTransition: null,
 
-    hasTags: bool('node.tags.length'),
+    hasTags: bool('preprint.tags.length'),
     expandedAbstract: navigator.userAgent.includes('Prerender'),
 
     node: alias('preprint.node'),
@@ -60,11 +61,12 @@ export default Controller.extend({
         },
     }),
 
-    fileDownloadURL: computed('preprint', function() {
+    fileDownloadURL: computed('model', function() {
         const { location: { origin } } = window;
         return [
             origin,
-            this.get('preprint.id'),
+            this.get('theme.id') !== 'osf' ? `preprints/${this.get('theme.id')}` : null,
+            this.get('model.preprintId'),
             'download',
         ].filter(part => !!part).join('/');
     }),
@@ -80,20 +82,20 @@ export default Controller.extend({
         return (this.get('node.currentUserPermissions') || []).includes(permissions.ADMIN);
     }),
 
-    hasShortenedDescription: computed('node.description', function() {
-        const nodeDescription = this.get('node.description');
+    hasShortenedDescription: computed('preprint.description', function() {
+        const preprintDescription = this.get('preprint.description');
 
-        return nodeDescription && nodeDescription.length > 350;
+        return preprintDescription && preprintDescription.length > 350;
     }),
 
     useShortenedDescription: computed('expandedAbstract', 'hasShortenedDescription', function() {
         return this.get('hasShortenedDescription') && !this.get('expandedAbstract');
     }),
 
-    description: computed('node.description', function() {
+    description: computed('preprint.description', function() {
         // Get a shortened version of the abstract, but doesn't cut in the middle of word by going
         // to the last space.
-        return this.get('node.description')
+        return this.get('preprint.description')
             .slice(0, 350)
             .replace(/\s+\S*$/, '');
     }),
@@ -124,7 +126,6 @@ export default Controller.extend({
         },
         submitDecision(trigger, comment, filter) {
             this.toggleProperty('savingAction');
-
             const action = this.store.createRecord('review-action', {
                 actionTrigger: trigger,
                 target: this.get('preprint'),
@@ -142,10 +143,11 @@ export default Controller.extend({
         return action.save()
             .then(this._toModerationList.bind(this, { status: filter, page: 1, sort: '-date_last_transitioned' }))
             .catch(this._notifySubmitFailure.bind(this))
-            .finally(() => this.toggleProperty('savingAction'));
+            .finally(() => this.set('savingAction', false));
     },
 
     _toModerationList(queryParams) {
+        this.set('userHasEnteredReview', false);
         this.transitionToRoute('preprints.provider.moderation', { queryParams });
     },
 

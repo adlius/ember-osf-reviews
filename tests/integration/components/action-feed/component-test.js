@@ -11,13 +11,19 @@ const storeStub = EmberService.extend({
         this.actionList = [EmberObject.create({ // Records to be returned by query
             dateCreated: '2017-10-28T14:57:35.949534Z',
             creator: { fullName: 'Po' },
-            provider: { name: 'viperXiv', preprintWord: 'preprint' },
+            provider: {
+                name: 'viperXiv',
+                documentType: { singular: 'preprint' },
+            },
             actionTrigger: 'submit',
             target: { title: 'the archive of all vipers' },
         }), EmberObject.create({
             dateCreated: '2017-10-27T14:57:35.949534Z',
             creator: { fullName: 'Tigerss' },
-            provider: { name: 'viperXiv', preprintWord: 'preprint' },
+            provider: {
+                name: 'viperXiv',
+                documentType: { singular: 'preprint' },
+            },
             actionTrigger: 'submit',
             target: { title: 'the archive of all vipers' },
         })];

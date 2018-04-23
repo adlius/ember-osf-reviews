@@ -6,8 +6,8 @@
                 <div class="col-xs-12 col-sm-11">
                     {{#if fetchData.isIdle}}
                         {{reviews-breadcrumbs}}
-                        <h1 id="preprintTitle" class="p-t-md p-b-md">{{node.title}}</h1>
-                        <h5>{{contributor-list node=node contributors=preprint.contributors}}</h5>
+                        <h1 id="preprintTitle" class="p-t-md p-b-md">{{preprint.title}}</h1>
+                        <h5>{{contributor-list contributors=preprint.contributors submission=preprint}}</h5>
                         <h6 class="preprint-added-on">
                             {{t actionDateLabel}}: {{moment-format preprint.dateLastTransitioned "MMMM DD, YYYY"}} | {{t "content.header.lastEdited"}}: {{moment-format preprint.dateModified "MMMM DD, YYYY"}}
                         </h6>
@@ -35,7 +35,7 @@
                                 {{t "content.orphan_preprint"}}
                             </div>
                         {{else}}
-                            {{preprint-file-browser primaryFile=preprint.primaryFile preprint=preprint chooseFile=(action 'chooseFile')}}
+                            {{preprint-file-browser primaryFile=preprint.primaryFile preprint=preprint fileDownloadURL=fileDownloadURL chooseFile=(action 'chooseFile')}}
                         {{/if}}
                     {{/if}}
                     <button class="expand-mfr-carrot hidden-xs hidden-sm" {{action 'expandMFR'}}>
@@ -57,7 +57,7 @@
                     {{else}}
                         <div class="share-row p-sm osf-box-lt clearfix">
                             <a class="btn btn-primary p-v-xs" href={{fileDownloadURL}}>
-                                {{t "content.share.downloadPreprint"}}
+                                {{t "content.share.downloadPreprint" documentType=preprint.provider.documentType}}
                             </a>
                             <div class="p-v-xs pull-right">
                                 {{t "content.share.downloads"}}: {{preprint.primaryFile.extra.downloads}}
@@ -82,7 +82,7 @@
                         <div class="p-t-xs">
                             <h4 class="p-v-md f-w-md"><strong>{{t "global.abstract"}}</strong></h4>
                             <p class="abstract {{if useShortenedDescription 'abstract-truncated'}}">
-                                {{~if useShortenedDescription description node.description~}}
+                                {{~if useShortenedDescription description preprint.description~}}
                             </p>
                             <button class='btn-link' hidden={{not hasShortenedDescription}} {{action 'expandAbstract'}}>
                                 {{~t (if expandedAbstract 'content.seeLess' 'content.seeMore')~}}
@@ -90,11 +90,15 @@
                         </div>
 
                         <section class="p-t-xs">
-                            {{#if preprint.preprintDoiUrl}}
-                                <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
-                                <a href={{preprint.preprintDoiUrl}}>{{extract-doi preprint.preprintDoiUrl}}</a>
-                            {{else if (not preprint.isPublished)}}
-                                <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
+                            <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
+                            {{#if preprint.isPublished}}
+                                {{#if preprint.preprintDoiCreated}}
+                                    <a href={{preprint.preprintDoiUrl}}>{{extract-doi preprint.preprintDoiUrl}}</a>
+                                {{else}}
+                                    <p> {{extract-doi preprint.preprintDoiUrl}} </p>
+                                    <p> {{t "content.preprintPendingDOIMinted"}} </p>
+                                {{/if}}
+                            {{else}}
                                 {{t 'content.preprintPendingDOI'}}
                             {{/if}}
                         </section>
@@ -129,7 +133,7 @@
                         <div class="p-t-xs">
                             <h4 class=" f-w-md p-v-md"><strong>{{t "global.tags"}}</strong></h4>
                             {{#if hasTags}}
-                                {{#each node.tags as |tag|}}
+                                {{#each preprint.tags as |tag|}}
                                     <span class="badge">{{fix-special-char tag}}</span>
                                 {{/each}}
                             {{else}}
@@ -148,7 +152,7 @@
                                      title={{t "global.openScienceFramework"}}></div>
                             </div>
                             <div class="col-xs-6 text-left">
-                                <p class="f-w-xs">{{t "content.projectButton.paragraph"}}</p>
+                                <p class="f-w-xs">{{t "content.projectButton.paragraph" documentType=preprint.provider.documentType}}</p>
                                 <a type="button" class="btn btn-info" href={{node.links.html}}>
                                     {{t "content.projectButton.button"}}
                                 </a>

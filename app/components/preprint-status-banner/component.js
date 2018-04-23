@@ -256,6 +256,7 @@ export default Component.extend({
         cancel() {
             this.set('decision', this.get('submission.reviewsState'));
             this.set('reviewerComment', this.get('initialReviewerComment'));
+            this.get('setUserEnteredReview')(false);
         },
         decisionToggled() {
             this.get('setUserEnteredReview')(this.get('decisionChanged'));

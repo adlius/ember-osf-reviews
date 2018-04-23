@@ -73,23 +73,16 @@ test('actionDateLabel computed property', function (assert) {
     const ctrl = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
-        });
-
         const provider = this.store.createRecord('preprint-provider', {
             reviewsWorkflow: 'pre-moderation',
         });
 
-        const preprint = this.store.createRecord('preprint', { node, provider });
+        const preprint = this.store.createRecord('preprint', { provider });
 
         ctrl.setProperties({ preprint });
-
         assert.strictEqual(ctrl.get('actionDateLabel'), 'content.dateLabel.submittedOn');
 
         ctrl.set('preprint.provider.reviewsWorkflow', 'post-moderation');
-
         assert.strictEqual(ctrl.get('actionDateLabel'), 'content.dateLabel.createdOn');
     });
 });
@@ -99,21 +92,18 @@ test('hasShortenedDescription computed property', function (assert) {
     const ctrl = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
+        const preprint = this.store.createRecord('preprint', {
             title: 'test title',
             description: 'test description',
         });
-
-        const preprint = this.store.createRecord('preprint', { node });
         ctrl.setProperties({ preprint });
-        ctrl.set('node.description', 'test description');
 
         assert.strictEqual(
             ctrl.get('hasShortenedDescription'),
             false,
         );
 
-        ctrl.set('node.description', 'Lorem ipsum'.repeat(35));
+        ctrl.set('preprint.description', 'Lorem ipsum'.repeat(35));
         assert.strictEqual(
             ctrl.get('hasShortenedDescription'),
             true,
@@ -126,14 +116,12 @@ test('useShortenedDescription computed property', function (assert) {
     const ctrl = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
+        const preprint = this.store.createRecord('preprint', {
             title: 'test title',
             description: 'test description',
         });
 
-        const preprint = this.store.createRecord('preprint', { node });
         ctrl.setProperties({ preprint });
-        ctrl.set('node.description', 'test description');
         ctrl.set('expandedAbstract', false);
 
         assert.strictEqual(
@@ -142,7 +130,7 @@ test('useShortenedDescription computed property', function (assert) {
         );
 
         ctrl.set('expandedAbstract', false);
-        ctrl.set('node.description', 'Lorem ipsum'.repeat(35));
+        ctrl.set('preprint.description', 'Lorem ipsum'.repeat(35));
         assert.strictEqual(
             ctrl.get('useShortenedDescription'),
             true,
@@ -159,11 +147,9 @@ test('description computed property', function (assert) {
         const input = 'test description length'.repeat(20);
         const expected = 'test description length'.repeat(20).substring(0, 349);
 
-        const node = this.store.createRecord('node', {
+        const preprint = this.store.createRecord('preprint', {
             description: input,
         });
-
-        const preprint = this.store.createRecord('preprint', { node });
         ctrl.setProperties({ preprint });
 
         assert.strictEqual(
@@ -233,12 +219,9 @@ test('activeFile action', function (assert) {
             id: 'test2',
         });
 
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
+        const preprint = this.store.createRecord('preprint', {
+            primaryFile,
         });
-
-        const preprint = this.store.createRecord('preprint', { node, primaryFile });
 
         ctrl.setProperties({ preprint });
 
@@ -271,34 +254,64 @@ test('submitDecision action', function (assert) {
         const stub = this.stub(ctrl, '_saveAction');
 
         ctrl.send('submitDecision', 'accept', 'yes', 'accepted');
+        assert.strictEqual(ctrl.get('userHasEnteredReview'), false);
         assert.strictEqual(ctrl.get('savingAction'), !initialValue);
         assert.ok(stub.calledWithExactly(action, 'accepted'), 'correct arguments passed to _saveAction');
 
         ctrl.send('submitDecision', 'reject', 'no', 'rejected');
+        assert.strictEqual(ctrl.get('userHasEnteredReview'), false);
         assert.strictEqual(ctrl.get('savingAction'), initialValue);
         assert.ok(stub.calledWithExactly(action, 'rejected'), 'correct arguments passed to _saveAction');
     });
 });
 
-test('fileDownloadURL computed property', function (assert) {
+test('fileDownloadURL computed property - non-branded provider', function (assert) {
     this.inject.service('store');
     this.inject.service('theme');
+
+    this.theme.id = 'osf';
 
     const ctrl = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
-            description: 'test description',
+        const provider = this.store.createRecord('preprint-provider', {
+            name: 'osf',
+            reviewsWorkflow: 'pre-moderation',
         });
 
-        const preprint = this.store.createRecord('preprint', { node });
+        const model = this.store.createRecord('preprint', { provider });
 
-        ctrl.setProperties({ preprint });
-        ctrl.set('preprint.id', '6gtu');
+        ctrl.setProperties({ model });
+        ctrl.set('model.preprintId', '6gtu');
+
+        const { location: { port } } = window;
+
+        assert.strictEqual(ctrl.get('fileDownloadURL'), `http://localhost:${port}/6gtu/download`);
+    });
+});
+
+test('fileDownloadURL computed property - branded provider', function(assert) {
+    this.inject.service('store');
+    this.inject.service('theme');
+
+    this.theme.id = 'engrxiv';
+
+    const ctrl = this.subject();
+
+    run(() => {
+        const provider = this.store.createRecord('preprint-provider', {
+            name: 'engrxiv',
+            reviewsWorkflow: 'pre-moderation',
+        });
+
+        const model = this.store.createRecord('preprint', { provider });
+
+        ctrl.setProperties({ model });
+        ctrl.set('model.preprintId', '6gtu');
 
         const { location: { origin } } = window;
 
-        assert.strictEqual(ctrl.get('fileDownloadURL'), `${origin}/6gtu/download`);
+        assert.strictEqual(ctrl.get('fileDownloadURL'), `${origin}/preprints/engrxiv/6gtu/download`);
     });
 });
 

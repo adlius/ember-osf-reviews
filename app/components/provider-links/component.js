@@ -13,6 +13,7 @@ export default Component.extend({
             preprint: 'fa-graduation-cap',
             paper: 'fa-file-text-o',
             thesis: 'fa-book',
+            work: 'fa-file-text',
         };
         this.pendingCount = null;
         this.get('fetchData').perform();

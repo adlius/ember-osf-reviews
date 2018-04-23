@@ -1,5 +1,7 @@
 import { inject as service } from '@ember/service';
+import { computed, get } from '@ember/object';
 import Controller from '@ember/controller';
+import { getOwner } from '@ember/application';
 import OSFAgnosticAuthControllerMixin from 'ember-osf/mixins/osf-agnostic-auth-controller';
 
 /**
@@ -15,14 +17,11 @@ export default Controller.extend(OSFAgnosticAuthControllerMixin, {
     i18n: service(),
     theme: service(),
     navigator: service(),
-
-    init() {
-        // Hack to make the Add Preprint button work.
-        this.get('i18n').addGlobals({
-            preprintWords: {
-                preprint: this.get('i18n').t('documentType.preprint.singularCapitalized'),
-            },
-        });
-        this._super(...arguments);
-    },
+    // This is needed as `provider-service` instance is not accessible in application.hbs,
+    // which is where we use the `new-osf-navbar` component.
+    // Therefore, we need to get the `documentType` directly from i18n service here.
+    documentType: computed('i18n', function () {
+        const locale = getOwner(this).factoryFor(`locale:${this.get('i18n.locale')}/translations`).class;
+        return get(locale, 'documentType.preprint');
+    }),
 });

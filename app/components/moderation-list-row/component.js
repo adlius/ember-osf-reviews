@@ -45,13 +45,13 @@ export default Component.extend({
     }),
 
     // first three contributors to the preprint
-    firstContributors: computed('submission.node.contributors', function() {
-        return this.get('submission.node.contributors').slice(0, 3);
+    firstContributors: computed('submission.contributors', function() {
+        return this.get('submission.contributors').slice(0, 3);
     }),
 
     // count of contributors in-addition to the first three
-    additionalContributors: computed('submission.node.contributors', function() {
-        return this.get('submission.node.contributors.content.meta.pagination.total') - 3;
+    additionalContributors: computed('submission.contributors', function() {
+        return this.get('submission.contributors.content.meta.total') - 3;
     }),
 
     // translations for moderator action label
@@ -92,8 +92,7 @@ export default Component.extend({
     },
 
     fetchData: task(function* () {
-        const node = yield this.get('submission.node');
-        yield node.get('contributors');
+        yield this.get('submission.contributors');
         yield this.get('submission.reviewActions');
     }),
 });

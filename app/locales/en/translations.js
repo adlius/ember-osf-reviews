@@ -13,38 +13,6 @@ export default {
         moderation: 'Moderation',
         notifications: 'Notifications',
     },
-    documentType: {
-        default: {
-            plural: 'documents',
-            pluralCapitalized: 'Documents',
-            singular: 'document',
-            singularCapitalized: 'Document',
-        },
-        paper: {
-            plural: 'papers',
-            pluralCapitalized: 'Papers',
-            singular: 'paper',
-            singularCapitalized: 'Paper',
-        },
-        preprint: {
-            plural: 'preprints',
-            pluralCapitalized: 'Preprints',
-            singular: 'preprint',
-            singularCapitalized: 'Preprint',
-        },
-        none: {
-            plural: '',
-            pluralCapitalized: '',
-            singular: '',
-            singularCapitalized: '',
-        },
-        thesis: {
-            plural: 'theses',
-            pluralCapitalized: 'Theses',
-            singular: 'thesis',
-            singularCapitalized: 'Thesis',
-        },
-    },
     index: {
         feature: {
             title: 'Moderate your collection',
@@ -71,11 +39,11 @@ export default {
             options: {
                 'pre-moderation': {
                     title: 'Pre-moderation',
-                    description: 'All {{provider.type.plural}} are placed in a queue for a moderator to accept or reject. {{provider.type.pluralCapitalized}} are displayed publicly only after approval.',
+                    description: 'All {{documentType.plural}} are placed in a queue for a moderator to accept or reject. {{documentType.pluralCapitalized}} are displayed publicly only after approval.',
                 },
                 'post-moderation': {
                     title: 'Post-moderation',
-                    description: 'All {{provider.type.plural}} are displayed publicly immediately upon submission. {{provider.type.pluralCapitalized}} also appear in a queue for a moderator to accept or reject. If rejected, the {{provider.type.singular}} is no longer displayed publicly.',
+                    description: 'All {{documentType.plural}} are displayed publicly immediately upon submission. {{documentType.pluralCapitalized}} also appear in a queue for a moderator to accept or reject. If rejected, the {{documentType.singular}} is no longer displayed publicly.',
                 },
             },
         },
@@ -153,18 +121,19 @@ export default {
             download: 'Download',
             downloads: 'Downloads',
             downloadFile: 'Download file',
-            downloadPreprint: 'Download {{provider.type.singular}}',
+            downloadPreprint: 'Download {{documentType.singular}}',
         },
         seeMore: 'See more',
         seeLess: 'See less',
         version: 'Version',
-        preprintDOI: '{{provider.type.singularCapitalized}} DOI',
+        preprintDOI: '{{documentType.singularCapitalized}} DOI',
         preprintPendingDOI: 'DOI created after moderator approval',
+        preprintPendingDOIMinted: 'DOIs are minted by a third party, and may take up to 24 hours to be registered.',
         articleDOI: 'Peer-reviewed Publication DOI',
         citations: 'Citations',
         disciplines: 'Disciplines',
         projectButton: {
-            paragraph: 'The project for this paper is available on the OSF.',
+            paragraph: 'The project for this {{documentType.singular}} is available on the OSF.',
             button: 'Visit project',
         },
         warning: {
@@ -184,10 +153,10 @@ export default {
         },
         actionFeedEntry: {
             actionMessage: {
-                submit: 'submitted a {{documentType}} to {{providerName}}',
-                accept: 'accepted a {{documentType}} in {{providerName}}',
-                reject: 'rejected a {{documentType}} from {{providerName}}',
-                edit_comment: 'edited the comment for a {{documentType}} in {{providerName}}',
+                submit: 'submitted a {{documentType.singular}} to {{providerName}}',
+                accept: 'accepted a {{documentType.singular}} in {{providerName}}',
+                reject: 'rejected a {{documentType.singular}} from {{providerName}}',
+                edit_comment: 'edited the comment for a {{documentType.singular}} in {{providerName}}',
             },
         },
         dashboardSidebar: {
@@ -244,12 +213,12 @@ export default {
         },
         preprintStatusBanner: {
             recentActivity: {
-                pending: 'submitted this {{provider.type.singular}} on',
-                accepted: 'accepted this {{provider.type.singular}} on',
-                rejected: 'rejected this {{provider.type.singular}} on',
+                pending: 'submitted this {{documentType.singular}} on',
+                accepted: 'accepted this {{documentType.singular}} on',
+                rejected: 'rejected this {{documentType.singular}} on',
                 automatic: {
-                    pending: 'This {{provider.type.singular}} was submitted on',
-                    accepted: 'This {{provider.type.singular}} was automatically accepted on',
+                    pending: 'This {{documentType.singular}} was submitted on',
+                    accepted: 'This {{documentType.singular}} was automatically accepted on',
                 },
             },
             message: {
@@ -270,7 +239,7 @@ export default {
                     modifyDecision: 'Modify your decision',
                 },
                 moderator: 'Moderator',
-                base: 'This {{provider.type.singular}} is',
+                base: 'This {{documentType.singular}} is',
                 btn: {
                     submitDecision: 'Submit decision',
                     modifyDecision: 'Modify decision',
