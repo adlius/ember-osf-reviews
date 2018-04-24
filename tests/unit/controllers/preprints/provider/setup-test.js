@@ -55,6 +55,7 @@ test('providerSettings computed property', function (assert) {
     run(() => {
         const model = this.store.createRecord('preprint-provider', {
             reviewsWorkflow: 'pre-moderation',
+            documentType: null,
         });
 
         ctrl.setProperties({ model });

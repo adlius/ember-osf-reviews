@@ -47,7 +47,7 @@ export default Component.extend({
             this.get('actionsList').pushObjects(actions.toArray());
             this.set(
                 'totalPages',
-                Math.ceil(actions.get('meta.pagination.total') / actions.get('meta.pagination.per_page')),
+                Math.ceil(actions.get('meta.total') / actions.get('meta.per_page')),
             );
         } catch (e) {
             this.get('toast')

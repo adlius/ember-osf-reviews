@@ -11,7 +11,6 @@ moduleForComponent('preprint-status-banner', 'Unit | Component | preprint status
     unit: true,
     needs: [
         'model:review-action',
-        'model:node',
         'model:user',
         'model:preprint',
         'model:preprint-provider',
@@ -33,16 +32,11 @@ test('getClassName computed property', function(assert) {
     const component = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
-        });
-
         const provider = this.store.createRecord('preprint-provider', {
             reviewsWorkflow: 'pre-moderation',
         });
 
-        const submission = this.store.createRecord('preprint', { node, provider });
+        const submission = this.store.createRecord('preprint', { provider });
         component.setProperties({ submission });
         component.set('reviewsWorkflow', 'pre-moderation');
 
@@ -59,16 +53,11 @@ test('statusExplanation computed property', function(assert) {
     const component = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
-        });
-
         const provider = this.store.createRecord('preprint-provider', {
             reviewsWorkflow: 'pre-moderation',
         });
 
-        const submission = this.store.createRecord('preprint', { node, provider });
+        const submission = this.store.createRecord('preprint', { provider });
         component.setProperties({ submission });
         component.set('reviewsWorkflow', 'pre-moderation');
 
@@ -85,16 +74,11 @@ test('recentActivityLanguage computed property', function(assert) {
     const component = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
-        });
-
         const provider = this.store.createRecord('preprint-provider', {
             reviewsWorkflow: 'pre-moderation',
         });
 
-        const submission = this.store.createRecord('preprint', { node, provider });
+        const submission = this.store.createRecord('preprint', { provider });
         component.setProperties({ submission });
         component.set('reviewsWorkflow', 'pre-moderation');
 
@@ -119,11 +103,6 @@ test('latestAction computed property', function(assert) {
     const component = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
-        });
-
         const provider = this.store.createRecord('preprint-provider', {
             reviewsWorkflow: 'pre-moderation',
         });
@@ -140,7 +119,7 @@ test('latestAction computed property', function(assert) {
             }),
         ];
 
-        const submission = this.store.createRecord('preprint', { node, provider, reviewActions });
+        const submission = this.store.createRecord('preprint', { provider, reviewActions });
         component.setProperties({ submission });
 
         assert.strictEqual(component.get('latestAction.dateModified'), '2017-10-29T14:57:35.949534Z');
@@ -153,12 +132,7 @@ test('labelDecisionBtn computed property', function(assert) {
     const component = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
-        });
-
-        const submission = this.store.createRecord('preprint', { node });
+        const submission = this.store.createRecord('preprint');
         component.setProperties({ submission });
 
         component.set('decision', 'accepted');
@@ -181,12 +155,7 @@ test('submit action', function(assert) {
     const component = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
-        });
-
-        const submission = this.store.createRecord('preprint', { node });
+        const submission = this.store.createRecord('preprint');
         component.setProperties({ submission });
 
         component.set('submission.reviewsState', 'rejected');
@@ -215,12 +184,7 @@ test('cancel action', function(assert) {
     run(() => {
         component.set('setUserEnteredReview', () => {});
 
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
-        });
-
-        const submission = this.store.createRecord('preprint', { node });
+        const submission = this.store.createRecord('preprint');
         component.setProperties({ submission });
 
         component.set('submission.reviewsState', 'rejected');
@@ -238,11 +202,6 @@ test('_handleActions  action', function(assert) {
     const component = this.subject();
 
     run(() => {
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
-        });
-
         const action = this.store.createRecord('review-action', {
             fromState: 'rejected',
             toState: 'accepted',
@@ -251,7 +210,7 @@ test('_handleActions  action', function(assert) {
             comment: 'test comment',
         });
 
-        const submission = this.store.createRecord('preprint', { node });
+        const submission = this.store.createRecord('preprint');
 
         component.setProperties({ submission });
 

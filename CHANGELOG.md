@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2018-04-24
+### Added
+- `preprintPendingDOIMinted` translation string to show message when DOI is being minted
+- `mergedContext` function in `services/i18n.js` to fix interpolation for translation strings
+
+### Changed
+- ember-cli-moment-shim version to `^3.5.3` due to security issues found in `moment` versions before `2.19.3`
+- Reviews to use ember-osf version of `queryHasMany`
+- `osf-style` to use the latest version with navbar changes
+- to use `provider-service` property `documentType` to unify translations of preprint words
+
+### Removed
+- Unneeded node calls to reflect divorce changes
+- Some hacks in `applcation.js` that get translations for different preprint words.
+
 ## [0.4.2] - 2018-03-14
 ### Fixed
 - Download links for moderators

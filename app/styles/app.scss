@@ -3,13 +3,13 @@
 @import 'font-awesome';
 @import 'toastr';
 @import 'ember-content-placeholders';
+@import 'ember-power-select';
 
 // All variable overrides
 @import 'variables';
 
 // Our 3rd parties
 @import 'osf-style';
-@import 'ember-osf';
 
 // Various other local styles sheets
 @import 'mixins';

@@ -7,7 +7,7 @@
         <p class="f-w-lg p-b-md">{{selectedFile.name}}</p>
     </div>
     <div class="col-sm-6 text-nowrap supplemental-downloads">
-        <a class="btn btn-default btn-sm" href={{fileDownloadURL}}> {{t (if fileIsPrimary "content.share.downloadPreprint" "content.share.downloadFile")}}</a>
+        <a class="btn btn-default btn-sm" href={{fileDownloadURL}}> {{t (if fileIsPrimary "content.share.downloadPreprint" "content.share.downloadFile") documentType=preprint.provider.documentType}}</a>
         <span class="p-sm"> {{t "content.version"}}: {{selectedFile.currentVersion}}</span>
     </div>
 </div>
