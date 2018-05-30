@@ -54,9 +54,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@centerforopenscience/ember-osf@0.16.0":
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@centerforopenscience/ember-osf/-/ember-osf-0.16.0.tgz#197951a4f567fe8b21d470eeb884012595f02abd"
+"@centerforopenscience/ember-osf@0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@centerforopenscience/ember-osf/-/ember-osf-0.17.0.tgz#defc0230e808a25b15609c9542658c825a07a291"
   dependencies:
     broccoli-funnel "1.2.0"
     broccoli-merge-trees "2.0.0"
@@ -72,6 +72,7 @@
     ember-cli-shims "1.0.2"
     ember-collapsible-panel "^2.1.1"
     ember-component-css "^0.6.0"
+    ember-computed-style "^0.2.0"
     ember-concurrency "^0.8.12"
     ember-cp-validations "^3.5.0"
     ember-diff-attrs "^0.2.0"
@@ -104,9 +105,9 @@
     eslint-plugin-eslint-comments "^1.0.0"
     eslint-plugin-import "^2.7.0"
 
-"@centerforopenscience/osf-style@https://github.com/CenterForOpenScience/osf-style#b09451d759c8544d2fab4bd7dbd5ca8b6dc242b8":
-  version "1.6.0"
-  resolved "https://github.com/CenterForOpenScience/osf-style#b09451d759c8544d2fab4bd7dbd5ca8b6dc242b8"
+"@centerforopenscience/osf-style@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@centerforopenscience/osf-style/-/osf-style-1.7.0.tgz#0ae3c0eaaca07fcf8bd667a7b3d7aeeb3244564d"
 
 "@cos-forks/ember-content-placeholders@https://github.com/cos-forks/ember-content-placeholders#c85cdbeb4b9c206c3f76a92422db76815b2c95bc":
   version "0.5.0"
@@ -3319,6 +3320,12 @@ ember-component-css@^0.6.0:
     rsvp "^4.8.1"
     walk-sync "^0.3.2"
 
+ember-computed-style@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/ember-computed-style/-/ember-computed-style-0.2.0.tgz#6ceb2f1f10f9555fa5b5092f5668dde2c9df5440"
+  dependencies:
+    ember-cli-babel "^5.1.7"
+
 ember-concurrency@^0.8.12:
   version "0.8.12"
   resolved "https://registry.yarnpkg.com/ember-concurrency/-/ember-concurrency-0.8.12.tgz#fb91180e5efeb1024cfa2cfb99d2fe6721930c91"
@@ -3335,7 +3342,7 @@ ember-cookies@^0.0.13:
     ember-cli-babel "^5.1.7"
     ember-getowner-polyfill "^1.2.2"
 
-ember-cp-validations@^3.5.0:
+ember-cp-validations@^3.5.0, ember-cp-validations@^3.5.2:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.5.2.tgz#1b205891ae7d7026f7b6c55cf6e440122db9b2ac"
   dependencies:
@@ -3701,6 +3708,13 @@ ember-runtime-enumerable-includes-polyfill@^2.0.0:
   dependencies:
     ember-cli-babel "^6.0.0"
     ember-cli-version-checker "^1.1.6"
+
+ember-scroll-to@^0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/ember-scroll-to/-/ember-scroll-to-0.6.4.tgz#aabf0e683db1d9eaf2d1b09e33a2e6691fcf77f4"
+  dependencies:
+    ember-cli-babel "^5.1.6"
+    ember-cli-htmlbars "^1.0.3"
 
 ember-simple-auth@^1.3.0:
   version "1.4.0"

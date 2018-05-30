@@ -5,7 +5,7 @@
             {{placeholder.heading subtitle=false}}
         </span>
         <div class="provider-links">
-            <div class="provider-links--skeleton">{{placeholder.text lines=2}}</div>
+            <div class="provider-links--skeleton">{{placeholder.text lines=4}}</div>
         </div>
     {{/content-placeholders}}
 {{else}}
@@ -17,10 +17,20 @@
         {{#if provider.reviewsWorkflow}}
             <li>
                 {{#link-to 'preprints.provider.moderation' provider.id}}
-                    {{t 'global.moderation'~}}
+                    {{t 'global.submissions'~}}
                 {{/link-to}}
                 {{#link-to 'preprints.provider.moderation' provider.id class="no-underline"}}
                     <small class="unread-label">{{pendingCount}}</small>
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'preprints.provider.moderators' provider.id}}
+                    {{t 'global.moderators'}}
+                {{/link-to}}
+            </li>
+            <li>
+                {{#link-to 'preprints.provider.notifications' provider.id}}
+                    {{t 'global.notifications'}}
                 {{/link-to}}
             </li>
             <li>

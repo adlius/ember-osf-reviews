@@ -1,0 +1,92 @@
+<div class="moderators-add-row-container p-h-md p-v-sm">
+    <div class="moderator-name">
+        {{#if (not selectedUnregisteredUser)}}
+            {{#power-select
+                disabled=loadingModerators
+                options=users
+                search=(perform searchUsers)
+                placeholder='Search by name'
+                selected=selectedUser
+                onchange=(action (mut selectedUser)) as |user|}}
+                <div style="display: flex; align-items: center;">
+                    <img class="m-xs" src="{{user.profileImage}}" height=25 width=25 alt="{{user.fullName}} gravatar">
+                    <div>{{user.fullName}}</div>
+                </div>
+            {{/power-select}}
+        {{else}}
+            <i>{{unregisteredUserName}}</i>
+        {{/if}}
+        {{#if showInviteForm}}
+            <span class="p-l-xs">or</span>
+            {{#bs-dropdown classNames="invite-dropdown" closeOnMenuClick=false as |dd|}}
+                {{#dd.toggle id="toggle-form" classNames="btn dropdown-link"}}
+                    {{t 'components.moderatorListAdd.inviteText'}}
+                {{/dd.toggle}}
+                {{#dd.menu classNames="unregistered-dropdown" tagName="div" as |menu|}}
+                    {{#menu.item classNames="unregistered-form" tagName="form"}}
+                        <div>
+                            <label>{{t "components.unregisteredContributorForm.fullNameLabel"}}</label>
+                            <form>
+                                {{validated-input
+                                    model=this
+                                    valuePath='fullName'
+                                    placeholder=(t "components.unregisteredContributorForm.fullNameLabel")
+                                    value=unregisteredUserName}}
+                            </form>
+                        </div>
+                        <div>
+                            <label>{{t "components.unregisteredContributorForm.emailLabel"}}</label>
+                            <form>
+                                {{validated-input
+                                    model=this
+                                    valuePath='email'
+                                    placeholder=(t "components.unregisteredContributorForm.emailLabel")
+                                    value=unregisteredUserEmail}}
+                            </form>
+                        </div>
+                        <p class="text-muted">
+                            {{t "components.unregisteredContributorForm.notifyMessage"}}
+                        </p>
+                        <div class="pull-right p-t-xs p-b-sm">
+                            <button type="button" class="btn btn-default btn-small" {{action 'resetInviteForm'}}>
+                                {{t "global.cancel"}}
+                            </button>
+                            <button type="submit" class="btn btn-success btn-small m-l-xs" {{action 'selectUnregistered'}} disabled={{not isFormValid}}>
+                                {{t "global.add"}}
+                            </button>
+                        </div>
+                    {{/menu.item}}
+                {{/dd.menu}}
+            {{/bs-dropdown}}
+        {{/if}}
+    </div>
+    {{#bs-dropdown classNames="role-dropdown" as |dd|}}
+        {{#dd.button classNames="btn btn-default dropdown-button"}}
+            {{roleLabel}}
+            <span class="fa fa-caret-down p-l-xs"></span>
+        {{/dd.button}}
+        {{#dd.menu classNames="moderator-dropdown-menu" as |menu|}}
+            {{#each roleOptions as |roleOption|}}
+                {{#menu.item}}
+                    <button class="btn" {{action 'roleChanged' roleOption.role}}>
+                        {{roleOption.label}}
+                        <i class='{{if (eq role roleOption.role) 'fa fa-check selected' 'not-selected'}}'></i>
+                    </button>
+                {{/menu.item}}
+            {{/each}}
+        {{/dd.menu}}
+    {{/bs-dropdown}}
+    <div class="row-controls">
+        <button class="btn btn-default" {{action 'cancel'}} disabled={{addModerator.isRunning}}>
+            {{t 'global.cancel'}}
+        </button>
+        <button class="btn btn-success m-l-xs" disabled={{disableSave}} onclick={{perform addModerator selectedUserId role unregisteredUserName}}>
+            {{#if addModerator.isRunning}}
+                {{loading-btn-indicator}}
+            {{else}}
+                {{t 'global.save'}}
+            {{/if}}
+        </button>
+    </div>
+</div>
+<div class="moderators-row-border"></div>

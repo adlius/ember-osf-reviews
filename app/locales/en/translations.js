@@ -1,6 +1,9 @@
 export default {
     global: {
         cancel: 'Cancel',
+        remove: 'Remove',
+        save: 'Save',
+        add: 'Add',
         abstract: 'Abstract',
         doi: 'DOI',
         tags: 'Tags',
@@ -11,6 +14,9 @@ export default {
         none: 'None',
         settings: 'Settings',
         moderation: 'Moderation',
+        notifications: 'Notifications',
+        submissions: 'Submissions',
+        moderators: 'Moderators',
     },
     index: {
         feature: {
@@ -30,6 +36,19 @@ export default {
                 postModeration: 'Post-moderation',
             },
         },
+    },
+    moderators: {
+        addNewMod: 'Add',
+        getStartedIntro: 'Get started by',
+        getStartedAction: 'adding a new moderator!',
+        deleteModeratorError: 'Error removing moderator',
+        updateModeratorError: 'Error saving moderator',
+        addModeratorError: 'Error adding moderator',
+        addExistingModeratorError: 'User is already a moderator',
+        name: 'Name',
+        permissions: 'Permissions',
+        admin: 'Admin',
+        moderator: 'Moderator',
     },
     providerSettings: {
         reviewsWorkflow: {
@@ -199,6 +218,25 @@ export default {
                 rejected: 'Rejected {{timeDate}} by {{moderatorName}}',
             },
         },
+        notificationList: {
+            heading: 'Configure reviews notification preferences',
+            helperText: 'To configure other notification preferences visit your',
+            userSettings: 'user settings',
+        },
+        notificationListRow: {
+            instant: 'Instant',
+            daily: 'Daily',
+            never: 'Never',
+            errorUpdating: 'Error updating notification settings.',
+        },
+        moderatorListAdd: {
+            inviteText: 'invite by email',
+            userSearchError: 'Error searching users.',
+        },
+        moderatorList: {
+            editDisabledMessage: 'Can only edit one moderator at a time',
+            adminDisabledMessage: 'Must have one admin',
+        },
         preprintStatusBanner: {
             recentActivity: {
                 pending: 'submitted this {{documentType.singular}} on',
@@ -261,6 +299,11 @@ export default {
                 },
             },
             error: 'Error submitting decision.',
+        },
+        unregisteredContributorForm: {
+            fullNameLabel: 'Full name',
+            emailLabel: 'Email',
+            notifyMessage: 'We will notify the user that they have been added as a moderator.',
         },
     },
 };

@@ -55,8 +55,10 @@ Router.map(function() {
         this.route('provider', { path: ':provider_id' }, function() {
             this.route('setup');
             this.route('moderation', { path: '/' });
+            this.route('moderators');
             this.route('settings');
             this.route('preprint-detail', { path: ':preprint_id' });
+            this.route('notifications');
         });
     });
     this.route('dashboard');

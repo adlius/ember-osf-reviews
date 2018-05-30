@@ -1,6 +1,6 @@
 {
   "name": "reviews",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Center for Open Science Reviews Service",
   "license": "Apache-2.0",
   "author": "",
@@ -19,8 +19,9 @@
     "use-ember-osf-next-interfaces": "yarn upgrade @centerforopenscience/ember-osf@https://github.com/CenterForOpenScience/ember-osf.git#release/next-interfaces#$(date -u +%FT%TZ)"
   },
   "devDependencies": {
-    "@centerforopenscience/ember-osf": "0.16.0",
+    "@centerforopenscience/ember-osf": "0.17.0",
     "@centerforopenscience/eslint-config": "^2.0.0",
+    "@centerforopenscience/osf-style": "1.7.0",
     "@cos-forks/ember-content-placeholders": "https://github.com/cos-forks/ember-content-placeholders#c85cdbeb4b9c206c3f76a92422db76815b2c95bc",
     "broccoli-asset-rev": "^2.4.5",
     "coveralls": "^3.0.0",
@@ -45,6 +46,7 @@
     "ember-cli-uglify": "^1.2.0",
     "ember-component-css": "^0.3.5",
     "ember-concurrency": "^0.8.12",
+    "ember-cp-validations": "^3.5.2",
     "ember-data": "2.16.2",
     "ember-export-application-global": "^2.0.0",
     "ember-font-awesome": "^3.0.0",
@@ -54,8 +56,10 @@
     "ember-moment": "^7.4.1",
     "ember-onbeforeunload": "^1.1.2",
     "ember-parachute": "^0.3.5",
+    "ember-power-select": "^1.10.4",
     "ember-radio-button": "^1.1.1",
     "ember-resolver": "^4.0.0",
+    "ember-scroll-to": "^0.6.4",
     "ember-source": "2.16.2",
     "ember-toastr": "^1.7.0",
     "eslint": "^4.4.1",
@@ -68,7 +72,6 @@
   },
   "private": true,
   "dependencies": {
-    "@centerforopenscience/osf-style": "https://github.com/CenterForOpenScience/osf-style#b09451d759c8544d2fab4bd7dbd5ca8b6dc242b8",
     "autoprefixer": "^7.1.2",
     "bootstrap-sass": "^3.3.7",
     "cssnano": "^3.10.0",
