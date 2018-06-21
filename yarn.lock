@@ -54,9 +54,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@centerforopenscience/ember-osf@0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@centerforopenscience/ember-osf/-/ember-osf-0.17.0.tgz#defc0230e808a25b15609c9542658c825a07a291"
+"@centerforopenscience/ember-osf@0.17.1":
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/@centerforopenscience/ember-osf/-/ember-osf-0.17.1.tgz#f44322bc37082c07e27d7f42e7c43f51608ea06a"
   dependencies:
     broccoli-funnel "1.2.0"
     broccoli-merge-trees "2.0.0"
@@ -78,7 +78,7 @@
     ember-diff-attrs "^0.2.0"
     ember-get-config "0.2.1"
     ember-i18n "5.0.1"
-    ember-metrics "^0.12.1"
+    ember-metrics "https://github.com/cos-forks/ember-metrics#v0.12.1+cos0"
     ember-moment "^7.4.1"
     ember-power-select "^1.10.4"
     ember-radio-buttons "4.0.3"
@@ -3556,9 +3556,19 @@ ember-maybe-import-regenerator@^0.1.5:
     ember-cli-babel "^6.0.0-beta.4"
     regenerator-runtime "^0.9.5"
 
-ember-metrics@^0.12.1:
+"ember-metrics@git+https://github.com/cos-forks/ember-metrics.git#v0.12.1+cos0":
   version "0.12.1"
-  resolved "https://registry.yarnpkg.com/ember-metrics/-/ember-metrics-0.12.1.tgz#8659343bf7b8bda403e70d482ff59cc9714d89f6"
+  uid "32fcc6eec0c4bc1974c854435401f94f660c6e74"
+  resolved "git+https://github.com/cos-forks/ember-metrics.git#32fcc6eec0c4bc1974c854435401f94f660c6e74"
+  dependencies:
+    broccoli-funnel "^1.0.1"
+    ember-cli-babel "^6.1.0"
+    ember-getowner-polyfill "^2.0.0"
+    ember-runtime-enumerable-includes-polyfill "^2.0.0"
+
+"ember-metrics@https://github.com/cos-forks/ember-metrics#v0.12.1+cos0":
+  version "0.12.1"
+  resolved "https://github.com/cos-forks/ember-metrics#32fcc6eec0c4bc1974c854435401f94f660c6e74"
   dependencies:
     broccoli-funnel "^1.0.1"
     ember-cli-babel "^6.1.0"
