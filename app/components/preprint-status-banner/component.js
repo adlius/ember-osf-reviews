@@ -8,6 +8,7 @@ import latestAction from 'reviews/utils/latest-action';
 const PENDING = 'pending';
 const ACCEPTED = 'accepted';
 const REJECTED = 'rejected';
+const PENDING_WITHDRAWAL = 'pending_withdrawal';
 
 const PRE_MODERATION = 'pre-moderation';
 const POST_MODERATION = 'post-moderation';
@@ -18,12 +19,14 @@ const ICONS = {
     [PENDING]: 'fa-hourglass-o',
     [ACCEPTED]: 'fa-check-circle-o',
     [REJECTED]: 'fa-times-circle-o',
+    [PENDING_WITHDRAWAL]: 'fa-hourglass-o',
 };
 
 const STATUS = {
     [PENDING]: 'components.preprintStatusBanner.pending',
     [ACCEPTED]: 'components.preprintStatusBanner.accepted',
     [REJECTED]: 'components.preprintStatusBanner.rejected',
+    [PENDING_WITHDRAWAL]: 'components.preprintStatusBanner.pending',
 };
 
 const MESSAGE = {
@@ -31,6 +34,7 @@ const MESSAGE = {
     [POST_MODERATION]: 'components.preprintStatusBanner.message.pendingPost',
     [ACCEPTED]: 'components.preprintStatusBanner.message.accepted',
     [REJECTED]: 'components.preprintStatusBanner.message.rejected',
+    [PENDING_WITHDRAWAL]: 'components.preprintStatusBanner.message.pendingWithdrawal',
 };
 
 const CLASS_NAMES = {
@@ -38,6 +42,7 @@ const CLASS_NAMES = {
     [POST_MODERATION]: 'preprint-status-pending-post',
     [ACCEPTED]: 'preprint-status-accepted',
     [REJECTED]: 'preprint-status-rejected',
+    [PENDING_WITHDRAWAL]: 'preprint-status-pending-withdrawal',
 };
 
 const SETTINGS = {
@@ -85,6 +90,7 @@ const RECENT_ACTIVITY = {
     [PENDING]: 'components.preprintStatusBanner.recentActivity.pending',
     [ACCEPTED]: 'components.preprintStatusBanner.recentActivity.accepted',
     [REJECTED]: 'components.preprintStatusBanner.recentActivity.rejected',
+    [PENDING_WITHDRAWAL]: 'components.preprintStatusBanner.recentActivity.pendingWithdrawal',
     automatic: {
         [PENDING]: 'components.preprintStatusBanner.recentActivity.automatic.pending',
         [ACCEPTED]: 'components.preprintStatusBanner.recentActivity.automatic.accepted',
@@ -101,6 +107,10 @@ export default Component.extend({
     commentPlaceholder: 'components.preprintStatusBanner.decision.commentPlaceholder',
     labelAccept: 'components.preprintStatusBanner.decision.accept.label',
     labelReject: 'components.preprintStatusBanner.decision.reject.label',
+    labelApprove: 'components.preprintStatusBanner.decision.approve.label',
+    labelDecline: 'components.preprintStatusBanner.decision.decline.label',
+    approveExplanation: 'components.preprintStatusBanner.decision.approve.explanation',
+    declineExplanation: 'components.preprintStatusBanner.decision.decline.explanation',
 
     classNames: ['preprint-status-component'],
 
@@ -119,6 +129,8 @@ export default Component.extend({
 
     creatorProfile: alias('latestAction.creator.profileURL'),
     creatorName: alias('latestAction.creator.fullName'),
+    withdrawalRequesterProfile: alias('withdrawalRequest.creator.profileURL'),
+    withdrawalRequesterName: alias('withdrawalRequest.creator.fullName'),
 
     commentExceedsLimit: computed.gt('reviewerComment.length', COMMENT_LIMIT),
 
@@ -133,22 +145,34 @@ export default Component.extend({
     }),
 
 
-    statusExplanation: computed('reviewsWorkflow', 'submission.reviewsState', function() {
+    statusExplanation: computed('reviewsWorkflow', 'submission.reviewsState', 'isPendingWithdrawal', function() {
+        if (this.get('isPendingWithdrawal')) {
+            return MESSAGE[PENDING_WITHDRAWAL];
+        }
         return this.get('submission.reviewsState') === PENDING ?
             MESSAGE[this.get('reviewsWorkflow')] :
             MESSAGE[this.get('submission.reviewsState')];
     }),
 
-    status: computed('submission.reviewsState', function() {
-        return STATUS[this.get('submission.reviewsState')];
+    status: computed('submission.reviewsState', 'isPendingWithdrawal', function() {
+        if (this.get('isPendingWithdrawal')) {
+            return STATUS[PENDING_WITHDRAWAL];
+        } else {
+            return STATUS[this.get('submission.reviewsState')];
+        }
     }),
 
-    icon: computed('submission.reviewsState', function() {
+    icon: computed('submission.reviewsState', 'isPendingWithdrawal', function() {
+        if (this.get('isPendingWithdrawal')) {
+            return ICONS[PENDING_WITHDRAWAL];
+        }
         return ICONS[this.get('submission.reviewsState')];
     }),
 
-    recentActivityLanguage: computed('noActions', 'submission.reviewsState', function() {
-        if (this.get('noActions')) {
+    recentActivityLanguage: computed('noActions', 'submission.reviewsState', 'isPendingWithdrawal', function() {
+        if (this.get('isPendingWithdrawal')) {
+            return RECENT_ACTIVITY[PENDING_WITHDRAWAL];
+        } else if (this.get('noActions')) {
             return RECENT_ACTIVITY.automatic[this.get('submission.reviewsState')];
         } else {
             return RECENT_ACTIVITY[this.get('submission.reviewsState')];
@@ -156,10 +180,14 @@ export default Component.extend({
     }),
 
 
-    getClassName: computed('reviewsWorkflow', 'submission.reviewsState', function() {
-        return this.get('submission.reviewsState') === PENDING ?
-            CLASS_NAMES[this.get('reviewsWorkflow')] :
-            CLASS_NAMES[this.get('submission.reviewsState')];
+    getClassName: computed('reviewsWorkflow', 'submission.reviewsState', 'isPendingWithdrawal', function() {
+        if (this.get('isPendingWithdrawal')) {
+            return CLASS_NAMES[PENDING_WITHDRAWAL];
+        } else {
+            return this.get('submission.reviewsState') === PENDING ?
+                CLASS_NAMES[this.get('reviewsWorkflow')] :
+                CLASS_NAMES[this.get('submission.reviewsState')];
+        }
     }),
 
     latestAction: computed('submission.reviewActions.[]', function() {
@@ -201,18 +229,28 @@ export default Component.extend({
         return DECISION_EXPLANATION.reject[this.get('reviewsWorkflow')];
     }),
 
-    labelDecisionDropdown: computed('submission.reviewsState', function() {
-        return this.get('submission.reviewsState') === PENDING ?
-            'components.preprintStatusBanner.decision.makeDecision' :
-            'components.preprintStatusBanner.decision.modifyDecision';
+    labelDecisionDropdown: computed('submission.reviewsState', 'isPendingWithdrawal', function() {
+        if (this.get('isPendingWithdrawal')) {
+            return 'components.preprintStatusBanner.decision.makeDecision';
+        } else {
+            return this.get('submission.reviewsState') === PENDING ?
+                'components.preprintStatusBanner.decision.makeDecision' :
+                'components.preprintStatusBanner.decision.modifyDecision';
+        }
     }),
-    labelDecisionHeader: computed('submission.reviewsState', function() {
-        return this.get('submission.reviewsState') === PENDING ?
-            'components.preprintStatusBanner.decision.header.submitDecision' :
-            'components.preprintStatusBanner.decision.header.modifyDecision';
+    labelDecisionHeader: computed('submission.reviewsState', 'isPendingWithdrawal', function() {
+        if (this.get('isPendingWithdrawal')) {
+            return 'components.preprintStatusBanner.decision.header.submitDecision';
+        } else {
+            return this.get('submission.reviewsState') === PENDING ?
+                'components.preprintStatusBanner.decision.header.submitDecision' :
+                'components.preprintStatusBanner.decision.header.modifyDecision';
+        }
     }),
-    labelDecisionBtn: computed('submission.reviewsState', 'decision', 'reviewerComment', function() {
-        if (this.get('submission.reviewsState') === PENDING) {
+    labelDecisionBtn: computed('submission.reviewsState', 'decision', 'reviewerComment', 'isPendingWithdrawal', function() {
+        if (this.get('isPendingWithdrawal')) {
+            return 'components.preprintStatusBanner.decision.btn.submitDecision';
+        } else if (this.get('submission.reviewsState') === PENDING) {
             return 'components.preprintStatusBanner.decision.btn.submitDecision';
         } else if (this.get('submission.reviewsState') !== this.get('decision')) {
             return 'components.preprintStatusBanner.decision.btn.modifyDecision';

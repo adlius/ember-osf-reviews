@@ -242,6 +242,7 @@ export default {
                 pending: 'submitted this {{documentType.singular}} on',
                 accepted: 'accepted this {{documentType.singular}} on',
                 rejected: 'rejected this {{documentType.singular}} on',
+                pendingWithdrawal: 'requested to withdraw this {{documentType.singular}} on',
                 automatic: {
                     pending: 'This {{documentType.singular}} was submitted on',
                     accepted: 'This {{documentType.singular}} was automatically accepted on',
@@ -252,7 +253,9 @@ export default {
                 pendingPost: 'publicly available and searchable but is subject to removal by a moderator',
                 accepted: 'publicly available and searchable',
                 rejected: 'not publicly available or searchable',
+                pendingWithdrawal: 'not public available or searchable once the withdrawal request is approved'
             },
+            withdrawalJustification: 'Reason for withdrawal',
             pending: 'pending',
             accepted: 'accepted',
             rejected: 'rejected',
@@ -282,6 +285,14 @@ export default {
                     label: 'Reject',
                     pre: 'Submission will not appear in search results and will remain private.',
                     post: 'Submission will be removed from search results and made private.',
+                },
+                approve: {
+                    label: 'Approve',
+                    explanation: 'Submission will be withdrawn but still have a tombstone page with a subset of the metadata available',
+                },
+                decline: {
+                    label: 'Decline',
+                    explanation: 'Submission will remain fully public',
                 },
             },
             settings: {

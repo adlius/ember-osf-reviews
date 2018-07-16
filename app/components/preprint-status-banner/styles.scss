@@ -67,6 +67,16 @@
     }
 }
 
+.preprint-status-pending-withdrawal {
+    background-color: $color-state-warning-bg;
+    color: $color-state-warning-text;
+
+    .status-icon {
+        font-size: 16px;
+        -webkit-text-stroke: 0;
+    }
+}
+
 .status-badge {
     cursor: default;
     display: inline-block;  // required for the text-transform
@@ -117,6 +127,10 @@
         font-size: 1.4em;
     }
 
+    .withdrawal-justification {
+        font-size: 1.4em;
+    }
+
     .feedback-header {
         border-bottom: 1px solid $color-border;
         font-size: 2em;
@@ -161,7 +175,6 @@
 
         input {
             vertical-align: top;
-            width: 14px;  // prevents flex from making radio buttons smaller
         }
 
         p {
