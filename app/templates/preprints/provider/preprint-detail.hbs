@@ -61,141 +61,210 @@
         {{#if (or fetchData.isRunning (not preprint))}}
             <div local-class="preprint-status-component--skeleton"></div>
         {{else}}
-            {{preprint-status-banner submission=preprint saving=savingAction setUserEnteredReview=(action (mut userHasEnteredReview)) submitDecision=(action 'submitDecision')}}
+            {{preprint-status-banner submission=preprint withdrawalRequest=withdrawalRequest isPendingWithdrawal=isPendingWithdrawal saving=savingAction setUserEnteredReview=(action (mut userHasEnteredReview)) submitReviewsDecision=(action 'submitReviewsDecision') submitRequestsDecision=(action 'submitRequestsDecision')}}
         {{/if}}
     </div>
 
     <div local-class="view-page">
         <div class="container">
             <div class="row p-md">
-                <div local-class="mfr-col" class="col-md-{{if fullScreenMFR '12' '7'}}">
-                    {{#if fetchData.isRunning}}
-                        {{file-renderer-skeleton}}
-                    {{else}}
-                        {{preprint-file-browser primaryFile=preprint.primaryFile preprint=preprint fileDownloadURL=fileDownloadURL}}
-                    {{/if}}
-                    <button local-class="expand-mfr-carrot" class="hidden-xs hidden-sm" {{action 'expandMFR'}}>
-                        <i class="fa fa-chevron-{{if fullScreenMFR 'left' 'right'}}"></i>
-                    </button>
-                </div>
-
-                <div class="col-md-5 {{if fullScreenMFR 'hidden' ''}}">
-                    {{#if fetchData.isRunning}}
-                        {{#content-placeholders as |placeholder|}}
-                            {{placeholder.img}}
-                            {{#each dummyMetaData}}
-                                <div class="m-v-lg">
-                                    {{placeholder.heading subtitle=false}}
-                                    {{placeholder.text lines=2}}
-                                </div>
-                            {{/each}}
-                        {{/content-placeholders}}
-                    {{else}}
-                        <div class="p-sm osf-box-lt clearfix" local-class="share-row osf-box-lt">
-                            <a class="btn btn-primary p-v-xs" href={{fileDownloadURL}}>
-                                {{t "content.share.downloadPreprint" documentType=preprint.provider.documentType}}
-                            </a>
-                            <div class="p-v-xs pull-right">
-                                {{t "content.share.downloads"}}: {{preprint.primaryFile.extra.downloads}}
-                            </div>
-                        </div>
-
-                        <div class="p-t-md pull-right">
-                            <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
-                                <i class="fa fa-2x fa-twitter-square"></i>
-                            </a>
-                            <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
-                                <i class="fa fa-2x fa-facebook-square"></i>
-                            </a>
-                            <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
-                                <i class="fa fa-2x fa-linkedin-square"></i>
-                            </a>
-                            <a class="text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
-                                <i class="fa fa-2x fa-envelope"></i>
-                            </a>
-                        </div>
-
-                        <div class="p-t-xs">
-                            <h4 class="p-v-md f-w-md"><strong>{{t "global.abstract"}}</strong></h4>
-                            <p class="abstract {{if useShortenedDescription 'abstract-truncated'}}">
-                                {{~if useShortenedDescription description preprint.description~}}
-                            </p>
-                            <button class='btn-link' hidden={{not hasShortenedDescription}} {{action 'expandAbstract'}}>
-                                {{~t (if expandedAbstract 'content.seeLess' 'content.seeMore')~}}
-                            </button>
-                        </div>
-
-                        <section class="p-t-xs">
-                            <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
-                            {{#if preprint.isPublished}}
-                                {{#if preprint.preprintDoiCreated}}
-                                    <a href={{preprint.preprintDoiUrl}}>{{extract-doi preprint.preprintDoiUrl}}</a>
-                                {{else}}
-                                    <p> {{extract-doi preprint.preprintDoiUrl}} </p>
-                                    <p> {{t "content.preprintPendingDOIMinted"}} </p>
-                                {{/if}}
-                            {{else}}
-                                {{t 'content.preprintPendingDOI'}}
-                            {{/if}}
-                        </section>
-
-                        {{#if preprint.articleDoiUrl}}
-                            <section class="p-t-xs">
-                                <h4 class="p-v-md f-w-md"><strong>{{t "content.articleDOI"}}</strong></h4>
-                                <a href={{preprint.articleDoiUrl}}>{{preprint.doi}}</a>
-                            </section>
+                {{#if (not isWithdrawn)}}
+                    <div local-class="mfr-col" class="col-md-{{if fullScreenMFR '12' '7'}}">
+                        {{#if fetchData.isRunning}}
+                            {{file-renderer-skeleton}}
+                        {{else}}
+                            {{preprint-file-browser primaryFile=preprint.primaryFile preprint=preprint fileDownloadURL=fileDownloadURL}}
                         {{/if}}
+                        <button local-class="expand-mfr-carrot" class="hidden-xs hidden-sm" {{action 'expandMFR'}}>
+                            <i class="fa fa-chevron-{{if fullScreenMFR 'left' 'right'}}"></i>
+                        </button>
+                    </div>
 
-                        {{#if preprint.license.name}}
-                            <section local-class="preprint-license" class="p-t-xs">
-                                <h4 class="p-v-md f-w-md"><strong>{{t "global.license"}}</strong></h4>
-                                {{preprint.license.name}}
-                                <span  onclick={{action 'toggleShowLicense'}} role="button">
-                                    <i class="fa fa-caret-{{if showLicense 'down' 'right'}}"></i>
-                                </span>
-                                {{#if showLicense}}
-                                    <pre>{{preprint.licenseText}}</pre>
-                                {{/if}}
-                            </section>
-                        {{/if}}
-
-                        <div class="p-t-xs">
-                            <h4 class="p-v-md f-w-md"><strong>{{t "content.disciplines"}}</strong></h4>
-                            {{#each preprint.uniqueSubjects as |subject|}}
-                                <span local-class="subject-preview">{{subject.text}}</span>
-                            {{/each}}
-                        </div>
-
-                        <div class="p-t-xs">
-                            <h4 class=" f-w-md p-v-md"><strong>{{t "global.tags"}}</strong></h4>
-                            {{#if hasTags}}
-                                {{#each preprint.tags as |tag|}}
-                                    <span class="badge">{{fix-special-char tag}}</span>
+                    <div class="col-md-5 {{if fullScreenMFR 'hidden' ''}}">
+                        {{#if fetchData.isRunning}}
+                            {{#content-placeholders as |placeholder|}}
+                                {{placeholder.img}}
+                                {{#each dummyMetaData}}
+                                    <div class="m-v-lg">
+                                        {{placeholder.heading subtitle=false}}
+                                        {{placeholder.text lines=2}}
+                                    </div>
                                 {{/each}}
+                            {{/content-placeholders}}
+                        {{else}}
+                            <div class="p-sm osf-box-lt clearfix" local-class="share-row osf-box-lt">
+                                <a class="btn btn-primary p-v-xs" href={{fileDownloadURL}}>
+                                    {{t "content.share.downloadPreprint" documentType=preprint.provider.documentType}}
+                                </a>
+                                <div class="p-v-xs pull-right">
+                                    {{t "content.share.downloads"}}: {{preprint.primaryFile.extra.downloads}}
+                                </div>
+                            </div>
+
+                            <div class="p-t-md pull-right">
+                                <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
+                                    <i class="fa fa-2x fa-twitter-square"></i>
+                                </a>
+                                <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
+                                    <i class="fa fa-2x fa-facebook-square"></i>
+                                </a>
+                                <a class="m-r-xs text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
+                                    <i class="fa fa-2x fa-linkedin-square"></i>
+                                </a>
+                                <a class="text-smaller disabled" href='' onclick="return false;" aria-hidden="true">
+                                    <i class="fa fa-2x fa-envelope"></i>
+                                </a>
+                            </div>
+
+                            <div class="p-t-xs">
+                                <h4 class="p-v-md f-w-md"><strong>{{t "global.abstract"}}</strong></h4>
+                                <p class="abstract {{if useShortenedDescription 'abstract-truncated'}}">
+                                    {{~if useShortenedDescription description preprint.description~}}
+                                </p>
+                                <button class='btn-link' hidden={{not hasShortenedDescription}} {{action 'expandAbstract'}}>
+                                    {{~t (if expandedAbstract 'content.seeLess' 'content.seeMore')~}}
+                                </button>
+                            </div>
+
+                            <section class="p-t-xs">
+                                <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI"}}</strong></h4>
+                                {{#if preprint.isPublished}}
+                                    {{#if preprint.preprintDoiCreated}}
+                                        <a href={{preprint.preprintDoiUrl}}>{{extract-doi preprint.preprintDoiUrl}}</a>
+                                    {{else}}
+                                        <p> {{extract-doi preprint.preprintDoiUrl}} </p>
+                                        <p> {{t "content.preprintPendingDOIMinted"}} </p>
+                                    {{/if}}
+                                {{else}}
+                                    {{t 'content.preprintPendingDOI'}}
+                                {{/if}}
+                            </section>
+
+                            {{#if preprint.articleDoiUrl}}
+                                <section class="p-t-xs">
+                                    <h4 class="p-v-md f-w-md"><strong>{{t "content.articleDOI"}}</strong></h4>
+                                    <a href={{preprint.articleDoiUrl}}>{{preprint.doi}}</a>
+                                </section>
+                            {{/if}}
+
+                            {{#if preprint.license.name}}
+                                <section local-class="preprint-license" class="p-t-xs">
+                                    <h4 class="p-v-md f-w-md"><strong>{{t "global.license"}}</strong></h4>
+                                    {{preprint.license.name}}
+                                    <span  onclick={{action 'toggleShowLicense'}} role="button">
+                                        <i class="fa fa-caret-{{if showLicense 'down' 'right'}}"></i>
+                                    </span>
+                                    {{#if showLicense}}
+                                        <pre>{{preprint.licenseText}}</pre>
+                                    {{/if}}
+                                </section>
+                            {{/if}}
+
+                            <div class="p-t-xs">
+                                <h4 class="p-v-md f-w-md"><strong>{{t "content.disciplines"}}</strong></h4>
+                                {{#each preprint.uniqueSubjects as |subject|}}
+                                    <span local-class="subject-preview">{{subject.text}}</span>
+                                {{/each}}
+                            </div>
+
+                            <div class="p-t-xs">
+                                <h4 class=" f-w-md p-v-md"><strong>{{t "global.tags"}}</strong></h4>
+                                {{#if hasTags}}
+                                    {{#each preprint.tags as |tag|}}
+                                        <span class="badge">{{fix-special-char tag}}</span>
+                                    {{/each}}
+                                {{else}}
+                                    {{t "global.none"}}
+                                {{/if}}
+                            </div>
+
+                            <div class="p-t-xs m-b-lg">
+                                <h4 class="p-v-md f-w-md"><strong>{{t "content.citations"}}</strong></h4>
+                                {{citation-widget node=preprint}}
+                            </div>
+                        {{/if}}
+                    </div>
+                {{else}}
+                    <div class="row p-md" local-class="withdrawn-column">
+                        <div class="col-md-7">
+                            {{#if fetchData.isRunning}}
+                                {{#content-placeholders as |placeholder|}}
+                                    {{placeholder.img}}
+                                    {{#each dummyMetaData}}
+                                        <div class="m-v-lg">
+                                            {{placeholder.heading subtitle=false}}
+                                            {{placeholder.text lines=2}}
+                                        </div>
+                                    {{/each}}
+                                {{/content-placeholders}}
                             {{else}}
-                                {{t "global.none"}}
+                                <div class="p-t-xs">
+                                    <h4 class="p-v-md f-w-md"><strong>{{t "global.abstract"}}</strong></h4>
+                                    <p class="abstract {{if useShortenedDescription 'abstract-truncated'}}">
+                                        {{~if useShortenedDescription description preprint.description~}}
+                                    </p>
+                                    <button class='btn-link' hidden={{not hasShortenedDescription}} {{action 'expandAbstract'}}>
+                                        {{~t (if expandedAbstract 'content.seeLess' 'content.seeMore')~}}
+                                    </button>
+                                </div>
+
+                                <section class="p-t-xs">
+                                    <h4 class="p-v-md f-w-md"><strong>{{t "content.preprintDOI" documentType=preprint.provider.documentType}}</strong></h4>
+                                    {{#if preprint.isPublished}}
+                                        {{#if preprint.preprintDoiCreated}}
+                                            <a href={{preprint.preprintDoiUrl}}>{{extract-doi preprint.preprintDoiUrl}}</a>
+                                        {{/if}}
+                                    {{else}}
+                                        {{t "global.none"}}
+                                    {{/if}}
+                                </section>
+
+                                {{#if preprint.license.name}}
+                                    <section local-class="preprint-license" class="p-t-xs">
+                                        <h4 class="p-v-md f-w-md"><strong>{{t "global.license"}}</strong></h4>
+                                        {{preprint.license.name}}
+                                        <span  onclick={{action 'toggleShowLicense'}} role="button">
+                                            <i class="fa fa-caret-{{if showLicense 'down' 'right'}}"></i>
+                                        </span>
+                                        {{#if showLicense}}
+                                            <pre>{{preprint.licenseText}}</pre>
+                                        {{/if}}
+                                    </section>
+                                {{/if}}
+
+                                <div class="p-t-xs">
+                                    <h4 class="p-v-md f-w-md"><strong>{{t "content.disciplines"}}</strong></h4>
+                                    {{#each preprint.uniqueSubjects as |subject|}}
+                                        <span local-class="subject-preview">{{subject.text}}</span>
+                                    {{/each}}
+                                </div>
+
+                                <div class="p-t-xs">
+                                    <h4 class=" f-w-md p-v-md"><strong>{{t "global.tags"}}</strong></h4>
+                                    {{#if hasTags}}
+                                        {{#each preprint.tags as |tag|}}
+                                            <span class="badge">{{fix-special-char tag}}</span>
+                                        {{/each}}
+                                    {{else}}
+                                        {{t "global.none"}}
+                                    {{/if}}
+                                </div>
                             {{/if}}
                         </div>
-
-                        <div class="p-t-xs m-b-lg">
-                            <h4 class="p-v-md f-w-md"><strong>{{t "content.citations"}}</strong></h4>
-                            {{citation-widget node=preprint}}
-                        </div>
-                    {{/if}}
-                </div>
-
+                    </div>
+                {{/if}}
             </div>
         </div>
-    </div>
 
-    {{#bs-modal open=showWarning onHide=(action (mut showWarning false)) as |modal|}}
-        {{#modal.header}}
-            <div class="warning-header"><i class="fa fa-exclamation-triangle"></i> {{t 'content.warning.header'}}</div>
-        {{/modal.header}}
-        {{#modal.body}}<div class="warning-body">{{t 'content.warning.body'}}</div>{{/modal.body}}
-        {{#modal.footer}}
-            {{#bs-button onClick=(action modal.close)}}{{t 'content.warning.footer.stay'}}{{/bs-button}}
-            {{#bs-button onClick=(action 'leavePage') type="primary"}}{{t 'content.warning.footer.leave'}}{{/bs-button}}
-        {{/modal.footer}}
-    {{/bs-modal}}
+        {{#bs-modal open=showWarning onHide=(action (mut showWarning false)) as |modal|}}
+            {{#modal.header}}
+                <div class="warning-header"><i class="fa fa-exclamation-triangle"></i> {{t 'content.warning.header'}}</div>
+            {{/modal.header}}
+            {{#modal.body}}<div class="warning-body">{{t 'content.warning.body'}}</div>{{/modal.body}}
+            {{#modal.footer}}
+                {{#bs-button onClick=(action modal.close)}}{{t 'content.warning.footer.stay'}}{{/bs-button}}
+                {{#bs-button onClick=(action 'leavePage') type="primary"}}{{t 'content.warning.footer.leave'}}{{/bs-button}}
+            {{/modal.footer}}
+        {{/bs-modal}}
+    </div>
 </div>

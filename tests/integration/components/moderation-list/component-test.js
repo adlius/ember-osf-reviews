@@ -38,6 +38,7 @@ test('moderation-list no submissions', function(assert) {
             sortChanged=sortChanged
             submissions=submissions
             page=1
+            isSubmissions=true
             sort='-date_last_transitioned'
             status='pending'
             loading=false
