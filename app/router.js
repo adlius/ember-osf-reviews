@@ -81,6 +81,7 @@ Router.map(function() {
             this.route('settings');
             this.route('preprint-detail', { path: ':preprint_id' });
             this.route('notifications');
+            this.route('withdrawals');
         });
     });
     this.route('dashboard');

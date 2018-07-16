@@ -67,6 +67,30 @@
     }
 }
 
+.preprint-status-pending-withdrawal {
+    background-color: $color-state-warning-bg;
+    color: $color-state-warning-text;
+}
+
+.preprint-status-withdrawn {
+    background-color: $color-state-danger-bg;
+    color: $color-state-danger-text;
+
+    .status-icon {
+        font-size: 16px;
+        -webkit-text-stroke: 0;
+    }
+}
+
+.icon-stack {
+    height: 1.25em;
+    line-height: 1em;
+
+    & > .icon-layer-fa-minus {
+        font-size: 10px;
+    }
+}
+
 .status-badge {
     cursor: default;
     display: inline-block;  // required for the text-transform
@@ -117,6 +141,11 @@
         font-size: 1.4em;
     }
 
+    .withdrawal-justification {
+        padding-bottom: 5px;
+        padding-top: 10px;
+    }
+
     .feedback-header {
         border-bottom: 1px solid $color-border;
         font-size: 2em;
@@ -138,6 +167,10 @@
 
     .comment-length-error {
         color: $state-danger-text;
+    }
+
+    .withdrawal-reason {
+        font-style: italic;
     }
 }
 
@@ -161,7 +194,6 @@
 
         input {
             vertical-align: top;
-            width: 14px;  // prevents flex from making radio buttons smaller
         }
 
         p {
