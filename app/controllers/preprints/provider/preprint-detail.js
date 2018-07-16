@@ -35,6 +35,8 @@ export default Controller.extend({
     savingAction: false,
     showLicense: false,
 
+    withdrawalRequest: null,
+    isPendingWithdrawal: false,
     _activeFile: null,
     chosenFile: null,
 
@@ -126,10 +128,18 @@ export default Controller.extend({
         },
         submitDecision(trigger, comment, filter) {
             this.toggleProperty('savingAction');
-            const action = this.store.createRecord('review-action', {
-                actionTrigger: trigger,
-                target: this.get('preprint'),
-            });
+            let action = null;
+            if (this.get('isPendingWithdrawal')) {
+                action = this.store.createRecord('preprint-request-action', {
+                    actionTrigger: trigger,
+                    target: this.get('withdrawalRequest'),
+                });
+            } else {
+                action = this.store.createRecord('review-action', {
+                    actionTrigger: trigger,
+                    target: this.get('preprint'),
+                });
+            }
 
             if (comment) {
                 action.comment = comment;
@@ -161,12 +171,21 @@ export default Controller.extend({
             preprintId,
             { include: ['node', 'license', 'review_actions', 'contributors'] },
         );
+        let withdrawalRequest = yield this.get('store').query(
+            'preprint-request',
+            { providerId: this.get('theme').provider.id, filter: { target: preprintId, machine_state: 'pending' } },
+        );
+        withdrawalRequest = withdrawalRequest.toArray();
         const node = yield response.get('node');
         if (!node.get('public')) {
             this.transitionToRoute('page-not-found');
             return;
         }
         this.set('preprint', response);
+        if (withdrawalRequest.length >= 1) {
+            this.set('withdrawalRequest', withdrawalRequest[0]);
+            this.set('isPendingWithdrawal', true);
+        }
         this.get('loadMathJax').perform();
 
         // required for breadcrumbs
