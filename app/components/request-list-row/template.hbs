@@ -1,0 +1,21 @@
+{{#if fetchData.isRunning}}
+    {{moderation-list-row-skeleton}}
+{{else}}
+    {{#link-to 'preprints.provider.preprint-detail' theme.id request.target.id}}
+        <div data-status={{request.target.reviewsState}} local-class="flex-container">
+            <i class="fa fa-lg {{get iconClass request.machineState}}" local-class="{{get iconClass request.machineState}} status-icon"></i>
+            <div title={{request.target.title}} local-class="submission-info">
+                <div local-class="submission-title">{{request.target.title}}</div>
+                <div local-class="submission-body">
+                    {{#if isWithdrawn}}
+                        <div>{{decisionOnLabel}}</div>
+                    {{else}}
+                        <div>
+                            {{requestedOnLabel}}
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    {{/link-to}}
+{{/if}}

@@ -7,7 +7,12 @@
                         <button class="btn" local-class="reviews-btn-filter {{if (eq status statusButton.status) 'active-filter'}}"
                                 {{action statusChanged statusButton.status}}>
                             <i class="fa {{statusButton.iconClass}}"></i>
-                            <span>{{get theme.reviewableStatusCounts statusButton.status}}</span>
+                            {{#if isSubmissions}}
+                                <span>{{get theme.reviewableStatusCounts statusButton.status}}</span>
+                            {{/if}}
+                            {{#if isRequests}}
+                                <span>{{get theme.requestStatusCounts statusButton.status}}</span>
+                            {{/if}}
                             {{t statusButton.labelKey}}
                         </button>
                     {{/each}}
@@ -32,13 +37,29 @@
                     {{#if loading}}
                         {{moderation-list-row-skeleton}}
                     {{else}}
-                        {{#if (eq submissions.length 0)}}
+                        {{#if (and isSubmissions (eq submissions.length 0))}}
                             <div class="text-center p-v-md {{local-class 'moderation-list-row' from='reviews/components/moderation-list-row/styles'}}">
                                 {{t 'components.moderationList.noSubmissions'}}
                             </div>
                         {{else}}
                             {{#each submissions as |submission|}}
                                 {{moderation-list-row submission=submission}}
+                            {{/each}}
+                            <div class="pull-right text-right">
+                                {{pagination-pager
+                                    count=totalPages
+                                    current=page
+                                    change=(action pageChanged)
+                                }}
+                            </div>
+                        {{/if}}
+                        {{#if (and isRequests (eq requests.length 0))}}
+                            <div class="text-center p-v-md {{local-class 'moderation-list-row' from='reviews/components/moderation-list-row/styles'}}">
+                                {{t 'components.moderationList.noRequests'}}
+                            </div>
+                        {{else}}
+                            {{#each requests as |request|}}
+                                {{request-list-row request=request}}
                             {{/each}}
                             <div class="pull-right text-right">
                                 {{pagination-pager

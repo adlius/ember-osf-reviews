@@ -17,6 +17,7 @@ export default {
         notifications: 'Notifications',
         submissions: 'Submissions',
         moderators: 'Moderators',
+        withdrawalRequests: 'Withdrawal Requests',
     },
     index: {
         feature: {
@@ -203,8 +204,11 @@ export default {
             pending: 'Pending',
             accepted: 'Accepted',
             rejected: 'Rejected',
+            approved: 'Approved',
+            declined: 'Declined',
             sort: 'Sort',
             noSubmissions: 'No submissions.',
+            noRequests: 'No requests.',
         },
         moderationListRow: {
             submission: {
@@ -216,6 +220,16 @@ export default {
                 acceptedAutomatically: 'Accepted automatically {{timeDate}}',
                 rejectedOn: 'Rejected on {{timeDate}} by {{moderatorName}}',
                 rejected: 'Rejected {{timeDate}} by {{moderatorName}}',
+            },
+        },
+        requestListRow: {
+            submission: {
+                requestedOn: 'Requested on {{timeDate}} by {{submitterName}}',
+                requested: 'Requested {{timeDate}} by {{submitterName}}',
+                approvedOn: 'Approved on {{timeDate}} by {{moderatorName}}',
+                approved: 'Approved {{timeDate}} by {{moderatorName}}',
+                declinedOn: 'Declined on {{timeDate}} by {{moderatorName}}',
+                declined: 'Declined {{timeDate}} by {{moderatorName}}',
             },
         },
         notificationList: {

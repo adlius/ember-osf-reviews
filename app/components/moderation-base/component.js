@@ -17,14 +17,19 @@ export default Component.extend({
     store: service(),
 
     providerName: alias('theme.provider.name'),
-
-    tabs: computed('theme.reviewableStatusCounts.pending', function() {
+    tabs: computed('theme.reviewableStatusCounts.pending', 'theme.requestStatusCounts', function() {
         return [
             {
                 nameKey: 'global.submissions',
                 route: 'preprints.provider.moderation',
                 hasCount: true,
                 count: this.get('theme.reviewableStatusCounts.pending'),
+            },
+            {
+                nameKey: 'global.withdrawalRequests',
+                route: 'preprints.provider.withdrawals',
+                hasCount: true,
+                count: this.get('theme.requestStatusCounts.pending'),
             },
             {
                 nameKey: 'global.moderators',
@@ -40,4 +45,6 @@ export default Component.extend({
             },
         ];
     }),
+
+
 });
