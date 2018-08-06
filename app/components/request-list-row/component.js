@@ -3,12 +3,12 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 
 import moment from 'moment';
-import { task } from 'ember-concurrency';
 
 import latestAction from 'reviews/utils/latest-action';
 
 const ACCEPTED = 'accepted';
 const REJECTED = 'rejected';
+const AUTO_ACCEPTED = 'automaticallyAccepted';
 
 const submittedOnLabel = {
     gtDay: 'components.requestListRow.submission.requestedOn',
@@ -19,6 +19,10 @@ const ACTION_LABELS = Object.freeze({
     [ACCEPTED]: {
         gtDay: 'components.requestListRow.submission.approvedOn',
         ltDay: 'components.requestListRow.submission.approved',
+    },
+    [AUTO_ACCEPTED]: {
+        gtDay: 'components.requestListRow.submission.approvedAutomaticallyOn',
+        ltDay: 'components.requestListRow.submission.approvedAutomatically',
     },
     [REJECTED]: {
         gtDay: 'components.requestListRow.submission.declinedOn',
@@ -33,26 +37,31 @@ export default Component.extend({
 
     localClassNames: ['moderation-list-row'],
 
+    latestActionCreator: computed.alias('latestAction.creator.fullName'),
+
     isWithdrawn: computed('request.machineState', function() {
         return this.get('request.machineState') === 'accepted';
     }),
 
-    latestAction: computed('request.target.reviewActions.[]', function() {
-        return latestAction(this.get('request.target.reviewActions'));
+    latestAction: computed('request.actions', function() {
+        return latestAction(this.get('request.actions'));
     }),
 
-    latestActionCreator: computed.alias('latestAction.creator.fullName'),
-
-    decisionOnLabel: computed('request.machineState', 'request.dateLastTransitioned', 'latestActionCreator', function() {
+    decisionOnLabel: computed('request.machineState', 'request.dateLastTransitioned', 'latestActionCreator', 'latestAction', function() {
         const i18n = this.get('i18n');
         const [acceptedRejectedDate, gtDay] = this.formattedDateLabel(this.get('request.dateLastTransitioned'));
         const dayValue = gtDay ? 'gtDay' : 'ltDay';
-        const status = this.get('request.machineState');
+        let status = null;
+        if (this.get('latestAction.auto')) {
+            status = 'automaticallyAccepted';
+        } else {
+            status = this.get('request.machineState');
+        }
         const labels = ACTION_LABELS[status][dayValue];
         return i18n.t(labels, { timeDate: acceptedRejectedDate, moderatorName: this.get('latestActionCreator') });
     }),
 
-    requestedOnLabel: computed('request.created', 'request.creator.fullnName', function() {
+    requestedOnLabel: computed('request.created', 'request.creator.fullName', function() {
         const i18n = this.get('i18n');
         const [submitDate, gtDaySubmit] = this.formattedDateLabel(this.get('request.created'));
         const dayValue = gtDaySubmit ? 'gtDay' : 'ltDay';

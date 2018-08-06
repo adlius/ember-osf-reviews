@@ -57,7 +57,6 @@ export default Controller.extend(Analytics, moderationQueryParams.Mixin, {
     },
 
     fetchData: task(function* (queryParams) {
-        console.log('fetching data');
         const providerId = this.get('theme.provider.id');
         const response = yield this.get('store').query(
             'preprint-request',

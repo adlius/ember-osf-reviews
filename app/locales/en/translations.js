@@ -228,6 +228,8 @@ export default {
                 requested: 'Requested {{timeDate}} by {{submitterName}}',
                 approvedOn: 'Approved on {{timeDate}} by {{moderatorName}}',
                 approved: 'Approved {{timeDate}} by {{moderatorName}}',
+                approvedAutomaticallyOn: 'Approved automatically on {{timeDate}}',
+                approvedAutomatically: 'Approved automatically {{timeDate}}',
                 declinedOn: 'Declined on {{timeDate}} by {{moderatorName}}',
                 declined: 'Declined {{timeDate}} by {{moderatorName}}',
             },
