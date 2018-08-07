@@ -47,6 +47,7 @@ export default Controller.extend(Analytics, moderationQueryParams.Mixin, {
     },
 
     setup({ queryParams }) {
+        console.log('fetching reviews');
         this.get('fetchData').perform(queryParams);
     },
 

@@ -41,6 +41,7 @@ export default Controller.extend(Analytics, moderationQueryParams.Mixin, {
     },
 
     setup({ queryParams }) {
+        console.log('fetching requests');
         this.get('fetchData').perform(queryParams);
     },
 

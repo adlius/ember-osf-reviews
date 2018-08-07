@@ -13,6 +13,7 @@ export default Route.extend(ConfirmationMixin, {
 
     setupController(controller, model) {
         this._super(...arguments);
+        controller.set('isPendingWithdrawal', false);
         controller.get('fetchData').perform(model.preprintId);
     },
 

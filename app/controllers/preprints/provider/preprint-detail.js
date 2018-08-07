@@ -129,31 +129,46 @@ export default Controller.extend({
         submitDecision(trigger, comment, filter) {
             this.toggleProperty('savingAction');
             let action = null;
+            let actionType = null;
             if (this.get('isPendingWithdrawal')) {
                 action = this.store.createRecord('preprint-request-action', {
                     actionTrigger: trigger,
                     target: this.get('withdrawalRequest'),
                 });
+                actionType = 'withdrawal';
             } else {
                 action = this.store.createRecord('review-action', {
                     actionTrigger: trigger,
                     target: this.get('preprint'),
                 });
+                actionType = 'reviews';
             }
 
             if (comment) {
                 action.comment = comment;
             }
 
-            this._saveAction(action, filter);
+            this._saveAction(action, actionType, filter);
         },
     },
 
-    _saveAction(action, filter) {
-        return action.save()
-            .then(this._toModerationList.bind(this, { status: filter, page: 1, sort: '-date_last_transitioned' }))
-            .catch(this._notifySubmitFailure.bind(this))
-            .finally(() => this.set('savingAction', false));
+    _saveAction(action, actionType, filter) {
+        if (actionType === 'withdrawal') {
+            return action.save()
+                .then(this._toRequestList.bind(this, { status: filter, page: 1, sort: '-date_last_transitioned' }))
+                .catch(this._notifySubmitFailure.bind(this))
+                .finally(() => this.set('savingAction', false));
+        } else if (actionType === 'reviews') {
+            return action.save()
+                .then(this._toModerationList.bind(this, { status: filter, page: 1, sort: '-date_last_transitioned' }))
+                .catch(this._notifySubmitFailure.bind(this))
+                .finally(() => this.set('savingAction', false));
+        }
+    },
+
+    _toRequestList(queryParams) {
+        this.set('userHasEnteredReview', false);
+        this.transitionToRoute('preprints.provider.withdrawals', { queryParams });
     },
 
     _toModerationList(queryParams) {
@@ -165,27 +180,29 @@ export default Controller.extend({
         this.get('toast').error(this.get('i18n').t('components.preprintStatusBanner.error'));
     },
 
-    fetchData: task(function* (preprintId) {
+    fetchData: task(function* (preprintId, fromWithdrawalList=false) {
         const response = yield this.get('store').findRecord(
             'preprint',
             preprintId,
             { include: ['node', 'license', 'review_actions', 'contributors'] },
         );
-        let withdrawalRequest = yield this.get('store').query(
-            'preprint-request',
-            { providerId: this.get('theme').provider.id, filter: { target: preprintId, machine_state: 'pending' } },
-        );
-        withdrawalRequest = withdrawalRequest.toArray();
+        if (fromWithdrawalList) {
+            let withdrawalRequest = yield this.get('store').query(
+                'preprint-request',
+                { providerId: this.get('theme').provider.id, filter: { target: preprintId, machine_state: 'pending' } },
+            );
+            withdrawalRequest = withdrawalRequest.toArray();
+            if (withdrawalRequest.length >= 1) {
+                this.set('withdrawalRequest', withdrawalRequest[0]);
+                this.set('isPendingWithdrawal', true);
+            }
+        }
         const node = yield response.get('node');
         if (!node.get('public')) {
             this.transitionToRoute('page-not-found');
             return;
         }
         this.set('preprint', response);
-        if (withdrawalRequest.length >= 1) {
-            this.set('withdrawalRequest', withdrawalRequest[0]);
-            this.set('isPendingWithdrawal', true);
-        }
         this.get('loadMathJax').perform();
 
         // required for breadcrumbs
