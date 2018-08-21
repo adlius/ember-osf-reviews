@@ -39,7 +39,7 @@ body > :global(.ember-view) {
     padding: 0;
 }
 
-.alert-maintenance {
+:global(.alert-maintenance) {
     margin-bottom: 0;
 }
 

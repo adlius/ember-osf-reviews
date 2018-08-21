@@ -9,6 +9,9 @@
     "test": "tests"
   },
   "repository": "",
+  "browserslist": [
+    "last 2 major versions"
+  ],
   "scripts": {
     "build": "ember build",
     "start": "ember server",
@@ -23,15 +26,14 @@
     "@centerforopenscience/eslint-config": "^2.0.0",
     "@centerforopenscience/osf-style": "1.7.0",
     "@cos-forks/ember-content-placeholders": "https://github.com/cos-forks/ember-content-placeholders#c85cdbeb4b9c206c3f76a92422db76815b2c95bc",
+    "autoprefixer": "^9.1.2",
     "bootstrap-sass": "^3.3.7",
     "broccoli-asset-rev": "^2.4.5",
     "coveralls": "^3.0.0",
     "ember-bootstrap": "^1.0.0-rc.1",
     "ember-cli": "2.16.2",
     "ember-cli-app-version": "^3.0.0",
-    "ember-cli-autoprefixer": "^0.8.1",
     "ember-cli-babel": "^6.3.0",
-    "ember-cli-bootstrap-sassy": "^0.5.8",
     "ember-cli-code-coverage": "^0.4.2",
     "ember-cli-dependency-checker": "^2.0.1",
     "ember-cli-eslint": "^4.2.0",
