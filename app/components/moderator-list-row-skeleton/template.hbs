@@ -1,0 +1,19 @@
+{{#content-placeholders class=(local-class 'name--skeleton') as |placeholder|}}
+    {{placeholder.img class=(local-class 'gravatar--skeleton')}}
+    <div class="p-h-xs"></div>
+    {{placeholder.text class=(local-class 'text--skeleton') lines=1}}
+{{/content-placeholders}}
+
+{{#content-placeholders class=(local-class 'role--skeleton') as |placeholder|}}
+    {{#if isAdmin}}
+        <div local-class="dropdown--skeleton">
+            {{placeholder.img}}
+        </div>
+    {{/if}}
+{{/content-placeholders}}
+
+{{#content-placeholders class=(local-class 'controls--skeleton') as |placeholder|}}
+    {{#if isAdmin}}
+        {{placeholder.icon}}
+    {{/if}}
+{{/content-placeholders}}

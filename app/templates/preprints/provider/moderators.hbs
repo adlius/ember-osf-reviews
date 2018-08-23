@@ -11,26 +11,7 @@
     </div>
     <div class="moderators-row-border"></div>
     {{#if fetchData.isRunning}}
-        <div local-class="moderators-row-container moderators-row--skeleton" class="p-h-md p-v-sm">
-            <div class="name--skeleton">
-                {{#content-placeholders as |placeholder|}}
-                    <div class="gravatar--skeleton">{{placeholder.img}}</div>
-                    <div class="m-l-sm">{{placeholder.text lines=1}}</div>
-                {{/content-placeholders}}
-            </div>
-            {{#if isAdmin}}
-                <div>
-                    {{#content-placeholders as |placeholder|}}
-                        <div local-class="dropdown--skeleton">{{placeholder.img}}</div>
-                    {{/content-placeholders}}
-                </div>
-                <div local-class="remove-icon--skeleton">
-                    {{#content-placeholders as |placeholder|}}
-                        {{placeholder.icon}}
-                    {{/content-placeholders}}
-                </div>
-            {{/if}}
-        </div>
+        {{moderator-list-row-skeleton isAdmin=isAdmin}}
         <div class="moderators-row-border"></div>
     {{else if (not results.moderators)}}
         <p class="m-b-md m-t-md no-moderators-message">

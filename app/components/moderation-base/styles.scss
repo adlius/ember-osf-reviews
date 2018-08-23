@@ -8,6 +8,10 @@
         color: #fff;
     }
 
+    :global(.container) {
+        height: 100%;
+    }
+
     .provider-title {
         padding-bottom: 10px;
         font-weight: bold;

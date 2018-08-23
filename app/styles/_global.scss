@@ -47,10 +47,6 @@ body > :global(.ember-view) {
     height: $nav-wrapper-height;
 }
 
-:global(.container) {
-    height: 100%;
-}
-
 :global(.unread-label) {
     background-color: $color-bg-gray-light;
     color: $color-text-gray-dark;

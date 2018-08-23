@@ -55,7 +55,7 @@ test('it renders moderator-list-row admin view', function(assert) {
             }}`);
     assert.ok(this.$(`.${styles['moderator-name']}`).length);
     assert.ok(this.$('.dropdown-button').length);
-    assert.ok(this.$(`.${styles['row-controls']}`).length);
+    assert.ok(this.$(`.${styles['moderator-controls']}`).children().length);
     assert.notOk(this.$(`.${styles['remove-button']}.disabled`).length);
 
     assert.equal(this.$(`.${styles['moderator-name']} > .name`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
@@ -91,7 +91,7 @@ test('it renders moderator-list-row admin view remove disabled for admin', funct
             }}`);
     assert.ok(this.$(`.${styles['moderator-name']}`).length);
     assert.ok(this.$('.dropdown-button').length);
-    assert.ok(this.$(`.${styles['row-controls']}`).length);
+    assert.ok(this.$(`.${styles['moderator-controls']}`).children().length);
     assert.ok(this.$(`.${styles['remove-button']}.disabled`).length);
 
     assert.equal(this.$(`.${styles['moderator-name']} > .name`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
@@ -127,7 +127,7 @@ test('it renders moderator-list-row admin view remove not disabled for mod', fun
             }}`);
     assert.ok(this.$(`.${styles['moderator-name']}`).length);
     assert.ok(this.$('.dropdown-button').length);
-    assert.ok(this.$(`.${styles['row-controls']}`).length);
+    assert.ok(this.$(`.${styles['moderator-controls']}`).children().length);
     assert.notOk(this.$(`.${styles['remove-button']}.disabled`).length);
 
     assert.equal(this.$(`.${styles['moderator-name']} > .name`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
@@ -163,7 +163,7 @@ test('it renders moderator-list-row admin view remove disabled for mod', functio
             }}`);
     assert.ok(this.$(`.${styles['moderator-name']}`).length);
     assert.ok(this.$('.dropdown-button').length);
-    assert.ok(this.$(`.${styles['row-controls']}`).length);
+    assert.ok(this.$(`.${styles['moderator-controls']}`).children().length);
     assert.ok(this.$(`.${styles['remove-button']}.disabled`).length);
 
     assert.equal(this.$(`.${styles['moderator-name']} > .name`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
@@ -199,5 +199,5 @@ test('it renders moderator-list-row moderator view', function(assert) {
             }}`);
     assert.ok(this.$(`.${styles['moderator-name']}`).length);
     assert.notOk(this.$('.dropdown-button').length);
-    assert.notOk(this.$(`.${styles['row-controls']}`).length);
+    assert.notOk(this.$(`.${styles['moderator-controls']}`).children().length);
 });
