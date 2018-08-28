@@ -29,3 +29,10 @@
 .no-moderators-message {
     text-align: center;
 }
+
+.moderator-container {
+    @media (max-width: 768px) {
+        width: 100%;
+        margin: 0;
+    }
+}

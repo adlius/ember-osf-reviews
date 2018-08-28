@@ -17,65 +17,69 @@
             <i>{{unregisteredUserName}}</i>
         {{/if}}
         {{#if showInviteForm}}
-            <span class="p-l-xs">or</span>
-            {{#bs-dropdown classNames=(local-class 'invite-dropdown') closeOnMenuClick=false as |dd|}}
-                {{#dd.toggle id="toggle-form" classNames=(concat 'btn ' (local-class 'dropdown-link'))}}
-                    {{t 'components.moderatorListAdd.inviteText'}}
-                {{/dd.toggle}}
-                {{#dd.menu classNames=(local-class 'unregistered-dropdown') tagName="div" as |menu|}}
-                    {{#menu.item classNames=(local-class 'unregistered-form') tagName="form"}}
-                        <div>
-                            <label>{{t "components.unregisteredContributorForm.fullNameLabel"}}</label>
-                            <form>
-                                {{validated-input
-                                    model=this
-                                    valuePath='fullName'
-                                    placeholder=(t "components.unregisteredContributorForm.fullNameLabel")
-                                    value=unregisteredUserName}}
-                            </form>
-                        </div>
-                        <div>
-                            <label>{{t "components.unregisteredContributorForm.emailLabel"}}</label>
-                            <form>
-                                {{validated-input
-                                    model=this
-                                    valuePath='email'
-                                    placeholder=(t "components.unregisteredContributorForm.emailLabel")
-                                    value=unregisteredUserEmail}}
-                            </form>
-                        </div>
-                        <p class="text-muted">
-                            {{t "components.unregisteredContributorForm.notifyMessage"}}
-                        </p>
-                        <div class="pull-right p-t-xs p-b-sm">
-                            <button type="button" class="btn btn-default btn-small" {{action 'resetInviteForm'}}>
-                                {{t "global.cancel"}}
-                            </button>
-                            <button type="submit" class="btn btn-success btn-small m-l-xs" {{action 'selectUnregistered'}} disabled={{not isFormValid}}>
-                                {{t "global.add"}}
-                            </button>
-                        </div>
-                    {{/menu.item}}
-                {{/dd.menu}}
-            {{/bs-dropdown}}
+            <div local-class="invite-container">
+                <span local-class="invite-text">or</span>
+                {{#bs-dropdown classNames=(local-class 'invite-dropdown') closeOnMenuClick=false as |dd|}}
+                    {{#dd.toggle id="toggle-form" classNames=(concat 'btn ' (local-class 'dropdown-link'))}}
+                        {{t 'components.moderatorListAdd.inviteText'}}
+                    {{/dd.toggle}}
+                    {{#dd.menu classNames=(local-class 'unregistered-dropdown') tagName="div" as |menu|}}
+                        {{#menu.item classNames=(local-class 'unregistered-form') tagName="form"}}
+                            <div>
+                                <label>{{t "components.unregisteredContributorForm.fullNameLabel"}}</label>
+                                <form>
+                                    {{validated-input
+                                        model=this
+                                        valuePath='fullName'
+                                        placeholder=(t "components.unregisteredContributorForm.fullNameLabel")
+                                        value=unregisteredUserName}}
+                                </form>
+                            </div>
+                            <div>
+                                <label>{{t "components.unregisteredContributorForm.emailLabel"}}</label>
+                                <form>
+                                    {{validated-input
+                                        model=this
+                                        valuePath='email'
+                                        placeholder=(t "components.unregisteredContributorForm.emailLabel")
+                                        value=unregisteredUserEmail}}
+                                </form>
+                            </div>
+                            <p class="text-muted">
+                                {{t "components.unregisteredContributorForm.notifyMessage"}}
+                            </p>
+                            <div class="pull-right p-t-xs p-b-sm">
+                                <button type="button" class="btn btn-default btn-small" {{action 'resetInviteForm'}}>
+                                    {{t "global.cancel"}}
+                                </button>
+                                <button type="submit" class="btn btn-success btn-small m-l-xs" {{action 'selectUnregistered'}} disabled={{not isFormValid}}>
+                                    {{t "global.add"}}
+                                </button>
+                            </div>
+                        {{/menu.item}}
+                    {{/dd.menu}}
+                {{/bs-dropdown}}
+            </div>
         {{/if}}
     </div>
-    {{#bs-dropdown classNames=(local-class 'role-dropdown') as |dd|}}
-        {{#dd.button classNames="btn btn-default dropdown-button"}}
-            {{roleLabel}}
-            <span class="fa fa-caret-down p-l-xs"></span>
-        {{/dd.button}}
-        {{#dd.menu classNames=(local-class 'moderator-dropdown-menu') as |menu|}}
-            {{#each roleOptions as |roleOption|}}
-                {{#menu.item}}
-                    <button class="btn" {{action 'roleChanged' roleOption.role}}>
-                        {{roleOption.label}}
-                        <i class='{{if (eq role roleOption.role) 'fa fa-check selected' 'not-selected'}}'></i>
-                    </button>
-                {{/menu.item}}
-            {{/each}}
-        {{/dd.menu}}
-    {{/bs-dropdown}}
+    <div local-class="moderator-dropdown">
+        {{#bs-dropdown classNames=(local-class 'role-dropdown') as |dd|}}
+            {{#dd.button classNames="btn btn-default dropdown-button"}}
+                {{roleLabel}}
+                <span class="fa fa-caret-down p-l-xs"></span>
+            {{/dd.button}}
+            {{#dd.menu classNames=(local-class 'moderator-dropdown-menu') as |menu|}}
+                {{#each roleOptions as |roleOption|}}
+                    {{#menu.item}}
+                        <button class="btn" {{action 'roleChanged' roleOption.role}}>
+                            {{roleOption.label}}
+                            <i class='{{if (eq role roleOption.role) 'fa fa-check selected' 'not-selected'}}'></i>
+                        </button>
+                    {{/menu.item}}
+                {{/each}}
+            {{/dd.menu}}
+        {{/bs-dropdown}}
+    </div>
     <div local-class="row-controls">
         <button class="btn btn-default" {{action 'cancel'}} disabled={{addModerator.isRunning}}>
             {{t 'global.cancel'}}
