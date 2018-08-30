@@ -36,13 +36,14 @@
 
 .moderator-name {
     flex: 1;
+    -ms-flex: auto; /* stylelint-disable-line property-no-vendor-prefix */
     display: flex;
     align-items: center;
     flex-wrap: wrap;
 
     @media (max-width: 768px) {
         flex-basis: 100%;
-        min-height: 45px;
+        padding-bottom: 5px;
     }
 
     :global(.ember-power-select-trigger) {
@@ -70,6 +71,7 @@
 
 .moderator-dropdown {
     flex: 1;
+    -ms-flex: auto; /* stylelint-disable-line property-no-vendor-prefix */
     display: flex;
     justify-content: center;
 
@@ -93,6 +95,7 @@
 
 .row-controls {
     flex: 1;
+    -ms-flex: auto; /* stylelint-disable-line property-no-vendor-prefix */
     display: flex;
     justify-content: flex-end;
 }

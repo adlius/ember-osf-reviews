@@ -8,9 +8,8 @@
                 {{/content-placeholders}}
             </div>
         {{else}}
-            <img class="hidden-xs" src={{user.links.profile_image}} height=40 width=40 alt="gravatar {{moderator.fullName}}">
-            <img class="visible-xs" src="{{user.links.profile_image}}" height=25 width=25 alt="{{moderator.fullName}} gravatar">
-            <div class="name p-l-sm">
+            <img local-class="gravatar" src={{user.links.profile_image}} alt="gravatar {{moderator.fullName}}">
+            <div local-class="name" class="p-l-sm">
                 <a href="{{user.links.html}}">{{moderator.fullName}}</a>
             </div>
         {{/if}}
@@ -60,18 +59,20 @@
                     {{/if}}
                 </button>
             {{else}}
-                {{#if (and editingModerator disableRemove)}}
-                    {{#bs-tooltip placement='left'}}
-                        {{t 'components.moderatorList.editDisabledMessage'}}
-                    {{/bs-tooltip}}
-                {{else if (and disableAdminDeletion disableRemove)}}
-                    {{#bs-tooltip placement='left'}}
-                        {{t 'components.moderatorList.adminDisabledMessage'}}
-                    {{/bs-tooltip}}
-                {{/if}}
-                <a role="button" local-class="remove-button" class="{{if disableRemove 'disabled'}}" {{action 'removeInitiated'}}>
-                    <i class="fa fa-times fa-lg "></i>
-                </a>
+                <div>
+                    {{#if (and editingModerator disableRemove)}}
+                        {{#bs-tooltip placement='left'}}
+                            {{t 'components.moderatorList.editDisabledMessage'}}
+                        {{/bs-tooltip}}
+                    {{else if (and disableAdminDeletion disableRemove)}}
+                        {{#bs-tooltip placement='left'}}
+                            {{t 'components.moderatorList.adminDisabledMessage'}}
+                        {{/bs-tooltip}}
+                    {{/if}}
+                    <a role="button" local-class="remove-button" class="{{if disableRemove 'disabled'}}" {{action 'removeInitiated'}}>
+                        <i class="fa fa-times fa-lg "></i>
+                    </a>
+                </div>
             {{/if}}
         {{/if}}
     </div>

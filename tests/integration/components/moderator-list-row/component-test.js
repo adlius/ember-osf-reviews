@@ -58,7 +58,7 @@ test('it renders moderator-list-row admin view', function(assert) {
     assert.ok(this.$(`.${styles['moderator-controls']}`).children().length);
     assert.notOk(this.$(`.${styles['remove-button']}.disabled`).length);
 
-    assert.equal(this.$(`.${styles['moderator-name']} > .name`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
+    assert.equal(this.$(`.${styles['moderator-name']}`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
     assert.equal(this.$('.dropdown-button').text().replace(/\s+/g, ' ').trim(), 'Admin');
 });
 
@@ -94,7 +94,7 @@ test('it renders moderator-list-row admin view remove disabled for admin', funct
     assert.ok(this.$(`.${styles['moderator-controls']}`).children().length);
     assert.ok(this.$(`.${styles['remove-button']}.disabled`).length);
 
-    assert.equal(this.$(`.${styles['moderator-name']} > .name`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
+    assert.equal(this.$(`.${styles['moderator-name']}`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
     assert.equal(this.$('.dropdown-button').text().replace(/\s+/g, ' ').trim(), 'Admin');
 });
 
@@ -130,7 +130,7 @@ test('it renders moderator-list-row admin view remove not disabled for mod', fun
     assert.ok(this.$(`.${styles['moderator-controls']}`).children().length);
     assert.notOk(this.$(`.${styles['remove-button']}.disabled`).length);
 
-    assert.equal(this.$(`.${styles['moderator-name']} > .name`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
+    assert.equal(this.$(`.${styles['moderator-name']}`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
     assert.equal(this.$('.dropdown-button').text().replace(/\s+/g, ' ').trim(), 'Moderator');
 });
 
@@ -166,7 +166,7 @@ test('it renders moderator-list-row admin view remove disabled for mod', functio
     assert.ok(this.$(`.${styles['moderator-controls']}`).children().length);
     assert.ok(this.$(`.${styles['remove-button']}.disabled`).length);
 
-    assert.equal(this.$(`.${styles['moderator-name']} > .name`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
+    assert.equal(this.$(`.${styles['moderator-name']}`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
     assert.equal(this.$('.dropdown-button').text().replace(/\s+/g, ' ').trim(), 'Moderator');
 });
 
