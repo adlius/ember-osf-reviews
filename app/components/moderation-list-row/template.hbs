@@ -2,11 +2,11 @@
     {{moderation-list-row-skeleton}}
 {{else}}
     {{#link-to 'preprints.provider.preprint-detail' theme.id submission.id}}
-        <div data-status={{submission.reviewsState}} class="flex-container">
-            <i class="fa fa-lg {{get iconClass submission.reviewsState}} status-icon"></i>
-            <div title={{submission.title}} class="submission-info">
-                <div class="submission-title">{{submission.title}}</div>
-                <div class="submission-body">
+        <div data-status={{submission.reviewsState}} local-class="flex-container">
+            <i class="fa fa-lg {{get iconClass submission.reviewsState}}" local-class="{{get iconClass submission.reviewsState}} status-icon"></i>
+            <div title={{submission.title}} local-class="submission-info">
+                <div local-class="submission-title">{{submission.title}}</div>
+                <div local-class="submission-body">
                     <div>
                         {{submittedOnLabel}}
                         {{#each firstContributors as |contributor| ~}}

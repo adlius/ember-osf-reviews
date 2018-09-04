@@ -13,6 +13,7 @@ moduleFor('controller:preprints/provider/moderation', 'Unit | Controller | prepr
     needs: [
         'service:theme',
         'service:metrics',
+        'service:session',
     ],
     beforeEach() {
         this.register('service:metrics', analyticsService);

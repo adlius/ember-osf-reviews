@@ -16,7 +16,8 @@ const TITLES = {
 
 
 export default Component.extend({
-    classNames: ['reviews-error-page', 'content'],
+    classNames: ['content'],
+    localClassNames: 'reviews-error-page',
     supportEmail: 'support@osf.io',
 
     errorMessage: computed('error', function() {

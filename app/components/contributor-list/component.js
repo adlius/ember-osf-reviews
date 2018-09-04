@@ -8,6 +8,7 @@ export default Component.extend({
     store: service(),
 
     tagName: 'ul',
+    localClassNames: 'contributor-list',
 
     bibliographicContributors: filterBy('contributorsList', 'bibliographic', true),
 

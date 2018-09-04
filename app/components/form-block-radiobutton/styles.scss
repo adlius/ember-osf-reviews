@@ -1,0 +1,29 @@
+.form-block-radiobutton {
+    cursor: pointer;
+    padding: 18px;
+    margin: 25px;
+    background: $color-panel-bg;
+
+    .radio {
+        text-align: center;
+    }
+
+    .text {
+        width: 100%;
+    }
+
+    input[type='radio'] { /* stylelint-disable-line selector-no-qualifying-type */
+        margin: 0;
+    }
+
+    // Make centering a radio button possible
+    .row {
+        display: table;
+
+        > * {
+            display: table-cell;
+            float: none;
+            vertical-align: middle;
+        }
+    }
+}

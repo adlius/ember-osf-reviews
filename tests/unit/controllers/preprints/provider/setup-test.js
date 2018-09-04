@@ -25,6 +25,7 @@ moduleFor('controller:preprints/provider/setup', 'Unit | Controller | preprints/
         'service:i18n',
         'service:metrics',
         'service:toast',
+        'service:session',
     ],
     beforeEach() {
         this.registry.register('helper:t', tHelper);

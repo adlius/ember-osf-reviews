@@ -1,0 +1,57 @@
+.action-feed-entry {
+    clear: both;
+
+    :hover {
+        background: $color-bg-gray-light;
+        cursor: pointer;
+    }
+
+}
+
+// Used in Unit tests
+.action-body { } /* stylelint-disable-line block-no-empty */
+
+.action-date {
+    color: $color-text-gray-light;
+    font-size: 16px;
+    margin-left: 30px;
+}
+
+.action-heading {
+    color: $color-text-gray-dark;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 30px;
+    line-height: 23px;
+}
+
+.action-detail {
+    margin-left: 30px;
+
+    a {
+        color: $color-text-gray;
+        font-size: 16px;
+    }
+}
+
+.submit-icon {
+    color: $color-action-submit;
+}
+
+.accept-icon {
+    color: $color-action-accept;
+}
+
+.reject-icon {
+    color: $color-action-reject;
+}
+
+.edit-comment-icon {
+    color: $color-action-edit-comment;
+}
+
+
+.icon {
+    float: left;
+    font-size: 20px;
+}

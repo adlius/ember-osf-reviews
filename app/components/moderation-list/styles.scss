@@ -1,0 +1,107 @@
+.reviews-list {
+    padding-top: 20px;
+
+    :global(.btn) {
+        background: transparent;
+        font-size: 20px;
+        outline: none;
+        padding: 6px 0;
+
+        @media screen and (max-width: $screen-small-tablet) {
+            font-size: 16px;
+        }
+
+        @media screen and (max-width: $screen-medium-small) {
+            font-size: 14px;
+        }
+
+        @media screen and (max-width: $screen-xs) {
+            display: block;
+        }
+    }
+
+    :global(.btn:hover) {
+        outline: none;
+        text-decoration: none;
+    }
+
+    :global(.btn:active) {
+        box-shadow: none;
+    }
+}
+
+.reviews-list-heading {
+    background-color: $color-bg-gray-light;
+    border: 1px solid $color-border;
+    padding: 10px 20px;
+
+    @media screen and (max-width: $screen-small-tablet) {
+        .moderation-list-heading {
+            padding-left: 20px;
+        }
+    }
+
+    :global(.icon-accepted) {
+        -webkit-text-stroke: 1px $color-bg-gray-light;
+    }
+
+    :global(.icon-rejected) {
+        -webkit-text-stroke: 1px $color-bg-gray-light;
+    }
+
+    :global(.dropdown-toggle) {
+        color: $color-text-gray-dark;
+        text-decoration: none;
+
+        @media screen and (max-width: $screen-xs) {
+            margin-top: -2.3em;
+        }
+    }
+
+    :global(.dropdown-menu) {
+        background: $color-bg-gray-light;
+
+        @media screen and (max-width: $screen-xs) {
+            margin-top: -0.7em;
+        }
+
+        :global(.btn) {
+            text-align: left;
+            width: 100%;
+        }
+
+        i {
+            padding-left: 30px;
+        }
+
+        i:global(.fa-check) {
+            padding-left: 5px;
+        }
+
+        button:hover {
+            background-color: $color-border;
+        }
+    }
+}
+
+.reviews-btn-filter {
+    margin: 0;
+    margin-right: 20px;
+
+    @media screen and (max-width: $screen-small-tablet) {
+        margin-right: 1px;
+    }
+}
+
+.active-filter {
+    font-weight: bold;
+}
+
+.reviews-list {
+    padding-top: 20px;
+}
+
+.reviews-list-body {
+    font-size: 16px;
+    margin-bottom: 25px;
+}

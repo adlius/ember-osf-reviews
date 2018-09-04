@@ -17,9 +17,11 @@ export default Component.extend({
     store: service(),
     toast: service(),
     i18n: service(),
-
     currentUser: service(),
+
     classNames: ['action-feed'],
+    localClassNames: 'action-feed',
+
     page: 0,
 
     dummyActionList: computed(function() {

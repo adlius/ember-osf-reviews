@@ -1,0 +1,38 @@
+.moderators-header {
+    padding-bottom: 15px;
+
+    .add-moderator-button {
+        justify-self: flex-end;
+        align-self: flex-end;
+    }
+
+    .row-header {
+        font-size: 18px;
+        align-self: flex-end;
+    }
+}
+
+.moderators-row-container {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+    min-height: 60px;
+}
+
+:global(.moderators-row-border) {
+    width: 100%;
+    height: 1px;
+    background-color: $color-border-gray-light;
+}
+
+.no-moderators-message {
+    text-align: center;
+}
+
+.moderator-container {
+    @media (max-width: 768px) {
+        width: 100%;
+        margin: 0;
+    }
+}

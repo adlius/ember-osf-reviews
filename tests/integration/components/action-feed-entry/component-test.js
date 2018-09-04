@@ -1,6 +1,7 @@
 import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import styles from 'reviews/components/action-feed-entry/styles';
 
 moduleForComponent('action-feed-entry', 'Integration | Component | action-feed-entry', {
     integration: true,
@@ -17,9 +18,9 @@ test('it renders action-feed-entry', function(assert) {
     }));
     this.set('toDetail', () => {});
     this.render(hbs`{{action-feed-entry action=action toDetail=toDetail}}`);
-    assert.ok(this.$('.action-body').length);
+    assert.ok(this.$(`.${styles['action-body']}`).length);
     assert.equal(
-        this.$('.action-body').text().replace(/\s+/g, ' ').trim(),
+        this.$(`.${styles['action-body']}`).text().replace(/\s+/g, ' ').trim(),
         'October 28, 2017 Po submitted a preprint to viperXiv Using machine learning for better bambo taste',
     );
 });

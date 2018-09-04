@@ -1,13 +1,13 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-12 reviews-list">
+        <div class="col-md-12" local-class="reviews-list">
             <div class="box-shadow-md">
-                <div class="moderation-list-heading">
+                <div local-class="reviews-list-heading">
                     {{#each statusButtons as |statusButton|}}
-                        <button class="btn moderation-btn-filter {{if (eq status statusButton.status) 'active-filter'}}"
+                        <button class="btn" local-class="reviews-btn-filter {{if (eq status statusButton.status) 'active-filter'}}"
                                 {{action statusChanged statusButton.status}}>
                             <i class="fa {{statusButton.iconClass}}"></i>
-                            <span class="status-count">{{get theme.reviewableStatusCounts statusButton.status}}</span>
+                            <span>{{get theme.reviewableStatusCounts statusButton.status}}</span>
                             {{t statusButton.labelKey}}
                         </button>
                     {{/each}}
@@ -16,11 +16,11 @@
                             {{t 'components.moderationList.sort'}}
                             <span class="fa fa-caret-down"></span>
                         {{/dd.toggle}}
-                        {{#dd.menu classNames="dropdown-menu-right" as |menu|}}
+                        {{#dd.menu as |menu|}}
                             {{#each sortOptions as |sortOption|}}
                                 {{#menu.item}}
                                     <button class="btn" {{action sortChanged sortOption.sort}}>
-                                        <i class='{{if (eq sort sortOption.sort) 'fa fa-check selected' 'not-selected'}}'></i>
+                                        <i class='{{if (eq sort sortOption.sort) 'fa fa-check' ''}}'></i>
                                         {{t sortOption.labelKey}}
                                     </button>
                                 {{/menu.item}}
@@ -28,12 +28,12 @@
                         {{/dd.menu}}
                     {{/bs-dropdown}}
                 </div>
-                <div class="moderation-list-body">
+                <div local-class="reviews-list-body">
                     {{#if loading}}
                         {{moderation-list-row-skeleton}}
                     {{else}}
                         {{#if (eq submissions.length 0)}}
-                            <div class="text-center p-v-md moderation-list-row">
+                            <div class="text-center p-v-md {{local-class 'moderation-list-row' from='reviews/components/moderation-list-row/styles'}}">
                                 {{t 'components.moderationList.noSubmissions'}}
                             </div>
                         {{else}}

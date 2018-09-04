@@ -10,6 +10,7 @@ const SCROLL_RESET_DISABLED_ROUTES = ['preprints.provider.moderation', 'preprint
 
 const Router = EmberRouter.extend({
     metrics: service(),
+    session: service(),
     location: config.locationType,
     rootURL: config.rootURL,
     transitioningFrom: '',
@@ -37,9 +38,30 @@ const Router = EmberRouter.extend({
     // Track page/route views
     _trackPage() {
         scheduleOnce('afterRender', this, () => {
+            // Tracks page with custom parameters
+            // authenticated => if the user is logged in or not
+            // isPublic      => if the resource the user is viewing is public or private.
+            //                  n/a is used for pages like discover and index
+            // page          => the name of the current page
+            // resource      => what resource the user is on. Ex node, preprint, registry.
+            // title         => the current route name
+            const {
+                authenticated,
+                isPublic,
+                resource,
+            } = config.metricsAdapters[0].dimensions;
             const page = document.location.pathname;
             const routeName = this.getWithDefault('currentRouteName', 'unknown');
-            this.get('metrics').trackPage({ page, routeName });
+            const isAuthenticated = this.get('session').get('isAuthenticated');
+            const resourceType = routeName.endsWith('preprint-detail') ? 'preprint' : 'n/a';
+
+            this.get('metrics').trackPage({
+                [authenticated]: isAuthenticated ? 'Logged in' : 'Logged out',
+                [isPublic]: 'n/a',
+                page,
+                [resource]: resourceType,
+                routeName,
+            });
         });
     },
 

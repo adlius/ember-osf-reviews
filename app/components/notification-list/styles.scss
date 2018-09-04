@@ -1,0 +1,43 @@
+.notification-list-heading-container {
+    padding-bottom: 10px;
+}
+
+.notification-list-heading {
+    padding: 20px 20px 0;
+    font-weight: normal;
+}
+
+.notification-title--skeleton {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    width: 100%;
+}
+
+.ember-content-placeholders-text__line {
+    margin-top: 9px;
+    margin-bottom: 9px;
+}
+
+.line-separator {
+    border-bottom: 1px solid $color-bg-gray-light;
+}
+
+.helper-text {
+    padding-left: 20px;
+    color: $color-text-gray-light;
+}
+
+.notification-menu {
+    background: $color-bg-gray-light;
+
+    .btn {
+        text-align: left;
+        width: 100%;
+        background: $color-bg-gray-light;
+    }
+
+    .btn:hover {
+        background-color: $color-border;
+    }
+}

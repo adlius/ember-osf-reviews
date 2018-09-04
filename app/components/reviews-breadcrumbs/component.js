@@ -5,7 +5,7 @@ import Component from '@ember/component';
 
 export default Component.extend({
     i18n: service(),
-    classNames: ['breadcrumbs'],
+    localClassNames: ['breadcrumbs'],
 
     breadcrumbs: computed('navigator.currentPath', function() {
         // Always include the dashboard breadcrumb

@@ -33,6 +33,8 @@ const CLASS_NAMES = Object.freeze({
 export default Component.extend({
     i18n: service(),
 
+    localClassNames: 'action-feed-entry',
+
     iconClass: computed('action.actionTrigger', function() {
         return CLASS_NAMES[this.get('action.actionTrigger')];
     }),

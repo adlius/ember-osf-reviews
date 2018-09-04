@@ -4,7 +4,8 @@ import Component from '@ember/component';
 
 const PreprintFileBrowserItem = Component.extend({
     classNames: ['col-xs-2'],
-    classNameBindings: ['isPrimary:primary', 'isSelected:selected'],
+    localClassNames: ['preprint-file-browser-item'],
+    localClassNameBindings: ['isPrimary:primary', 'isSelected:selected'],
 
     file: null,
     selected: true,

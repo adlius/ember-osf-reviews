@@ -6,6 +6,7 @@ moduleFor('route:preprints/provider/preprint-detail', 'Unit | Route | preprints/
         'service:theme',
         'service:metrics',
         'service:currentUser',
+        'service:session',
     ],
 });
 

@@ -1,15 +1,15 @@
 <div class="container p-md">
-    <div class="flex-container">
-        <div class="status-explanation">
-            <span class="badge {{getClassName}}">
+    <div local-class="flex-container">
+        <div local-class="status-explanation">
+            <span class="badge" local-class="{{getClassName}}">
                 <i class="fa {{icon}} status-icon" aria-hidden="true"></i>
-                <span class="status-badge">{{t status}}</span>
+                <span local-class="status-badge">{{t status}}</span>
                 {{#bs-tooltip placement="right"}}
                     {{t feedbackBaseMessage documentType=submission.provider.documentType}} {{t statusExplanation}}.
                 {{/bs-tooltip}}
             </span>
         </div>
-        <div class="recent-activity">
+        <div local-class="recent-activity">
             {{#if loadingActions}}
                 {{loading-indicator classes='ball-dark text-center'}}
             {{else}}
@@ -20,24 +20,24 @@
                 {{/if}}
             {{/if}}
         </div>
-        <div class="dropdown reviewer-feedback">
+        <div class="dropdown" local-class="reviewer-feedback">
             {{#bs-dropdown closeOnMenuClick=false as |dd|}}
                 {{#dd.button type="success" disabled=submission.reviewActions.isPending}}
                     {{#if submission.reviewActions.isPending}}
-                        <i class='button-loading-indicator fa fa-circle-o-notch fa-spin'></i>
+                        <i local-class="button-loading-indicator" class="fa fa-circle-o-notch fa-spin"></i>
                         {{t 'components.preprint-status-banner.loading'}}
                     {{else}}
                         {{t labelDecisionDropdown}} <i class="fa fa-caret-down" aria-hidden="true"></i>
                     {{/if}}
                 {{/dd.button}}
                 {{#dd.menu}}
-                    <div class="feedback-header">
+                    <div local-class="feedback-header">
                         <span id="moderator-feedback">{{t labelDecisionHeader}}</span>
                         {{#dd.toggle aria-label="Close" id="close"}}
                             <i class="fa fa-times"></i>
                         {{/dd.toggle}}
                     </div>
-                    <div class="setting-reminder p-md">
+                    <div local-class="setting-reminder" class="p-md">
                         <div class="p-b-sm row">
                             <i class="fa {{settingsCommentsIcon}} fa-lg col-xs-1"></i>
                             <span class="col-xs-11">{{t settingsComments}}</span>
@@ -53,16 +53,16 @@
                             <span class="col-xs-11">{{t settingsModeration}}</span>
                         </div>
                     </div>
-                    <div class="moderator-decision" aria-labelledby="moderator-feedback">
-                        <form class="{{if noComment 'no-comment'}}">
-                            <label class="decision-option ">
+                    <div local-class="moderator-decision" aria-labelledby="moderator-feedback">
+                        <form local-class="{{if noComment 'no-comment'}}">
+                            <label local-class="decision-option">
                                 {{radio-button value="accepted" groupValue=decision changed="decisionToggled"}}
                                 <span class="p-l-sm">
                                     {{t labelAccept}}
                                     <p>{{t acceptExplanation}}</p>
                                 </span>
                             </label>
-                            <label class="decision-option">
+                            <label local-class="decision-option">
                                 {{radio-button value="rejected" groupValue=decision changed="decisionToggled"}}
                                 <span class="p-l-sm">
                                     {{t labelReject}}
@@ -76,13 +76,13 @@
                                 class="form-control"
                             }}
                             {{#if commentExceedsLimit}}
-                                <div class="comment-length-error">
+                                <div local-class="comment-length-error">
                                     {{commentLengthErrorMessage}}
                                 </div>
                             {{/if}}
                         </form>
                     </div>
-                    <div class="feedback-footer">
+                    <div local-class="feedback-footer">
                         <button class="btn btn-success pull-right" id="submit-btn" disabled={{btnDisabled}} {{action "submit"}}>
                             {{t labelDecisionBtn}}
                         </button>

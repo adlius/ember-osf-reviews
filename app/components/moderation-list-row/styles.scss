@@ -1,0 +1,90 @@
+.flex-container {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.status-icon {
+    padding-left: 20px;
+
+    @media screen and (max-width: $screen-small-tablet) {
+        font-size: 16px;
+    }
+}
+
+.pending {
+    color: $color-action-submit;
+}
+
+.rejected {
+    color: $color-action-reject;
+}
+
+.accepted {
+    color: $color-action-accept;
+}
+
+.submission-info {
+    padding: 10px 20px;
+    color: $color-text-gray-dark;
+    min-width: 0;  // needed for the text-overflow on submission-title
+}
+
+.submission-title {
+    font-size: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @media screen and (max-width: $screen-small-tablet) {
+        font-size: 14px;
+    }
+}
+
+.submission-body {
+    font-size: 16px;
+
+    li {
+        display: inline;
+    }
+
+    li::after {
+        content: ', ';
+    }
+
+    li:last-child::after {
+        content: '';
+    }
+
+    @media screen and (max-width: $screen-small-tablet) {
+        font-size: 12px;
+    }
+
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+
+.moderation-list-row {
+    border: 1px solid $color-border;
+}
+
+.moderation-list-row:hover {
+    background-color: $color-bg-gray-light;
+}

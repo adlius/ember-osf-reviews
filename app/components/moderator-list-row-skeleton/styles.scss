@@ -1,0 +1,62 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 60px;
+}
+
+.name--skeleton {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+
+    @media (max-width: 768px) {
+        flex-basis: 100%;
+        margin-bottom: 2px;
+    }
+
+    .gravatar--skeleton {
+        width: 40px;
+        height: 40px;
+
+        @media (max-width: 768px) {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .text--skeleton {
+        width: 50%;
+
+        & > div {
+            margin-bottom: 0;
+        }
+    }
+}
+
+
+.role--skeleton {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    .dropdown--skeleton {
+        width: 115px;
+
+        :global(.ember-content-placeholders-img) {
+            height: 32px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        justify-content: flex-start;
+    }
+}
+
+.controls--skeleton {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}

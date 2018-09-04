@@ -3,6 +3,7 @@ import Component from '@ember/component';
 
 export default Component.extend({
     classNames: ['osf-box'],
+    localClassNames: 'form-block-radiobutton',
 
     title: null,
     description: null,

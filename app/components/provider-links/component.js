@@ -4,6 +4,7 @@ import { task } from 'ember-concurrency';
 
 export default Component.extend({
     store: service(),
+    localClassNames: 'provider-links-component',
 
     tagName: 'li',
 

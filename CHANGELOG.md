@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2018-09-04
+### Added
+- Custom dimensions to `trackPage` for Google Analytics
+
+### Fixed
+- Use `name` field for contributors on preprint-detail page
+- Prevent banner from loading on `preprint-detail` page if preprint is undefined
+
+## Changed
+- Use Ember-CSS-Modules
+
 ## [0.6.1] - 2018-06-21
 ### Added
 - `anonymizeIp: true` in GA config to anonymize sender IP.

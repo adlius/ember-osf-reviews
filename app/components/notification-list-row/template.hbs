@@ -1,7 +1,7 @@
-<div class="flex-container">
+<div local-class="flex-container">
     <div class="notification-title">New pending submissions</div>
     {{#bs-dropdown as |dd|}}
-        {{#dd.button class="dropdown"}} {{t currentSettingLabel}} <span class="fa fa-caret-down p-l-xs"></span>{{/dd.button}}
+        {{#dd.button class=(local-class 'dropdown')}} {{t currentSettingLabel}} <span class="fa fa-caret-down p-l-xs"></span>{{/dd.button}}
         {{#dd.menu classNames="notification-menu" as |menu|}}
             {{#each notificationOptions as |notificationOption| }}
                 {{#menu.item}}

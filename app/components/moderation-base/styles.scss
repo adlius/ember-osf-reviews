@@ -1,0 +1,95 @@
+.dark-header {
+    background: #fff url('img/dark-overlay.png') top center;
+    padding-top: 15px;
+    height: 203px;
+    color: #fff;
+
+    a:not(.btn) {
+        color: #fff;
+    }
+
+    :global(.container) {
+        height: 100%;
+    }
+
+    .provider-title {
+        padding-bottom: 10px;
+        font-weight: bold;
+        font-size: 36px;
+    }
+
+    .breadcrumbs {
+        padding-bottom: 25px;
+    }
+}
+
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.title-nav > li > a {
+    border-radius: 0;
+    font-size: 24px;
+    padding: 10px 15px;
+}
+
+.title-nav > li > a:hover {
+    color: $color-text-gray-dark;
+}
+
+.title-nav > :global(.active) > a {
+    background-color: $color-white !important;
+    color: $color-text-gray-dark !important;
+}
+
+
+
+
+/* This should be a temporary adjustment */
+@media (max-width: 768px) {
+    .reviews-navbar {
+        top: 50px;
+    }
+}
+
+@media screen and (max-width: $screen-small-tablet) {
+    .dark-header {
+        height: 170px;
+
+        .provider-title {
+            font-size: 26px;
+        }
+
+        .breadcrumbs {
+            padding-bottom: 15px;
+        }
+    }
+
+    .title-nav > li > a {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+@media screen and (max-width: $screen-medium-small) {
+    .dark-header {
+        height: 150px;
+
+        .provider-title {
+            font-size: 22px;
+        }
+
+        .breadcrumbs {
+            padding-bottom: 10px;
+        }
+    }
+
+    .title-nav > li > a {
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+}

@@ -1,5 +1,5 @@
-<div class="moderators-list-row-container p-h-md p-v-sm">
-    <div class="moderator-name">
+<div local-class="moderator-list-row-container" class="p-h-md p-v-sm">
+    <div local-class="moderator-name">
         {{#if fetchData.isRunning}}
             <div class="name--skeleton">
                 {{#content-placeholders as |placeholder|}}
@@ -8,31 +8,34 @@
                 {{/content-placeholders}}
             </div>
         {{else}}
-            <img class="hidden-xs" src={{user.links.profile_image}} height=40 width=40 alt="gravatar {{moderator.fullName}}">
-            <img class="visible-xs" src="{{user.links.profile_image}}" height=25 width=25 alt="{{moderator.fullName}} gravatar">
-            <div class="name p-l-sm">
+            <img local-class="gravatar" src={{user.links.profile_image}} alt="gravatar {{moderator.fullName}}">
+            <div local-class="name" class="p-l-sm">
                 <a href="{{user.links.html}}">{{moderator.fullName}}</a>
             </div>
         {{/if}}
     </div>
-    {{#if isAdmin}}
-        {{#bs-dropdown classNames="role-dropdown" as |dd|}}
-            {{#dd.button classNames="btn btn-default dropdown-button" disabled=disableRoleSelect}}
-                {{roleLabel}}
-                <span class="fa fa-caret-down p-l-xs"></span>
-            {{/dd.button}}
-            {{#dd.menu classNames="moderator-dropdown-menu" as |menu|}}
-                {{#each roleOptions as |roleOption|}}
-                    {{#menu.item}}
-                        <button class="btn" {{action 'roleChanged' roleOption.role}}>
-                            {{roleOption.label}}
-                            <i class='{{if (eq role roleOption.role) 'fa fa-check selected' 'not-selected'}}'></i>
-                        </button>
-                    {{/menu.item}}
-                {{/each}}
-            {{/dd.menu}}
-        {{/bs-dropdown}}
-        <div class="row-controls">
+    <div local-class="moderator-dropdown">
+        {{#if isAdmin}}
+            {{#bs-dropdown classNames=(local-class 'role-dropdown') as |dd|}}
+                {{#dd.button classNames="btn btn-default dropdown-button" disabled=disableRoleSelect}}
+                    {{roleLabel}}
+                    <span class="fa fa-caret-down p-l-xs"></span>
+                {{/dd.button}}
+                {{#dd.menu classNames=(local-class 'moderator-dropdown-menu') as |menu|}}
+                    {{#each roleOptions as |roleOption|}}
+                        {{#menu.item}}
+                            <button class="btn" {{action 'roleChanged' roleOption.role}}>
+                                {{roleOption.label}}
+                                <i class='{{if (eq role roleOption.role) 'fa fa-check selected' 'not-selected'}}'></i>
+                            </button>
+                        {{/menu.item}}
+                    {{/each}}
+                {{/dd.menu}}
+            {{/bs-dropdown}}
+        {{/if}}
+    </div>
+    <div local-class="moderator-controls">
+        {{#if isAdmin}}
             {{#if removeConfirmation}}
                 <button class="btn btn-default" {{action 'cancel'}} disabled={{removeModerator.isRunning}}>
                     {{t 'global.cancel'}}
@@ -56,20 +59,23 @@
                     {{/if}}
                 </button>
             {{else}}
-                {{#if (and editingModerator disableRemove)}}
-                    {{#bs-tooltip placement='left'}}
-                        {{t 'components.moderatorList.editDisabledMessage'}}
-                    {{/bs-tooltip}}
-                {{else if (and disableAdminDeletion disableRemove)}}
-                    {{#bs-tooltip placement='left'}}
-                        {{t 'components.moderatorList.adminDisabledMessage'}}
-                    {{/bs-tooltip}}
-                {{/if}}
-                <a role="button" class="remove-button {{if disableRemove 'disabled'}}" {{action 'removeInitiated'}}>
-                    <i class="fa fa-times fa-lg "></i>
-                </a>
+                <div>
+                    {{#if (and editingModerator disableRemove)}}
+                        {{#bs-tooltip placement='left'}}
+                            {{t 'components.moderatorList.editDisabledMessage'}}
+                        {{/bs-tooltip}}
+                    {{else if (and disableAdminDeletion disableRemove)}}
+                        {{#bs-tooltip placement='left'}}
+                            {{t 'components.moderatorList.adminDisabledMessage'}}
+                        {{/bs-tooltip}}
+                    {{/if}}
+                    <a role="button" local-class="remove-button" class="{{if disableRemove 'disabled'}}" {{action 'removeInitiated'}}>
+                        <i class="fa fa-times fa-lg "></i>
+                    </a>
+                </div>
             {{/if}}
-        </div>
-    {{/if}}
+        {{/if}}
+    </div>
 </div>
+
 <div class="moderators-row-border"></div>

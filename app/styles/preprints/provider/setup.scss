@@ -1,0 +1,40 @@
+.reviews-setup {
+    background: $color-bg;
+    padding-bottom: 50px;
+
+    > header {
+        @include bottom-border;
+
+        // Color picked from background image
+        background: #ebeff0 url('img/reviews-setup-bg.jpg');
+        background-size: cover;
+        padding-bottom: 100px;
+        padding-top: 150px;
+
+        h1 {
+            font-size: 41px;
+            font-weight: 300;
+        }
+    }
+
+    > :global(.alert-warning) {
+        font-size: 20px;
+        margin: 0;
+        padding: 25px;
+    }
+
+    form {
+        @include centered-horizontal;
+        max-width: 575px;
+    }
+
+    @media screen and (max-width: $screen-xs) {
+        form {
+            .osf-box {  /* stylelint-disable-line max-nesting-depth */
+                margin: 5px;
+                padding: 10px;
+            }
+        }
+    }
+
+}

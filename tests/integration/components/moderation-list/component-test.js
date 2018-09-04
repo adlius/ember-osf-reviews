@@ -2,6 +2,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import styles from 'reviews/components/moderation-list-row/styles';
 
 
 const themeStub = Service.extend({
@@ -43,7 +44,7 @@ test('moderation-list no submissions', function(assert) {
             totalPages=2
         }}`);
 
-    assert.equal(this.$('.moderation-list-row').text().trim(), 'No submissions.');
+    assert.equal(this.$(`.${styles['moderation-list-row']}`).text().trim(), 'No submissions.');
 });
 
 test('moderation-list full page submissions', function(assert) {
@@ -83,5 +84,5 @@ test('moderation-list full page submissions', function(assert) {
             totalPages=2
         }}`);
 
-    assert.equal(this.$('.moderation-list-row').length, 10);
+    assert.equal(this.$(`.${styles['moderation-list-row']}`).length, 10);
 });

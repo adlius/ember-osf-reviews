@@ -8,7 +8,7 @@
         {{action-feed-entry-skeleton}}
     {{/each}}
 {{else if moreActions}}
-    <div class='see-more'>
+    <div local-class='see-more'>
         <a role='button' onclick={{perform loadActions}}>{{t 'components.actionFeed.seeMore'}}</a>
     </div>
 {{/if}}

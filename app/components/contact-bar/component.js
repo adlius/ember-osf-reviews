@@ -2,6 +2,7 @@ import { computed } from '@ember/object';
 import Component from '@ember/component';
 
 export default Component.extend({
+    localClassNames: 'contact-bar',
     classNames: ['reviews-contact-bar'],
 
     // Show language asking for feedback instead of setting up a provider

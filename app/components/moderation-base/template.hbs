@@ -1,10 +1,10 @@
-<div class="dark-header">
+<div local-class="dark-header">
     <div class="container">
-        <div class="flex-container text-left">
+        <div local-class="flex-container" class="text-left">
             {{reviews-breadcrumbs}}
-            <h1 class="provider-title">{{providerName}}</h1>
-            <div id="tabTitle">
-                <ul class="nav nav-pills">
+            <h1 local-class="provider-title">{{providerName}}</h1>
+            <div>
+                <ul class="nav nav-pills" local-class="title-nav">
                     {{#each tabs as |tab|}}
                         {{#link-to tab.route tagName='li' href=false}}
                             {{#link-to tab.route provider.id}}

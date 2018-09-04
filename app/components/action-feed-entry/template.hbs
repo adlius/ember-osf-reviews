@@ -2,18 +2,18 @@
     {{action-feed-entry-skeleton}}
 {{else}}
     <div class="m-b-xs p-sm">
-        <div class="icon {{iconClass}}">
+        <div class="icon" local-class="icon {{iconClass}}">
             <i class="fa {{icon}}"></i>
         </div>
-        <div class="action-body">
-            <div class="action-date">
+        <div local-class="action-body">
+            <div local-class="action-date">
                 {{moment-format action.dateCreated 'MMMM D, Y'}}
             </div>
-            <div class="action-heading">
+            <div local-class="action-heading">
                 {{action.creator.fullName}}
                 {{message}}
             </div>
-            <div class="action-detail">
+            <div local-class="action-detail">
                 {{#link-to 'preprints.provider.preprint-detail' action.provider action.target}}
                     {{action.target.title}}
                 {{/link-to}}

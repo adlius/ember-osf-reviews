@@ -4,4 +4,10 @@ module.exports = {
     globals: {
         MathJax: true
     },
+    rules: {
+        'ember/avoid-leaking-state-in-components': ['error', [
+            'localClassNames',
+            'localClassNameBindings',
+        ]],
+    },
 };

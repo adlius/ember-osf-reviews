@@ -10,8 +10,7 @@ moduleForComponent('contributor-list', 'Integration | Component | contributor-li
             data: [
                 EmberObject.create({ // Records to be returned by queryHasMany
                     users: {
-                        givenName: 'Brian',
-                        familyName: 'Nosek',
+                        name: 'Brian Nosek',
                         profileURL: 'https://osf.io/12345',
                     },
                     unregisteredContributor: null,

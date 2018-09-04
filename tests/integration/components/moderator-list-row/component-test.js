@@ -2,6 +2,7 @@ import EmberObject from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import Service from '@ember/service';
+import styles from 'reviews/components/moderator-list-row/styles';
 
 
 const storeStub = Service.extend({
@@ -52,12 +53,12 @@ test('it renders moderator-list-row admin view', function(assert) {
                 deleteModerator=deleteModerator
                 roleOptions=roleOptions
             }}`);
-    assert.ok(this.$('.moderator-name').length);
+    assert.ok(this.$(`.${styles['moderator-name']}`).length);
     assert.ok(this.$('.dropdown-button').length);
-    assert.ok(this.$('.row-controls').length);
-    assert.notOk(this.$('.remove-button.disabled').length);
+    assert.ok(this.$(`.${styles['moderator-controls']}`).children().length);
+    assert.notOk(this.$(`.${styles['remove-button']}.disabled`).length);
 
-    assert.equal(this.$('.moderator-name > .name').text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
+    assert.equal(this.$(`.${styles['moderator-name']}`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
     assert.equal(this.$('.dropdown-button').text().replace(/\s+/g, ' ').trim(), 'Admin');
 });
 
@@ -88,12 +89,12 @@ test('it renders moderator-list-row admin view remove disabled for admin', funct
                 deleteModerator=deleteModerator
                 roleOptions=roleOptions
             }}`);
-    assert.ok(this.$('.moderator-name').length);
+    assert.ok(this.$(`.${styles['moderator-name']}`).length);
     assert.ok(this.$('.dropdown-button').length);
-    assert.ok(this.$('.row-controls').length);
-    assert.ok(this.$('.remove-button.disabled').length);
+    assert.ok(this.$(`.${styles['moderator-controls']}`).children().length);
+    assert.ok(this.$(`.${styles['remove-button']}.disabled`).length);
 
-    assert.equal(this.$('.moderator-name > .name').text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
+    assert.equal(this.$(`.${styles['moderator-name']}`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
     assert.equal(this.$('.dropdown-button').text().replace(/\s+/g, ' ').trim(), 'Admin');
 });
 
@@ -124,12 +125,12 @@ test('it renders moderator-list-row admin view remove not disabled for mod', fun
                 deleteModerator=deleteModerator
                 roleOptions=roleOptions
             }}`);
-    assert.ok(this.$('.moderator-name').length);
+    assert.ok(this.$(`.${styles['moderator-name']}`).length);
     assert.ok(this.$('.dropdown-button').length);
-    assert.ok(this.$('.row-controls').length);
-    assert.notOk(this.$('.remove-button.disabled').length);
+    assert.ok(this.$(`.${styles['moderator-controls']}`).children().length);
+    assert.notOk(this.$(`.${styles['remove-button']}.disabled`).length);
 
-    assert.equal(this.$('.moderator-name > .name').text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
+    assert.equal(this.$(`.${styles['moderator-name']}`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
     assert.equal(this.$('.dropdown-button').text().replace(/\s+/g, ' ').trim(), 'Moderator');
 });
 
@@ -160,12 +161,12 @@ test('it renders moderator-list-row admin view remove disabled for mod', functio
                 deleteModerator=deleteModerator
                 roleOptions=roleOptions
             }}`);
-    assert.ok(this.$('.moderator-name').length);
+    assert.ok(this.$(`.${styles['moderator-name']}`).length);
     assert.ok(this.$('.dropdown-button').length);
-    assert.ok(this.$('.row-controls').length);
-    assert.ok(this.$('.remove-button.disabled').length);
+    assert.ok(this.$(`.${styles['moderator-controls']}`).children().length);
+    assert.ok(this.$(`.${styles['remove-button']}.disabled`).length);
 
-    assert.equal(this.$('.moderator-name > .name').text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
+    assert.equal(this.$(`.${styles['moderator-name']}`).text().replace(/\s+/g, ' ').trim(), 'Brian Nosek');
     assert.equal(this.$('.dropdown-button').text().replace(/\s+/g, ' ').trim(), 'Moderator');
 });
 
@@ -196,7 +197,7 @@ test('it renders moderator-list-row moderator view', function(assert) {
                 deleteModerator=deleteModerator
                 roleOptions=roleOptions
             }}`);
-    assert.ok(this.$('.moderator-name').length);
+    assert.ok(this.$(`.${styles['moderator-name']}`).length);
     assert.notOk(this.$('.dropdown-button').length);
-    assert.notOk(this.$('.row-controls').length);
+    assert.notOk(this.$(`.${styles['moderator-controls']}`).children().length);
 });

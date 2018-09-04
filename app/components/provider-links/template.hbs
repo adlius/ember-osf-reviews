@@ -1,25 +1,25 @@
 {{#if fetchData.isRunning}}
     {{#content-placeholders as |placeholder|}}
         <span>
-            <i class="fa-li icon--skeleton">{{placeholder.icon}}</i>
+            <i class="fa-li" local-class="icon--skeleton">{{placeholder.icon}}</i>
             {{placeholder.heading subtitle=false}}
         </span>
-        <div class="provider-links">
-            <div class="provider-links--skeleton">{{placeholder.text lines=4}}</div>
+        <div local-class="provider-links">
+            <div local-class="provider-links--skeleton">{{placeholder.text lines=4}}</div>
         </div>
     {{/content-placeholders}}
 {{else}}
-    <span class="provider-name {{if provider.reviewsWorkflow "moderation-enabled" "moderation-disabled"}}">
-        <i class="fa-li fa {{get iconMap provider.preprintWord}} icon"></i>
+    <span local-class="provider-name {{if provider.reviewsWorkflow "moderation-enabled" "moderation-disabled"}}">
+        <i class="fa-li fa {{get iconMap provider.preprintWord}} icon" local-class="icon"></i>
         {{provider.name}}
     </span>
-    <ul class="provider-links">
+    <ul local-class="provider-links">
         {{#if provider.reviewsWorkflow}}
             <li>
                 {{#link-to 'preprints.provider.moderation' provider.id}}
                     {{t 'global.submissions'~}}
                 {{/link-to}}
-                {{#link-to 'preprints.provider.moderation' provider.id class="no-underline"}}
+                {{#link-to 'preprints.provider.moderation' provider.id local-class="no-underline"}}
                     <small class="unread-label">{{pendingCount}}</small>
                 {{/link-to}}
             </li>

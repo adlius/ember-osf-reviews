@@ -10,6 +10,7 @@ moduleFor('controller:preprints/provider/moderators', 'Unit | Controller | prepr
         'service:metrics',
         'service:i18n',
         'service:scroller',
+        'service:session',
     ],
 
     beforeEach() {

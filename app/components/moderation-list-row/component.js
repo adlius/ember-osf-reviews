@@ -33,7 +33,7 @@ export default Component.extend({
     theme: service(),
     i18n: service(),
 
-    classNames: ['moderation-list-row'],
+    localClassNames: ['moderation-list-row'],
 
     latestActionCreator: computed.alias('latestAction.creator.fullName'),
 

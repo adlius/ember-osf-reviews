@@ -1,0 +1,13 @@
+/* Dashboard page */
+.reviews-dashboard {
+    background: $color-bg-gray-cool;
+}
+
+/* Dashboard header */
+.reviews-dashboard-header {
+    // Color picked from background image
+    background: #214661 url('img/reviews-dashboard-bg.jpg');
+    background-size: cover;  // needs to be below "background"
+    padding-top: 50px;
+    padding-bottom: 46px;
+}

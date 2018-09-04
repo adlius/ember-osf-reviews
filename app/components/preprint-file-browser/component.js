@@ -12,6 +12,8 @@ export default Component.extend({
     selectedFile: null,
     primaryFile: null,
 
+    localClassNames: 'preprint-file-browser',
+
     hasAdditionalFiles: gt('files.length', 1),
 
     hasPrev: computed('pageNumber', function() {

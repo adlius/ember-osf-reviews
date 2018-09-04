@@ -1,12 +1,8 @@
 /* eslint-env node */
-
-
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const Funnel = require('broccoli-funnel');
 const jQueryPackage = require('jquery/package.json');
-const Autoprefixer = require('autoprefixer');
-const CSSNano = require('cssnano');
-
+const autoprefixer = require('autoprefixer');
 
 module.exports = function(defaults) {
     // const EMBER_DATA_VERSION = defaults.project.addonPackages['ember-data'].pkg.version;
@@ -81,19 +77,13 @@ module.exports = function(defaults) {
             importBootstrapCSS: false,
             importBootstrapFont: false,
         },
-        postcssOptions: {
-            // Doesn't agree with SCSS; must be disabled
-            compile: { enabled: false },
-            filter: {
-                browsers: ['last 4 versions'],
-                enabled: LEAN_BUILD,
-                include: ['**/*.css'],
-                plugins: [{
-                    module: Autoprefixer,
-                }, {
-                    module: CSSNano,
-                }],
-            },
+        cssModules: {
+            headerModules: [
+                'reviews/styles/headers',
+            ],
+            plugins: [
+                autoprefixer({ grid: true }),
+            ],
         },
         'ember-cli-babel': {
             includePolyfill: true,

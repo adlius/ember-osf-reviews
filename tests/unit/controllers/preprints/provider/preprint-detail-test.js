@@ -26,6 +26,7 @@ moduleFor('controller:preprints/provider/preprint-detail', 'Unit | Controller | 
         'service:currentUser',
         'service:i18n',
         'service:toast',
+        'service:session',
     ],
 });
 

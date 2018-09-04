@@ -1,8 +1,8 @@
-<div class="reviews-header">
+<div local-class="reviews-header">
     <div class="container">
         <div class="row">
             <div class="text-center m-t-lg col-xs-12">
-                <div class="m-b-lg reviews-brand"></div>
+                <div class="m-b-lg" local-class="reviews-brand"></div>
                 {{#if showSetup}}
                     {{start-moderating action=(action setupProvider) providers=providersToSetup}}
                 {{/if}}
