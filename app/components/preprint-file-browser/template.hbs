@@ -1,38 +1,13 @@
-{{#file-renderer download=selectedFile.links.download
+{{#file-renderer download=primaryFile.links.download
     width="99%" height="700"}}
 {{/file-renderer}}
 
 <div class="row">
     <div class="col-sm-6">
-        <p class="f-w-lg p-b-md">{{selectedFile.name}}</p>
+        <p class="f-w-lg p-b-md">{{primaryFile.name}}</p>
     </div>
     <div class="col-sm-6 text-nowrap supplemental-downloads">
-        <a class="btn btn-default btn-sm" href={{fileDownloadURL}}> {{t (if fileIsPrimary "content.share.downloadPreprint" "content.share.downloadFile") documentType=preprint.provider.documentType}}</a>
-        <span class="p-sm"> {{t "content.version"}}: {{selectedFile.currentVersion}}</span>
+        <a class="btn btn-default btn-sm" href={{fileDownloadURL}}> {{t "content.share.downloadPreprint" documentType=preprint.provider.documentType}}</a>
+        <span class="p-sm"> {{t "content.version"}}: {{primaryFile.currentVersion}}</span>
     </div>
 </div>
-
-{{#if hasAdditionalFiles}}
-    <div local-class="file-list" class="osf-box">
-        {{#if hasPrev}}
-            <button id="leftArrow" class="show-more-button left hidden-xs" onclick={{action 'page' -1}}>
-                <i class="fa fa-caret-left"></i>
-            </button>
-        {{/if}}
-
-        {{#each page as |file|}}
-            {{preprint-file-browser-item
-            file
-            selectFile=(action 'selectFile')
-            isPrimary=(eq file.id primaryFile.id)
-            isSelected=(eq file.id selectedFile.id)
-            }}
-        {{/each}}
-
-        {{#if hasNext}}
-            <button id="rightArrow" class="show-more-button right hidden-xs" onclick={{action 'page' 1}}>
-                <i class="fa fa-caret-right"></i>
-            </button>
-        {{/if}}
-    </div>
-{{/if}}

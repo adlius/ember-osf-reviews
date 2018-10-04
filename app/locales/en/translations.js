@@ -130,6 +130,7 @@ export default {
     content: {
         header: {
             lastEdited: 'Last edited',
+            authorsLabel: 'Authors',
         },
         dateLabel: {
             createdOn: 'Created on',
@@ -143,6 +144,9 @@ export default {
         },
         seeMore: 'See more',
         seeLess: 'See less',
+        supplementalMaterials: {
+            title: 'Supplemental Materials',
+        },
         version: 'Version',
         preprintDOI: '{{documentType.singularCapitalized}} DOI',
         preprintPendingDOI: 'DOI created after moderator approval',

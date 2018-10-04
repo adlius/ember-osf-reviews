@@ -45,8 +45,6 @@ export default Controller.extend({
     hasTags: bool('preprint.tags.length'),
     expandedAbstract: navigator.userAgent.includes('Prerender'),
 
-    node: alias('preprint.node'),
-
     dummyMetaData: computed(function() {
         return new Array(7);
     }),
@@ -77,11 +75,6 @@ export default Controller.extend({
             DATE_LABEL.created;
     }),
 
-    isAdmin: computed('node', function() {
-        // True if the current user has admin permissions for the node that contains the preprint
-        return (this.get('node.currentUserPermissions') || []).includes(permissions.ADMIN);
-    }),
-
     hasShortenedDescription: computed('preprint.description', function() {
         const preprintDescription = this.get('preprint.description');
 
@@ -99,6 +92,12 @@ export default Controller.extend({
             .slice(0, 350)
             .replace(/\s+\S*$/, '');
     }),
+    supplementalMaterialDisplayLink: computed('preprint.node.links.html', function() {
+        const supplementalLink = this.get('preprint.node.links.html');
+        if (supplementalLink){
+            return supplementalLink.replace(/^https?:\/\//i, '');
+        }
+    }),
 
     actions: {
         toggleShowLicense() {
@@ -109,12 +108,6 @@ export default Controller.extend({
         },
         expandAbstract() {
             this.toggleProperty('expandedAbstract');
-        },
-        chooseFile(fileItem) {
-            this.setProperties({
-                chosenFile: fileItem.get('id'),
-                activeFile: fileItem,
-            });
         },
         leavePage() {
             const previousTransition = this.get('previousTransition');
@@ -161,12 +154,9 @@ export default Controller.extend({
             preprintId,
             { include: ['node', 'license', 'review_actions', 'contributors'] },
         );
-        const node = yield response.get('node');
-        if (!node.get('public')) {
-            this.transitionToRoute('page-not-found');
-            return;
-        }
+
         this.set('preprint', response);
+        this.set('authors', response.get('contributors'));
         this.get('loadMathJax').perform();
 
         // required for breadcrumbs
