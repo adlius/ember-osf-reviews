@@ -1,12 +1,10 @@
 import { computed } from '@ember/object';
-import { alias, bool } from '@ember/object/computed';
+import { bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 
 import { task, waitForQueue } from 'ember-concurrency';
 import $ from 'jquery';
-
-import permissions from 'ember-osf/const/permissions';
 
 
 const DATE_LABEL = {
@@ -94,7 +92,7 @@ export default Controller.extend({
     }),
     supplementalMaterialDisplayLink: computed('preprint.node.links.html', function() {
         const supplementalLink = this.get('preprint.node.links.html');
-        if (supplementalLink){
+        if (supplementalLink) {
             return supplementalLink.replace(/^https?:\/\//i, '');
         }
     }),

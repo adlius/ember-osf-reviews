@@ -47,27 +47,6 @@ test('Initial properties', function (assert) {
     assert.ok(propKeys.every(key => expected[key] === actual[key]));
 });
 
-test('isAdmin computed property', function (assert) {
-    this.inject.service('store');
-
-    const ctrl = this.subject();
-
-    run(() => {
-        const node = this.store.createRecord('node', {
-            title: 'test title',
-            description: 'test description',
-        });
-
-        const preprint = this.store.createRecord('preprint', { node });
-
-        ctrl.setProperties({ preprint });
-        ctrl.set('node.currentUserPermissions', ['admin']);
-
-        assert.strictEqual(ctrl.get('isAdmin'), true);
-    });
-});
-
-
 test('actionDateLabel computed property', function (assert) {
     this.inject.service('store');
 
@@ -191,51 +170,6 @@ test('expandAbstract action', function (assert) {
 
     ctrl.send('expandAbstract');
     assert.strictEqual(ctrl.get('expandedAbstract'), initialValue);
-});
-
-test('chooseFile action', function (assert) {
-    this.inject.service('store');
-    const ctrl = this.subject();
-
-    run(() => {
-        const fileItem = this.store.createRecord('file', {
-            id: 'test1',
-        });
-
-        ctrl.send('chooseFile', fileItem);
-        assert.strictEqual(ctrl.get('chosenFile'), 'test1');
-    });
-});
-
-test('activeFile action', function (assert) {
-    this.inject.service('store');
-    const ctrl = this.subject();
-
-    run(() => {
-        const primaryFile = this.store.createRecord('file', {
-            id: 'test1',
-        });
-
-        const anotherFile = this.store.createRecord('file', {
-            id: 'test2',
-        });
-
-        const preprint = this.store.createRecord('preprint', {
-            primaryFile,
-        });
-
-        ctrl.setProperties({ preprint });
-
-        assert.strictEqual(ctrl.get('activeFile'), null);
-
-        ctrl.send('chooseFile', anotherFile);
-
-        assert.strictEqual(ctrl.get('activeFile'), anotherFile);
-
-        ctrl.send('chooseFile', primaryFile);
-
-        assert.strictEqual(ctrl.get('activeFile'), primaryFile);
-    });
 });
 
 test('submitDecision action', function (assert) {
