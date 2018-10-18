@@ -24,33 +24,33 @@
                                 {{/if}}
                             </ul>
                         </h5>
-                    <div local-class='detail-header-div'>
-                        <h6 local-class="detail-header-info">
-                            <div local-class="detail-header-item">
-                                <div local-class="detail-header-label">
-                                    <strong>{{t actionDateLabel}}</strong>
-                                </div>
-                                {{moment-format relevantDate "MMMM DD, YYYY"}}
-                            </div>
-                            <div local-class={{if preprint "detail-header-item" ""}}>
-                                <div local-class="detail-header-label">
-                                    <strong>{{t "content.header.lastEdited"}}</strong>
-                                </div>
-                                {{moment-format preprint.dateModified "MMMM DD, YYYY"}}
-                            </div>
-                            {{#if preprint.node}}
-                                <div>
+                        <div local-class='detail-header-div'>
+                            <h6 local-class="detail-header-info">
+                                <div local-class="detail-header-item">
                                     <div local-class="detail-header-label">
-                                        <strong>{{t "content.supplementalMaterials.title"}}</strong>
+                                        <strong>{{t actionDateLabel}}</strong>
                                     </div>
-                                    <a href={{preprint.node.links.html}} target="_blank" rel="noopener noreferrer">
-                                        {{supplementalMaterialDisplayLink}}
-                                        <i class="fa fa-external-link" aria-hidden="true"></i>
-                                    </a>
+                                    {{moment-format relevantDate "MMMM DD, YYYY"}}
                                 </div>
-                            {{/if}}
-                        </h6>
-                    </div>
+                                <div local-class={{if preprint "detail-header-item" ""}}>
+                                    <div local-class="detail-header-label">
+                                        <strong>{{t "content.header.lastEdited"}}</strong>
+                                    </div>
+                                    {{moment-format preprint.dateModified "MMMM DD, YYYY"}}
+                                </div>
+                                {{#if preprint.node}}
+                                    <div>
+                                        <div local-class="detail-header-label">
+                                            <strong>{{t "content.supplementalMaterials.title"}}</strong>
+                                        </div>
+                                        <a href={{preprint.node.links.html}} target="_blank" rel="noopener noreferrer">
+                                            {{supplementalMaterialDisplayLink}}
+                                            <i class="fa fa-external-link" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                {{/if}}
+                            </h6>
+                        </div>
                     {{/if}}
                 </div>
             </div>
