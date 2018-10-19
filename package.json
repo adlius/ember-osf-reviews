@@ -22,7 +22,7 @@
     "use-ember-osf-next-interfaces": "yarn upgrade @centerforopenscience/ember-osf@https://github.com/CenterForOpenScience/ember-osf.git#release/next-interfaces#$(date -u +%FT%TZ)"
   },
   "devDependencies": {
-    "@centerforopenscience/ember-osf": "https://github.com/centerforopenscience/ember-osf#875212c322ccbacf5781587057bc3052626766a9",
+    "@centerforopenscience/ember-osf": "https://github.com/centerforopenscience/ember-osf#0441332e7ca78dc266dd071f25cfd97ab236cfa5",
     "@centerforopenscience/eslint-config": "^2.0.0",
     "@centerforopenscience/osf-style": "1.7.0",
     "@cos-forks/ember-content-placeholders": "https://github.com/cos-forks/ember-content-placeholders#c85cdbeb4b9c206c3f76a92422db76815b2c95bc",
