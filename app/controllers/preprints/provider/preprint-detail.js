@@ -33,9 +33,6 @@ export default Controller.extend({
     savingAction: false,
     showLicense: false,
 
-    _activeFile: null,
-    chosenFile: null,
-
     userHasEnteredReview: false,
     showWarning: false,
     previousTransition: null,
@@ -45,16 +42,6 @@ export default Controller.extend({
 
     dummyMetaData: computed(function() {
         return new Array(7);
-    }),
-
-    // The currently selected file (defaults to primary)
-    activeFile: computed('preprint', {
-        get() {
-            return this.getWithDefault('_activeFile', this.get('preprint.primaryFile'));
-        },
-        set(key, value) {
-            return this.set('_activeFile', value);
-        },
     }),
 
     fileDownloadURL: computed('model', function() {
@@ -151,7 +138,7 @@ export default Controller.extend({
             'preprint',
             preprintId,
             { include: ['node', 'license', 'review_actions', 'contributors'] },
-        );
+        ).catch(() => this.replaceWith('page-not-found'));
 
         this.set('preprint', response);
         this.set('authors', response.get('contributors'));
