@@ -32,6 +32,54 @@
     padding: 1px 7px;
 }
 
+.preprint-header {
+    .view-authors {
+        color: #fff;
+        padding-bottom: 15px;
+
+        a {
+            color: #6dd1de;
+        }
+    }
+
+    .detail-header-info {
+        font-size: 14px;
+        display: flex;
+
+        .detail-header-item {
+            margin-right: 25px;
+        }
+
+        a {
+            color: #6dd1de;
+        }
+    }
+
+    .detail-header-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        padding-bottom: 2px;
+    }
+
+    .comma-list {
+        display: inline;
+        list-style: none;
+        padding-left: 0;
+
+        li {
+            display: inline;
+        }
+
+        li::after {
+            content: ', ';
+        }
+
+        li:last-child::after {
+            content: '';
+        }
+    }
+}
+
 .view-page {
     background-color: $color-bg;
     padding-top: 15px;

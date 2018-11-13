@@ -67,7 +67,6 @@ export default Controller.extend(Analytics, moderationQueryParams.Mixin, {
         const response = yield provider.queryHasMany('preprints', {
             filter: {
                 reviews_state: queryParams.status,
-                node_is_public: true,
             },
             'meta[reviews_state_counts]': true,
             sort: queryParams.sort,

@@ -1,12 +1,10 @@
 import { computed } from '@ember/object';
-import { alias, bool } from '@ember/object/computed';
+import { bool } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 
 import { task, waitForQueue } from 'ember-concurrency';
 import $ from 'jquery';
-
-import permissions from 'ember-osf/const/permissions';
 
 
 const DATE_LABEL = {
@@ -35,9 +33,6 @@ export default Controller.extend({
     savingAction: false,
     showLicense: false,
 
-    _activeFile: null,
-    chosenFile: null,
-
     userHasEnteredReview: false,
     showWarning: false,
     previousTransition: null,
@@ -45,20 +40,8 @@ export default Controller.extend({
     hasTags: bool('preprint.tags.length'),
     expandedAbstract: navigator.userAgent.includes('Prerender'),
 
-    node: alias('preprint.node'),
-
     dummyMetaData: computed(function() {
         return new Array(7);
-    }),
-
-    // The currently selected file (defaults to primary)
-    activeFile: computed('preprint', {
-        get() {
-            return this.getWithDefault('_activeFile', this.get('preprint.primaryFile'));
-        },
-        set(key, value) {
-            return this.set('_activeFile', value);
-        },
     }),
 
     fileDownloadURL: computed('model', function() {
@@ -75,11 +58,6 @@ export default Controller.extend({
         return this.get('preprint.provider.reviewsWorkflow') === PRE_MODERATION ?
             DATE_LABEL.submitted :
             DATE_LABEL.created;
-    }),
-
-    isAdmin: computed('node', function() {
-        // True if the current user has admin permissions for the node that contains the preprint
-        return (this.get('node.currentUserPermissions') || []).includes(permissions.ADMIN);
     }),
 
     hasShortenedDescription: computed('preprint.description', function() {
@@ -99,6 +77,12 @@ export default Controller.extend({
             .slice(0, 350)
             .replace(/\s+\S*$/, '');
     }),
+    supplementalMaterialDisplayLink: computed('preprint.node.links.html', function() {
+        const supplementalLink = this.get('preprint.node.links.html');
+        if (supplementalLink) {
+            return supplementalLink.replace(/^https?:\/\//i, '');
+        }
+    }),
 
     actions: {
         toggleShowLicense() {
@@ -109,12 +93,6 @@ export default Controller.extend({
         },
         expandAbstract() {
             this.toggleProperty('expandedAbstract');
-        },
-        chooseFile(fileItem) {
-            this.setProperties({
-                chosenFile: fileItem.get('id'),
-                activeFile: fileItem,
-            });
         },
         leavePage() {
             const previousTransition = this.get('previousTransition');
@@ -160,13 +138,10 @@ export default Controller.extend({
             'preprint',
             preprintId,
             { include: ['node', 'license', 'review_actions', 'contributors'] },
-        );
-        const node = yield response.get('node');
-        if (!node.get('public')) {
-            this.transitionToRoute('page-not-found');
-            return;
-        }
+        ).catch(() => this.replaceWith('page-not-found'));
+
         this.set('preprint', response);
+        this.set('authors', response.get('contributors'));
         this.get('loadMathJax').perform();
 
         // required for breadcrumbs

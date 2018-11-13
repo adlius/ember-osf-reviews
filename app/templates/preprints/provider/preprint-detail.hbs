@@ -1,15 +1,56 @@
 <div class="content">
     <div class="p-t-sm p-b-md m-b-md" local-class="dark-overlay-header-background">
-        <div class="container">
+        <div class="container" local-class="preprint-header">
             <div class="row">
                 <div class="col-xs-12 col-sm-11">
                     {{#if fetchData.isIdle}}
                         {{reviews-breadcrumbs}}
-                        <h1 id="preprintTitle" class="p-t-md p-b-md">{{preprint.title}}</h1>
-                        <h5>{{contributor-list contributors=preprint.contributors submission=preprint}}</h5>
-                        <h6 class="preprint-added-on">
-                            {{t actionDateLabel}}: {{moment-format preprint.dateLastTransitioned "MMMM DD, YYYY"}} | {{t "content.header.lastEdited"}}: {{moment-format preprint.dateModified "MMMM DD, YYYY"}}
-                        </h6>
+                        <h1 id="preprintTitle" class="p-b-md">{{preprint.title}}</h1>
+                        <h5 local-class="view-authors">
+                            <div local-class="detail-header-label">
+                                <strong>{{t "content.header.authorsLabel"}}</strong>
+                            </div>
+                            <ul local-class="comma-list">
+                                {{#if authors}}
+                                    {{#each authors as |author| ~}}
+                                        {{#if author.bibliographic}}
+                                            {{#if author.unregisteredContributor}}
+                                                <li>{{author.unregisteredContributor}}</li>
+                                            {{else}}
+                                                <li><a href={{author.users.profileURL}}>{{author.users.name}}</a></li>
+                                            {{/if}}
+                                        {{/if}}
+                                    {{~/each}}
+                                {{/if}}
+                            </ul>
+                        </h5>
+                        <div local-class='detail-header-div'>
+                            <h6 local-class="detail-header-info">
+                                <div local-class="detail-header-item">
+                                    <div local-class="detail-header-label">
+                                        <strong>{{t actionDateLabel}}</strong>
+                                    </div>
+                                    {{moment-format relevantDate "MMMM DD, YYYY"}}
+                                </div>
+                                <div local-class={{if preprint "detail-header-item" ""}}>
+                                    <div local-class="detail-header-label">
+                                        <strong>{{t "content.header.lastEdited"}}</strong>
+                                    </div>
+                                    {{moment-format preprint.dateModified "MMMM DD, YYYY"}}
+                                </div>
+                                {{#if preprint.node}}
+                                    <div>
+                                        <div local-class="detail-header-label">
+                                            <strong>{{t "content.supplementalMaterials.title"}}</strong>
+                                        </div>
+                                        <a href={{preprint.node.links.html}} target="_blank" rel="noopener noreferrer">
+                                            {{supplementalMaterialDisplayLink}}
+                                            <i class="fa fa-external-link" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                {{/if}}
+                            </h6>
+                        </div>
                     {{/if}}
                 </div>
             </div>
@@ -31,13 +72,7 @@
                     {{#if fetchData.isRunning}}
                         {{file-renderer-skeleton}}
                     {{else}}
-                        {{#if preprint.isPreprintOrphan}}
-                            <div class="alert alert-danger m-r-md" role="alert">
-                                {{t "content.orphan_preprint"}}
-                            </div>
-                        {{else}}
-                            {{preprint-file-browser primaryFile=preprint.primaryFile preprint=preprint fileDownloadURL=fileDownloadURL chooseFile=(action 'chooseFile')}}
-                        {{/if}}
+                        {{preprint-file-browser primaryFile=preprint.primaryFile preprint=preprint fileDownloadURL=fileDownloadURL}}
                     {{/if}}
                     <button local-class="expand-mfr-carrot" class="hidden-xs hidden-sm" {{action 'expandMFR'}}>
                         <i class="fa fa-chevron-{{if fullScreenMFR 'left' 'right'}}"></i>
@@ -145,19 +180,6 @@
                         <div class="p-t-xs m-b-lg">
                             <h4 class="p-v-md f-w-md"><strong>{{t "content.citations"}}</strong></h4>
                             {{citation-widget node=preprint}}
-                        </div>
-
-                        <div class="p-lg osf-box-lt row" local-class="osf-box-lt project-box">
-                            <div class="col-xs-6 text-center">
-                                <div local-class="content-provider-logo provider-osf-dark"
-                                     title={{t "global.openScienceFramework"}}></div>
-                            </div>
-                            <div class="col-xs-6 text-left">
-                                <p class="f-w-xs">{{t "content.projectButton.paragraph" documentType=preprint.provider.documentType}}</p>
-                                <a type="button" class="btn btn-info" href={{node.links.html}}>
-                                    {{t "content.projectButton.button"}}
-                                </a>
-                            </div>
                         </div>
                     {{/if}}
                 </div>
