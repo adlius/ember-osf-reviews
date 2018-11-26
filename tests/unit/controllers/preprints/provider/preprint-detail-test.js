@@ -37,8 +37,6 @@ test('Initial properties', function (assert) {
         fullScreenMFR: false,
         savingAction: false,
         showLicense: false,
-        _activeFile: null,
-        chosenFile: null,
     };
 
     const propKeys = Object.keys(expected);
