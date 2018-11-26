@@ -1,6 +1,6 @@
 {
   "name": "reviews",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "Center for Open Science Reviews Service",
   "license": "Apache-2.0",
   "author": "",
@@ -24,7 +24,7 @@
   "devDependencies": {
     "@centerforopenscience/ember-osf": "https://github.com/centerforopenscience/ember-osf#0441332e7ca78dc266dd071f25cfd97ab236cfa5",
     "@centerforopenscience/eslint-config": "^2.0.0",
-    "@centerforopenscience/osf-style": "1.7.0",
+    "@centerforopenscience/osf-style": "1.8.0",
     "@cos-forks/ember-content-placeholders": "https://github.com/cos-forks/ember-content-placeholders#c85cdbeb4b9c206c3f76a92422db76815b2c95bc",
     "autoprefixer": "^9.1.2",
     "bootstrap-sass": "^3.3.7",
