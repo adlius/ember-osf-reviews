@@ -105,9 +105,10 @@
     eslint-plugin-eslint-comments "^1.0.0"
     eslint-plugin-import "^2.7.0"
 
-"@centerforopenscience/osf-style@1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@centerforopenscience/osf-style/-/osf-style-1.7.0.tgz#0ae3c0eaaca07fcf8bd667a7b3d7aeeb3244564d"
+"@centerforopenscience/osf-style@1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@centerforopenscience/osf-style/-/osf-style-1.8.0.tgz#adde9771ec09d930b408a39a121ff10b925f2fd5"
+  integrity sha512-s6rwcQN44CVUuRpRihZHEMaDiQ7SBj6rXxisKORCGCq8BEd0GlogGYGHnTIUnNF/aJxufaVwjmLXRcI63FavJA==
 
 "@cos-forks/ember-content-placeholders@https://github.com/cos-forks/ember-content-placeholders#c85cdbeb4b9c206c3f76a92422db76815b2c95bc":
   version "0.5.0"
