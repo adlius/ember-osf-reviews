@@ -251,7 +251,7 @@ export default Component.extend({
             }
 
             const comment = this.get('reviewerComment').trim();
-            this.get('submitDecision')(trigger, comment, this.get('decision'));
+            this.get('submitDecision')(trigger, comment, 'pending');
         },
         cancel() {
             this.set('decision', this.get('submission.reviewsState'));
