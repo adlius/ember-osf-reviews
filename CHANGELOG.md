@@ -6,8 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.8.1] - 2018-12-13
+### Changed
+- update to ember-osf@0.22.1
+
 ## [0.8.0] - 2018-12-13
-## Changed
+### Changed
 - Upgraded osf-style to 1.8.0
 - Make changes to ensure Reviews work with node-preprint divorce changes
   - Remove logic for additional files from `preprint-file-browser` component.
