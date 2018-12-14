@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2018-12-13
+## Changed
+- Upgraded osf-style to 1.8.0
+- Make changes to ensure Reviews work with node-preprint divorce changes
+  - Remove logic for additional files from `preprint-file-browser` component.
+  - Modify `preprint-detail` view to maintain functional parity with detail page on Preprints app.
+
 ## [0.7.0] - 2018-09-04
 ### Added
 - Custom dimensions to `trackPage` for Google Analytics
