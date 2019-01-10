@@ -169,11 +169,11 @@ test('submit action', function(assert) {
         component.send('submit');
         assert.ok(stub.calledOnce);
 
-        assert.ok(stub.calledWithExactly('edit_comment', 'comment', 'accepted'));
+        assert.ok(stub.calledWithExactly('edit_comment', 'comment', 'pending'));
 
         component.set('commentEdited', false);
         component.send('submit');
-        assert.ok(stub.calledWithExactly('accept', 'comment', 'accepted'));
+        assert.ok(stub.calledWithExactly('accept', 'comment', 'pending'));
     });
 });
 
