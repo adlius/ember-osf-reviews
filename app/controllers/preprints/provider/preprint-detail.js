@@ -60,6 +60,8 @@ export default Controller.extend({
             DATE_LABEL.created;
     }),
 
+    relevantDate: computed.alias('preprint.dateCreated'),
+
     hasShortenedDescription: computed('preprint.description', function() {
         const preprintDescription = this.get('preprint.description');
 
