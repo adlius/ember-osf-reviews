@@ -10,6 +10,7 @@ moduleForComponent('moderation-list-row', 'Unit | Component | moderation list ro
         'model:user',
         'model:preprint',
         'model:preprint-provider',
+        'service:current-user',
         'service:i18n',
         'service:theme',
     ],

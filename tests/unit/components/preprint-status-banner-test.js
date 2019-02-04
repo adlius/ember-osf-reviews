@@ -14,6 +14,7 @@ moduleForComponent('preprint-status-banner', 'Unit | Component | preprint status
         'model:user',
         'model:preprint',
         'model:preprint-provider',
+        'service:current-user',
         'service:i18n',
         'service:theme',
     ],

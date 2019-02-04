@@ -9,6 +9,7 @@ moduleForComponent('moderator-list-row', 'Unit | Component | moderator list row'
     unit: true,
     needs: [
         'model:user',
+        'service:current-user',
         'service:i18n',
         'service:metrics',
     ],
