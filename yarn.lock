@@ -54,10 +54,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@centerforopenscience/ember-osf@0.22.1":
+"@centerforopenscience/ember-osf@https://github.com/CenterForOpenScience/ember-osf.git#develop#2019-02-04T16:55:50Z":
   version "0.22.1"
-  resolved "https://registry.yarnpkg.com/@centerforopenscience/ember-osf/-/ember-osf-0.22.1.tgz#6b2fe2d3aef2863a6c6005bc3218e5c32daa324a"
-  integrity sha512-e2DCaNJppm5ps0V9HlIwaWW0kxqhl1H1wNysasqzjFs3Bn6kurM7hRWcxz7KI8+wr1HBWPimOLfBW8defZv9bw==
+  resolved "https://github.com/CenterForOpenScience/ember-osf.git#c5476c85de99c71fdf40ec9e49e69575328f470c"
   dependencies:
     broccoli-funnel "1.2.0"
     broccoli-merge-trees "2.0.0"
@@ -75,6 +74,7 @@
     ember-component-css "^0.6.0"
     ember-computed-style "^0.2.0"
     ember-concurrency "^0.8.12"
+    ember-cookies "^0.3.1"
     ember-cp-validations "^3.5.0"
     ember-diff-attrs "^0.2.0"
     ember-feature-flags "^5.0.0"
@@ -3504,6 +3504,14 @@ ember-cookies@^0.0.13:
     ember-cli-babel "^5.1.7"
     ember-getowner-polyfill "^1.2.2"
 
+ember-cookies@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/ember-cookies/-/ember-cookies-0.3.1.tgz#42ca530703092f6cde691103d608a6a5a58f2d76"
+  integrity sha1-QspTBwMJL2zeaRED1gimpaWPLXY=
+  dependencies:
+    ember-cli-babel "^6.8.2"
+    ember-getowner-polyfill "^1.1.0 || ^2.0.0"
+
 ember-cp-validations@^3.5.0, ember-cp-validations@^3.5.2:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/ember-cp-validations/-/ember-cp-validations-3.5.2.tgz#1b205891ae7d7026f7b6c55cf6e440122db9b2ac"
@@ -3685,19 +3693,19 @@ ember-getowner-polyfill@^1.1.0, ember-getowner-polyfill@^1.2.2:
     ember-cli-version-checker "^1.2.0"
     ember-factory-for-polyfill "^1.1.0"
 
+"ember-getowner-polyfill@^1.1.0 || ^2.0.0", ember-getowner-polyfill@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-2.2.0.tgz#38e7dccbcac69d5ec694000329ec0b2be651d2b2"
+  dependencies:
+    ember-cli-version-checker "^2.1.0"
+    ember-factory-for-polyfill "^1.3.1"
+
 ember-getowner-polyfill@^2.0.0, ember-getowner-polyfill@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-2.0.1.tgz#9bfe2b4d527ed174e76fef2c8f30937d77cb66fb"
   dependencies:
     ember-cli-version-checker "^1.2.0"
     ember-factory-for-polyfill "^1.1.0"
-
-ember-getowner-polyfill@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-2.2.0.tgz#38e7dccbcac69d5ec694000329ec0b2be651d2b2"
-  dependencies:
-    ember-cli-version-checker "^2.1.0"
-    ember-factory-for-polyfill "^1.3.1"
 
 ember-i18n@5.0.1:
   version "5.0.1"
@@ -3763,16 +3771,6 @@ ember-maybe-import-regenerator@^0.1.5:
     broccoli-merge-trees "^1.0.0"
     ember-cli-babel "^6.0.0-beta.4"
     regenerator-runtime "^0.9.5"
-
-"ember-metrics@git+https://github.com/cos-forks/ember-metrics.git#v0.12.1+cos0":
-  version "0.12.1"
-  uid "32fcc6eec0c4bc1974c854435401f94f660c6e74"
-  resolved "git+https://github.com/cos-forks/ember-metrics.git#32fcc6eec0c4bc1974c854435401f94f660c6e74"
-  dependencies:
-    broccoli-funnel "^1.0.1"
-    ember-cli-babel "^6.1.0"
-    ember-getowner-polyfill "^2.0.0"
-    ember-runtime-enumerable-includes-polyfill "^2.0.0"
 
 "ember-metrics@https://github.com/cos-forks/ember-metrics#v0.12.1+cos0":
   version "0.12.1"
