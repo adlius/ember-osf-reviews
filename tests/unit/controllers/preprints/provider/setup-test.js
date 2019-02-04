@@ -22,6 +22,7 @@ const i18nStub = EmberService.extend({
 moduleFor('controller:preprints/provider/setup', 'Unit | Controller | preprints/provider/setup', {
     needs: [
         'model:preprint-provider',
+        'service:current-user',
         'service:i18n',
         'service:metrics',
         'service:toast',
