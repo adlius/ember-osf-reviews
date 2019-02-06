@@ -40,6 +40,8 @@ export default Controller.extend({
     hasTags: bool('preprint.tags.length'),
     expandedAbstract: navigator.userAgent.includes('Prerender'),
 
+    relevantDate: computed.alias('preprint.dateCreated'),
+
     dummyMetaData: computed(function() {
         return new Array(7);
     }),
