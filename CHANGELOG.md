@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - moderator-list-row component unit test
   - preprint-status-banner component unit test
   - preprints/provider/setup controller unit test
+- add missing `relevantDate` alias to preprints/provider/preprint-detail controller
 
 ## [0.8.1] - 2018-12-13
 ### Changed
