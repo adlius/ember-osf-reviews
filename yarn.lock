@@ -54,9 +54,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@centerforopenscience/ember-osf@https://github.com/CenterForOpenScience/ember-osf.git#develop#2019-02-04T16:55:50Z":
+"@centerforopenscience/ember-osf@https://github.com/CenterForOpenScience/ember-osf.git#develop#2019-02-27T17:50:28Z":
   version "0.22.1"
-  resolved "https://github.com/CenterForOpenScience/ember-osf.git#c5476c85de99c71fdf40ec9e49e69575328f470c"
+  resolved "https://github.com/CenterForOpenScience/ember-osf.git#2ae38f4c08056fdfbe48505bcb03b44db7db9c20"
   dependencies:
     broccoli-funnel "1.2.0"
     broccoli-merge-trees "2.0.0"
@@ -109,7 +109,7 @@
 
 "@centerforopenscience/osf-style@https://github.com/CenterForOpenScience/osf-style.git#develop#2019-02-27T19:13:37Z":
   version "1.8.0"
-  resolved "https://github.com/CenterForOpenScience/osf-style.git#b1d529aeddf9fe47c1cdf18554ad634b1b5cd9a2"
+  resolved "https://registry.yarnpkg.com/@centerforopenscience/osf-style/-/osf-style-1.8.0.tgz#adde9771ec09d930b408a39a121ff10b925f2fd5"
 
 "@cos-forks/ember-content-placeholders@https://github.com/cos-forks/ember-content-placeholders#c85cdbeb4b9c206c3f76a92422db76815b2c95bc":
   version "0.5.0"
@@ -3506,7 +3506,6 @@ ember-cookies@^0.0.13:
 ember-cookies@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/ember-cookies/-/ember-cookies-0.3.1.tgz#42ca530703092f6cde691103d608a6a5a58f2d76"
-  integrity sha1-QspTBwMJL2zeaRED1gimpaWPLXY=
   dependencies:
     ember-cli-babel "^6.8.2"
     ember-getowner-polyfill "^1.1.0 || ^2.0.0"
