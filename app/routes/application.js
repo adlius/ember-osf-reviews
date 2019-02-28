@@ -16,7 +16,8 @@ export default Route.extend(OSFAgnosticAuthRouteMixin, {
     session: service(),
     currentUser: service(),
 
-    afterModel() {
+    beforeModel() {
+        this._super(...arguments);
         const availableLocales = this.get('i18n.locales').toArray();
         let locale;
 
