@@ -40,6 +40,8 @@ export default Controller.extend({
     hasTags: bool('preprint.tags.length'),
     expandedAbstract: navigator.userAgent.includes('Prerender'),
 
+    relevantDate: computed.alias('preprint.dateCreated'),
+
     dummyMetaData: computed(function() {
         return new Array(7);
     }),
@@ -138,7 +140,7 @@ export default Controller.extend({
             'preprint',
             preprintId,
             { include: ['node', 'license', 'review_actions', 'contributors'] },
-        ).catch(() => this.replaceWith('page-not-found'));
+        ).catch(() => this.replaceRoute('page-not-found'));
 
         this.set('preprint', response);
         this.set('authors', response.get('contributors'));

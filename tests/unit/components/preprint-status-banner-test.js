@@ -14,6 +14,7 @@ moduleForComponent('preprint-status-banner', 'Unit | Component | preprint status
         'model:user',
         'model:preprint',
         'model:preprint-provider',
+        'service:current-user',
         'service:i18n',
         'service:theme',
     ],
@@ -169,11 +170,11 @@ test('submit action', function(assert) {
         component.send('submit');
         assert.ok(stub.calledOnce);
 
-        assert.ok(stub.calledWithExactly('edit_comment', 'comment', 'accepted'));
+        assert.ok(stub.calledWithExactly('edit_comment', 'comment', 'pending'));
 
         component.set('commentEdited', false);
         component.send('submit');
-        assert.ok(stub.calledWithExactly('accept', 'comment', 'accepted'));
+        assert.ok(stub.calledWithExactly('accept', 'comment', 'pending'));
     });
 });
 
