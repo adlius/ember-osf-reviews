@@ -5,13 +5,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.9.0] - 2019-03-04
 ### Changed
+- return to pending list after moderation
 - add service:current-user to unit test needs for:
   - moderation-list-row component unit test
   - moderator-list-row component unit test
   - preprint-status-banner component unit test
   - preprints/provider/setup controller unit test
 - add missing `relevantDate` alias to preprints/provider/preprint-detail controller
+- upgrade to ember-osf@0.23.0
+- upgrade to osf-style@1.9.0
 
 ## [0.8.1] - 2018-12-13
 ### Changed

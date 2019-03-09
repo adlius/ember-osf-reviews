@@ -169,7 +169,8 @@ export default Controller.extend({
             'preprint',
             preprintId,
             { include: ['node', 'license', 'review_actions', 'contributors'] },
-        ).catch(() => this.replaceWith('page-not-found'));
+        ).catch(() => this.replaceRoute('page-not-found'));
+
         this.set('preprint', response);
         if (response.get('dateWithdrawn') !== null) {
             this.set('isWithdrawn', true);
