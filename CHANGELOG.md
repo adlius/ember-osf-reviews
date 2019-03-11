@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.9.1] - 2019-03-11
+### Fixed
+- pass all links instead of just download link to file-renderer component
+
 ## [0.9.0] - 2019-03-04
 ### Changed
 - return to pending list after moderation
