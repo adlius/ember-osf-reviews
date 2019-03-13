@@ -2,7 +2,11 @@
     <div local-class="flex-container">
         <div local-class="status-explanation">
             <span class="badge" local-class="{{getClassName}}">
-                <i class="fa {{icon}} status-icon" aria-hidden="true"></i>
+                <span class="fa-stack" local-class="icon-stack">
+                    {{#each icon as |class|}}
+                        <i class="fa fa-lg {{class}} fa-stack-1x status-icon" local-class="icon-layer-{{class}}"></i>
+                    {{/each}}
+                </span>
                 <span local-class="status-badge">{{t status}}</span>
                 {{#bs-tooltip placement="right"}}
                     {{t feedbackBaseMessage documentType=submission.provider.documentType}} {{t statusExplanation}}.
@@ -16,86 +20,158 @@
                 {{#if noActions}}
                     {{t recentActivityLanguage documentType=submission.provider.documentType}} {{moment-format submission.dateLastTransitioned "MMMM DD, YYYY"}}
                 {{else}}
-                    <a href={{creatorProfile}}>{{creatorName}}</a> {{t recentActivityLanguage documentType=submission.provider.documentType}} {{moment-format submission.dateLastTransitioned "MMMM DD, YYYY"}}
+                    <a href={{creatorProfile}}>{{creatorName}}</a> {{t recentActivityLanguage documentType=submission.provider.documentType}} {{moment-format labelDate "MMMM DD, YYYY"}}
+                    {{#if isPendingWithdrawal}}
+                        <br>
+                        <a href={{withdrawalRequesterProfile}}>{{withdrawalRequesterName}}</a> {{t requestActivityLanguage documentType=submission.provider.documentType}} {{moment-format submission.dateLastTransitioned "MMMM DD, YYYY"}}
+                    {{/if}}
                 {{/if}}
             {{/if}}
         </div>
         <div class="dropdown" local-class="reviewer-feedback">
-            {{#bs-dropdown closeOnMenuClick=false as |dd|}}
-                {{#dd.button type="success" disabled=submission.reviewActions.isPending}}
-                    {{#if submission.reviewActions.isPending}}
-                        <i local-class="button-loading-indicator" class="fa fa-circle-o-notch fa-spin"></i>
-                        {{t 'components.preprint-status-banner.loading'}}
-                    {{else}}
+            {{#if isPendingWithdrawal}}
+                {{! If there is a pending withdrawal request }}
+                {{#bs-dropdown closeOnMenuClick=false as |dd|}}
+                    {{#dd.button type="success" disabled=submission.reviewActions.isPending}}
                         {{t labelDecisionDropdown}} <i class="fa fa-caret-down" aria-hidden="true"></i>
-                    {{/if}}
-                {{/dd.button}}
-                {{#dd.menu}}
-                    <div local-class="feedback-header">
-                        <span id="moderator-feedback">{{t labelDecisionHeader}}</span>
-                        {{#dd.toggle aria-label="Close" id="close"}}
-                            <i class="fa fa-times"></i>
-                        {{/dd.toggle}}
-                    </div>
-                    <div local-class="setting-reminder" class="p-md">
-                        <div class="p-b-sm row">
-                            <i class="fa {{settingsCommentsIcon}} fa-lg col-xs-1"></i>
-                            <span class="col-xs-11">{{t settingsComments}}</span>
+                    {{/dd.button}}
+                    {{#dd.menu}}
+                        <div local-class="feedback-header">
+                            <span id="moderator-feedback">{{t labelDecisionHeader}}</span>
+                            {{#dd.toggle aria-label="Close" id="close"}}
+                                <i class="fa fa-times"></i>
+                            {{/dd.toggle}}
                         </div>
-                        {{#if (not reviewsCommentsPrivate)}}
-                            <div class="p-b-sm row">
-                                <i class="fa {{settingsNamesIcon}} fa-lg col-xs-1"></i>
-                                <span class="col-xs-11">{{t settingsNames}}</span>
+                        <div local-class="moderator-decision" aria-labelledby="moderator-feedback">
+                            <form local-class="{{if noComment 'no-comment'}}">
+                                <label local-class="decision-option">
+                                    {{radio-button value="accepted" groupValue=decision changed="decisionToggled"}}
+                                    <span class="p-l-sm">
+                                        {{t labelApprove}}
+                                        <p>{{t approveExplanation}}</p>
+                                    </span>
+                                </label>
+                                <label local-class="decision-option">
+                                    {{radio-button value="rejected" groupValue=decision changed="decisionToggled"}}
+                                    <span class="p-l-sm">
+                                        {{t labelDecline}}
+                                        <p>{{t declineExplanation}}</p>
+                                    </span>
+                                </label>
+                                {{#if (eq decision 'accepted')}}
+                                    <label local-class="withdrawal-justification">
+                                        <span class="p-l-sm">
+                                            {{t 'components.preprintStatusBanner.withdrawalJustification'}}
+                                        </span>
+                                    </label>
+                                    {{textarea
+                                        value=withdrawalJustification
+                                        rows="8"
+                                        class="form-control"
+                                    }}
+                                {{/if}}
+                            </form>
+                        </div>
+                        <div local-class="feedback-footer">
+                            <button class="btn btn-success pull-right" id="submit-btn" {{action "submit"}}>
+                                {{t labelDecisionBtn}}
+                            </button>
+                        </div>
+                    {{/dd.menu}}
+                {{/bs-dropdown}}
+            {{else}}
+                {{! If there is no pending withdrawal request }}
+                {{#bs-dropdown closeOnMenuClick=false as |dd|}}
+                    {{#dd.button type="success" disabled=isDisabled}}
+                        {{#if submission.reviewActions.isPending}}
+                            <i local-class="button-loading-indicator" class="fa fa-circle-o-notch fa-spin"></i>
+                            {{t 'components.preprint-status-banner.loading'}}
+                        {{else}}
+                            {{t labelDecisionDropdown}} <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        {{/if}}
+                    {{/dd.button}}
+                    {{#if isDisabled}}
+                        {{#bs-tooltip placement='bottom'}}
+                            {{t 'components.preprintStatusBanner.noReasonProvided'}}
+                        {{/bs-tooltip}}
+                    {{/if}}
+                    {{#dd.menu}}
+                        <div local-class="feedback-header">
+                            <span id="moderator-feedback">{{t labelDecisionHeader}}</span>
+                            {{#dd.toggle aria-label="Close" id="close"}}
+                                <i class="fa fa-times"></i>
+                            {{/dd.toggle}}
+                        </div>
+                        {{#if (not (eq submission.reviewsState 'withdrawn'))}}
+                            <div local-class="setting-reminder" class="p-md">
+                                <div class="p-b-sm row">
+                                    <i class="fa {{settingsCommentsIcon}} fa-lg col-xs-1"></i>
+                                    <span class="col-xs-11">{{t settingsComments}}</span>
+                                </div>
+                                {{#if (not reviewsCommentsPrivate)}}
+                                    <div class="p-b-sm row">
+                                        <i class="fa {{settingsNamesIcon}} fa-lg col-xs-1"></i>
+                                        <span class="col-xs-11">{{t settingsNames}}</span>
+                                    </div>
+                                {{/if}}
+                                <div class="row">
+                                    <i class="fa {{settingsModerationIcon}} fa-lg col-xs-1"></i>
+                                    <span class="col-xs-11">{{t settingsModeration}}</span>
+                                </div>
+                            </div>
+                            <div local-class="moderator-decision" aria-labelledby="moderator-feedback">
+                                <form local-class="{{if noComment 'no-comment'}}">
+                                    <label local-class="decision-option">
+                                        {{radio-button value="accepted" groupValue=decision changed="decisionToggled"}}
+                                        <span class="p-l-sm">
+                                            {{t labelAccept}}
+                                            <p>{{t acceptExplanation}}</p>
+                                        </span>
+                                    </label>
+                                    <label local-class="decision-option">
+                                        {{radio-button value=radioDecision groupValue=decision changed="decisionToggled"}}
+                                        <span class="p-l-sm">
+                                            {{t labelDecision}}
+                                            <p>{{t rejectExplanation}}</p>
+                                        </span>
+                                    </label>
+                                    {{textarea
+                                        key-up=(action "commentChanged")
+                                        value=reviewerComment
+                                        rows="8" placeholder=(t commentPlaceholder)
+                                        class="form-control"
+                                    }}
+                                    {{#if commentExceedsLimit}}
+                                        <div local-class="comment-length-error">
+                                            {{commentLengthErrorMessage}}
+                                        </div>
+                                    {{/if}}
+                                </form>
+                            </div>
+                            <div local-class="feedback-footer">
+                                <button class="btn btn-success pull-right" id="submit-btn" disabled={{btnDisabled}} {{action "submit"}}>
+                                    {{t labelDecisionBtn}}
+                                </button>
+                                {{#if (not-eq submission.reviewsState 'pending')}}
+                                    {{#dd.toggle}}
+                                        <button class="btn btn-default pull-right" {{action "cancel"}}>
+                                            {{t "global.cancel"}}
+                                        </button>
+                                    {{/dd.toggle}}
+                                {{/if}}
+                            </div>
+                        {{else}}
+                            <div local-class="setting-reminder" class="p-md">
+                                <div class="p-b-sm row">
+                                    <span local-class="withdrawal-reason" class="col-xs-12">
+                                        {{latestAction.comment}}
+                                    </span>
+                                </div>
                             </div>
                         {{/if}}
-                        <div class="row">
-                            <i class="fa {{settingsModerationIcon}} fa-lg col-xs-1"></i>
-                            <span class="col-xs-11">{{t settingsModeration}}</span>
-                        </div>
-                    </div>
-                    <div local-class="moderator-decision" aria-labelledby="moderator-feedback">
-                        <form local-class="{{if noComment 'no-comment'}}">
-                            <label local-class="decision-option">
-                                {{radio-button value="accepted" groupValue=decision changed="decisionToggled"}}
-                                <span class="p-l-sm">
-                                    {{t labelAccept}}
-                                    <p>{{t acceptExplanation}}</p>
-                                </span>
-                            </label>
-                            <label local-class="decision-option">
-                                {{radio-button value="rejected" groupValue=decision changed="decisionToggled"}}
-                                <span class="p-l-sm">
-                                    {{t labelReject}}
-                                    <p>{{t rejectExplanation}}</p>
-                                </span>
-                            </label>
-                            {{textarea
-                                key-up=(action "commentChanged")
-                                value=reviewerComment
-                                rows="8" placeholder=(t commentPlaceholder)
-                                class="form-control"
-                            }}
-                            {{#if commentExceedsLimit}}
-                                <div local-class="comment-length-error">
-                                    {{commentLengthErrorMessage}}
-                                </div>
-                            {{/if}}
-                        </form>
-                    </div>
-                    <div local-class="feedback-footer">
-                        <button class="btn btn-success pull-right" id="submit-btn" disabled={{btnDisabled}} {{action "submit"}}>
-                            {{t labelDecisionBtn}}
-                        </button>
-                        {{#if (not-eq submission.reviewsState 'pending')}}
-                            {{#dd.toggle}}
-                                <button class="btn btn-default pull-right" {{action "cancel"}}>
-                                    {{t "global.cancel"}}
-                                </button>
-                            {{/dd.toggle}}
-                        {{/if}}
-                    </div>
-                {{/dd.menu}}
-            {{/bs-dropdown}}
+                    {{/dd.menu}}
+                {{/bs-dropdown}}
+            {{/if}}
         </div>
     </div>
 </div>

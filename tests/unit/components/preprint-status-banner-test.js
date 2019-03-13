@@ -164,8 +164,9 @@ test('submit action', function(assert) {
         component.set('decisionChanged', false);
         component.set('decision', 'accepted');
         component.set('commentEdited', true);
-        component.set('submitDecision', () => {});
-        const stub = this.stub(component, 'submitDecision');
+        component.set('isPendingWithdrawal', false);
+        component.set('submitReviewsDecision', () => {});
+        const stub = this.stub(component, 'submitReviewsDecision');
 
         component.send('submit');
         assert.ok(stub.calledOnce);

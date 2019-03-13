@@ -7,15 +7,15 @@
         outline: none;
         padding: 6px 0;
 
-        @media screen and (max-width: $screen-small-tablet) {
+        @media screen and (max-width: 731px) {
             font-size: 16px;
         }
 
-        @media screen and (max-width: $screen-medium-small) {
+        @media screen and (max-width: 543px) {
             font-size: 14px;
         }
 
-        @media screen and (max-width: $screen-xs) {
+        @media screen and (max-width: 488px) {
             display: block;
         }
     }
@@ -35,7 +35,7 @@
     border: 1px solid $color-border;
     padding: 10px 20px;
 
-    @media screen and (max-width: $screen-small-tablet) {
+    @media screen and (max-width: 731px) {
         .moderation-list-heading {
             padding-left: 20px;
         }
@@ -48,12 +48,32 @@
     :global(.icon-rejected) {
         -webkit-text-stroke: 1px $color-bg-gray-light;
     }
+    
+    :global(.icon-withdrawn) {
+        -webkit-text-stroke: 1px $color-bg-gray-light;
+    }
+
+    :global(.fa-stack) {
+        line-height: 0.8em;
+        height: 1em;
+        width: 1em;
+    }
+
+    :global(.fa-minus) {
+        font-size: 14px;
+        line-height: 1.25em;
+
+        @media screen and (max-width: 731px) {
+            font-size: 10px;
+            line-height: inherit;
+        }
+    }
 
     :global(.dropdown-toggle) {
         color: $color-text-gray-dark;
         text-decoration: none;
 
-        @media screen and (max-width: $screen-xs) {
+        @media screen and (max-width: 488px) {
             margin-top: -2.3em;
         }
     }
@@ -61,7 +81,7 @@
     :global(.dropdown-menu) {
         background: $color-bg-gray-light;
 
-        @media screen and (max-width: $screen-xs) {
+        @media screen and (max-width: 488px) {
             margin-top: -0.7em;
         }
 
@@ -88,7 +108,7 @@
     margin: 0;
     margin-right: 20px;
 
-    @media screen and (max-width: $screen-small-tablet) {
+    @media screen and (max-width: 731px) {
         margin-right: 1px;
     }
 }

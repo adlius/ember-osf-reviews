@@ -30,24 +30,48 @@ export default Component.extend({
     classNames: ['content'],
 
     didReceiveAttrs() {
-        this.set('statusButtons', [
-            {
-                status: 'pending',
-                iconClass: 'fa-hourglass-o icon-pending',
-                labelKey: 'components.moderationList.pending',
-            },
-            {
-                status: 'accepted',
-                iconClass: 'fa-check-circle-o icon-accepted',
-                labelKey: 'components.moderationList.accepted',
-            },
-            {
-                status: 'rejected',
-                iconClass: 'fa-times-circle-o icon-rejected',
-                labelKey: 'components.moderationList.rejected',
-            },
-        ]);
-
+        if (this.get('isSubmissions')) {
+            this.set('statusButtons', [
+                {
+                    status: 'pending',
+                    iconClass: ['fa-hourglass-o icon-pending'],
+                    labelKey: 'components.moderationList.pending',
+                },
+                {
+                    status: 'accepted',
+                    iconClass: ['fa-check-circle-o icon-accepted'],
+                    labelKey: 'components.moderationList.accepted',
+                },
+                {
+                    status: 'rejected',
+                    iconClass: ['fa-times-circle-o icon-rejected'],
+                    labelKey: 'components.moderationList.rejected',
+                },
+                {
+                    status: 'withdrawn',
+                    iconClass: ['fa-circle-o icon-accepted', 'fa-minus icon-withdrawn'],
+                    labelKey: 'components.moderationList.withdrawn',
+                },
+            ]);
+        } else if (this.get('isRequests')) {
+            this.set('statusButtons', [
+                {
+                    status: 'pending',
+                    iconClass: ['fa-hourglass-o icon-pending'],
+                    labelKey: 'components.moderationList.pending',
+                },
+                {
+                    status: 'accepted',
+                    iconClass: ['fa-check-circle-o icon-accepted'],
+                    labelKey: 'components.moderationList.approved',
+                },
+                {
+                    status: 'rejected',
+                    iconClass: ['fa-times-circle-o icon-rejected'],
+                    labelKey: 'components.moderationList.declined',
+                },
+            ]);
+        }
         this.set('sortOptions', [
             {
                 sort: '-date_last_transitioned',

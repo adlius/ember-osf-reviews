@@ -15,6 +15,11 @@ const submittedOnLabel = {
     ltDay: 'components.moderationListRow.submission.submitted',
 };
 
+const withdrawnOnLabel = {
+    gtDay: 'components.moderationListRow.submission.withdrawnOn',
+    ltDay: 'components.moderationListRow.submission.withdrawn',
+};
+
 const ACTION_LABELS = Object.freeze({
     [ACCEPTED]: {
         gtDay: 'components.moderationListRow.submission.acceptedOn',
@@ -74,11 +79,25 @@ export default Component.extend({
         return i18n.t(labels, { timeDate: submitDate });
     }),
 
+    // translations for withdrawn on label
+    withdrawnOnLabel: computed('submission.dateWithdrawn', function() {
+        const i18n = this.get('i18n');
+        const [withdrawnDate, gtDayWithdrawn] = this.formattedDateLabel(this.get('submission.dateWithdrawn'));
+        const dayValue = gtDayWithdrawn ? 'gtDay' : 'ltDay';
+        const labels = withdrawnOnLabel[dayValue];
+        return i18n.t(labels, { timeDate: withdrawnDate, moderatorName: this.get('latestActionCreator') });
+    }),
+
+    icon: computed('submission.reviewsState', function() {
+        return this.get(`iconClass.${this.get('submission.reviewsState')}`);
+    }),
+
     didReceiveAttrs() {
         this.iconClass = {
-            accepted: 'fa-check-circle-o accepted',
-            pending: 'fa-hourglass-o pending',
-            rejected: 'fa-times-circle-o rejected',
+            accepted: ['fa-check-circle-o accepted'],
+            pending: ['fa-hourglass-o pending'],
+            rejected: ['fa-times-circle-o rejected'],
+            withdrawn: ['fa-circle-o rejected', 'fa-minus rejected'],
         };
         this.get('fetchData').perform();
     },

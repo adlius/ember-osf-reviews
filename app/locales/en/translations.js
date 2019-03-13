@@ -17,6 +17,7 @@ export default {
         notifications: 'Notifications',
         submissions: 'Submissions',
         moderators: 'Moderators',
+        withdrawalRequests: 'Withdrawal Requests',
     },
     index: {
         feature: {
@@ -179,6 +180,7 @@ export default {
                 accept: 'accepted a {{documentType.singular}} in {{providerName}}',
                 reject: 'rejected a {{documentType.singular}} from {{providerName}}',
                 edit_comment: 'edited the comment for a {{documentType.singular}} in {{providerName}}',
+                withdraw: 'withdrew a {{documentType.singular}} from {{providerName}}',
             },
         },
         dashboardSidebar: {
@@ -207,8 +209,12 @@ export default {
             pending: 'Pending',
             accepted: 'Accepted',
             rejected: 'Rejected',
+            approved: 'Approved',
+            declined: 'Declined',
+            withdrawn: 'Withdrawn',
             sort: 'Sort',
             noSubmissions: 'No submissions.',
+            noRequests: 'No requests.',
         },
         moderationListRow: {
             submission: {
@@ -220,6 +226,20 @@ export default {
                 acceptedAutomatically: 'Accepted automatically {{timeDate}}',
                 rejectedOn: 'Rejected on {{timeDate}} by {{moderatorName}}',
                 rejected: 'Rejected {{timeDate}} by {{moderatorName}}',
+                withdrawnOn: 'Withdrawn on {{timeDate}} by {{moderatorName}}',
+                withdrawn: 'Withdrawn {{timeDate}} by {{moderatorName}}',
+            },
+        },
+        requestListRow: {
+            submission: {
+                requestedOn: 'Requested on {{timeDate}} by {{submitterName}}',
+                requested: 'Requested {{timeDate}} by {{submitterName}}',
+                approvedOn: 'Approved on {{timeDate}} by {{moderatorName}}',
+                approved: 'Approved {{timeDate}} by {{moderatorName}}',
+                approvedAutomaticallyOn: 'Approved automatically on {{timeDate}}',
+                approvedAutomatically: 'Approved automatically {{timeDate}}',
+                declinedOn: 'Declined on {{timeDate}} by {{moderatorName}}',
+                declined: 'Declined {{timeDate}} by {{moderatorName}}',
             },
         },
         notificationList: {
@@ -246,6 +266,8 @@ export default {
                 pending: 'submitted this {{documentType.singular}} on',
                 accepted: 'accepted this {{documentType.singular}} on',
                 rejected: 'rejected this {{documentType.singular}} on',
+                pendingWithdrawal: 'requested to withdraw this {{documentType.singular}} on',
+                withdrawn: 'withdrew this {{documentType.singular}} on',
                 automatic: {
                     pending: 'This {{documentType.singular}} was submitted on',
                     accepted: 'This {{documentType.singular}} was automatically accepted on',
@@ -256,17 +278,24 @@ export default {
                 pendingPost: 'publicly available and searchable but is subject to removal by a moderator',
                 accepted: 'publicly available and searchable',
                 rejected: 'not publicly available or searchable',
+                pendingWithdrawal: 'not public available or searchable once the withdrawal request is approved',
+                withdrawn: 'not publicly available',
             },
+            withdrawalJustification: 'Reason for withdrawal',
             pending: 'pending',
             accepted: 'accepted',
             rejected: 'rejected',
+            withdrawn: 'withdrawn',
             loading: 'Loading...',
+            noReasonProvided: 'No reason provided',
             decision: {
                 makeDecision: 'Make decision',
                 modifyDecision: 'Modify decision',
+                withdrawalReason: 'View reason',
                 header: {
                     submitDecision: 'Submit your decision',
                     modifyDecision: 'Modify your decision',
+                    withdrawalReason: 'Reason for withdrawal',
                 },
                 moderator: 'Moderator',
                 base: 'This {{documentType.singular}} is',
@@ -278,14 +307,26 @@ export default {
                 commentPlaceholder: 'Explain the reasoning behind your decision (optional)',
                 commentLengthError: 'Comment is {{difference}} character(s) too long (maximum is {{limit}}).',
                 accept: {
-                    label: 'Accept',
+                    label: 'Accept submission',
                     pre: 'Submission will appear in search results and be made public.',
                     post: 'Submission will continue to appear in search results.',
                 },
                 reject: {
-                    label: 'Reject',
+                    label: 'Reject submission',
                     pre: 'Submission will not appear in search results and will remain private.',
                     post: 'Submission will be removed from search results and made private.',
+                },
+                approve: {
+                    label: 'Approve withdrawal',
+                    explanation: 'Submission will be withdrawn but still have a tombstone page with a subset of the metadata available',
+                },
+                decline: {
+                    label: 'Decline withdrawal',
+                    explanation: 'Submission will remain fully public',
+                },
+                withdrawn: {
+                    label: 'Withdraw submission',
+                    post: 'Submission will no longer be publicly available.',
                 },
             },
             settings: {

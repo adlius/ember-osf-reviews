@@ -1,14 +1,18 @@
 import { getOwner } from '@ember/application';
 import EmberObject from '@ember/object';
 import { moduleFor, test } from 'ember-qunit';
+import DS from 'ember-data';
+import { resolve } from 'rsvp';
 
 import tHelper from 'ember-i18n/helper';
 import localeConfig from 'ember-i18n/config/en';
 
+const { PromiseObject } = DS;
 
 moduleFor('service:theme', 'Unit | Service | theme', {
     needs: [
         'service:i18n',
+        'model:preprint-request',
         'locale:en/translations',
         'locale:en/config',
         'util:i18n/missing-message',
@@ -26,7 +30,24 @@ moduleFor('service:theme', 'Unit | Service | theme', {
 });
 
 test('_onProviderLoad', function(assert) {
-    const service = this.subject();
+    const service = this.subject({
+        store: {
+            query: () => {
+                return PromiseObject.create({
+                    promise: resolve({
+                        meta: {
+                            request_status_counts: {
+                                pending: 2,
+                                accepted: 1,
+                                rejected: 3,
+                                initial: 0,
+                            },
+                        },
+                    }),
+                });
+            },
+        },
+    });
     const fakeProvider = EmberObject.create({
         reviewableStatusCounts: {
             pending: 2,
