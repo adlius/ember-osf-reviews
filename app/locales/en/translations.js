@@ -281,7 +281,7 @@ export default {
                 pendingWithdrawal: 'not public available or searchable once the withdrawal request is approved',
                 withdrawn: 'not publicly available',
             },
-            withdrawalJustification: 'Reason for withdrawal',
+            withdrawalJustification: 'Reason for withdrawal (optional, will be publicly displayed)',
             pending: 'pending',
             accepted: 'accepted',
             rejected: 'rejected',
