@@ -12,6 +12,7 @@ export default Service.extend({
 
     provider: null,
     reviewableStatusCounts: null,
+    request: null,
 
     id: alias('provider.id'),
     domain: alias('provider.domain'),
@@ -57,6 +58,14 @@ export default Service.extend({
     _onProviderLoad(provider) {
         this.set('provider', provider);
         this.set('reviewableStatusCounts', provider.get('reviewableStatusCounts'));
+        this.get('store').query(
+            'preprint-request',
+            {
+                providerId: provider.id,
+                'meta[requests_state_counts]': true,
+            },
+        ).then(this._setRequestStatusCounts.bind(this));
+
         this.get('i18n').addGlobals({
             provider: {
                 id: this.get('provider.id'),
@@ -64,5 +73,9 @@ export default Service.extend({
             },
         });
         return provider;
+    },
+
+    _setRequestStatusCounts(response) {
+        this.set('requestStatusCounts', response.meta.requests_state_counts);
     },
 });

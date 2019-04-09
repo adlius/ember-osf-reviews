@@ -32,7 +32,9 @@ export default Controller.extend({
     fullScreenMFR: false,
     savingAction: false,
     showLicense: false,
-
+    isWithdrawn: false,
+    withdrawalRequest: null,
+    isPendingWithdrawal: false,
     userHasEnteredReview: false,
     showWarning: false,
     previousTransition: null,
@@ -104,26 +106,53 @@ export default Controller.extend({
                 previousTransition.retry();
             }
         },
-        submitDecision(trigger, comment, filter) {
+        submitReviewsDecision(trigger, comment, filter) {
             this.toggleProperty('savingAction');
+
             const action = this.store.createRecord('review-action', {
                 actionTrigger: trigger,
                 target: this.get('preprint'),
             });
+            const actionType = 'reviews';
 
             if (comment) {
                 action.comment = comment;
             }
+            this._saveAction(action, actionType, filter);
+        },
+        submitRequestsDecision(trigger, comment, filter) {
+            this.toggleProperty('savingAction');
 
-            this._saveAction(action, filter);
+            const action = this.store.createRecord('preprint-request-action', {
+                actionTrigger: trigger,
+                target: this.get('withdrawalRequest'),
+            });
+            const actionType = 'withdrawal';
+
+            if (comment) {
+                action.comment = comment;
+            }
+            this._saveAction(action, actionType, filter);
         },
     },
 
-    _saveAction(action, filter) {
-        return action.save()
-            .then(this._toModerationList.bind(this, { status: filter, page: 1, sort: '-date_last_transitioned' }))
-            .catch(this._notifySubmitFailure.bind(this))
-            .finally(() => this.set('savingAction', false));
+    _saveAction(action, actionType, filter) {
+        if (actionType === 'withdrawal') {
+            return action.save()
+                .then(this._toRequestList.bind(this, { status: filter, page: 1, sort: '-date_last_transitioned' }))
+                .catch(this._notifySubmitFailure.bind(this))
+                .finally(() => this.set('savingAction', false));
+        } else if (actionType === 'reviews') {
+            return action.save()
+                .then(this._toModerationList.bind(this, { status: filter, page: 1, sort: '-date_last_transitioned' }))
+                .catch(this._notifySubmitFailure.bind(this))
+                .finally(() => this.set('savingAction', false));
+        }
+    },
+
+    _toRequestList(queryParams) {
+        this.set('userHasEnteredReview', false);
+        this.transitionToRoute('preprints.provider.withdrawals', { queryParams });
     },
 
     _toModerationList(queryParams) {
@@ -143,9 +172,26 @@ export default Controller.extend({
         ).catch(() => this.replaceRoute('page-not-found'));
 
         this.set('preprint', response);
+        if (response.get('dateWithdrawn') !== null) {
+            this.set('isWithdrawn', true);
+        }
         this.set('authors', response.get('contributors'));
+        const node = yield response.get('node');
+        if (node && !node.get('public')) {
+            this.transitionToRoute('page-not-found');
+            return;
+        }
+        this.set('preprint', response);
+        let withdrawalRequest = yield this.get('preprint.requests');
+        withdrawalRequest = withdrawalRequest.toArray();
+        if (withdrawalRequest.length >= 1 && withdrawalRequest[0].get('machineState') === 'pending') {
+            this.set('withdrawalRequest', withdrawalRequest[0]);
+            this.set('isPendingWithdrawal', true);
+        } else {
+            this.set('withdrawalRequest', null);
+            this.set('isPendingWithdrawal', false);
+        }
         this.get('loadMathJax').perform();
-
         // required for breadcrumbs
         this.set('model.breadcrumbTitle', response.get('title'));
     }),

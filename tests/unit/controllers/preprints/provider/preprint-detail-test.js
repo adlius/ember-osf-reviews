@@ -170,7 +170,7 @@ test('expandAbstract action', function (assert) {
     assert.strictEqual(ctrl.get('expandedAbstract'), initialValue);
 });
 
-test('submitDecision action', function (assert) {
+test('submitReviewsDecision action', function (assert) {
     this.inject.service('store');
     const ctrl = this.subject();
 
@@ -186,15 +186,43 @@ test('submitDecision action', function (assert) {
 
         const stub = this.stub(ctrl, '_saveAction');
 
-        ctrl.send('submitDecision', 'accept', 'yes', 'accepted');
+        ctrl.send('submitReviewsDecision', 'accept', 'yes', 'accepted');
         assert.strictEqual(ctrl.get('userHasEnteredReview'), false);
         assert.strictEqual(ctrl.get('savingAction'), !initialValue);
-        assert.ok(stub.calledWithExactly(action, 'accepted'), 'correct arguments passed to _saveAction');
+        assert.ok(stub.calledWithExactly(action, 'reviews', 'accepted'), 'correct arguments passed to _saveAction');
 
-        ctrl.send('submitDecision', 'reject', 'no', 'rejected');
+        ctrl.send('submitReviewsDecision', 'reject', 'no', 'rejected');
         assert.strictEqual(ctrl.get('userHasEnteredReview'), false);
         assert.strictEqual(ctrl.get('savingAction'), initialValue);
-        assert.ok(stub.calledWithExactly(action, 'rejected'), 'correct arguments passed to _saveAction');
+        assert.ok(stub.calledWithExactly(action, 'reviews', 'rejected'), 'correct arguments passed to _saveAction');
+    });
+});
+
+test('submitRequestsDecision action', function (assert) {
+    this.inject.service('store');
+    const ctrl = this.subject();
+
+    run(() => {
+        const initialValue = ctrl.get('savingAction');
+
+        const action = {
+            comment: '',
+            save() { return (new Promise(function(resolve) { resolve('hello'); })); },
+        };
+
+        ctrl.set('store.createRecord', () => { return action; });
+
+        const stub = this.stub(ctrl, '_saveAction');
+
+        ctrl.send('submitRequestsDecision', 'accept', 'yes', 'accepted');
+        assert.strictEqual(ctrl.get('userHasEnteredReview'), false);
+        assert.strictEqual(ctrl.get('savingAction'), !initialValue);
+        assert.ok(stub.calledWithExactly(action, 'withdrawal', 'accepted'), 'correct arguments passed to _saveAction');
+
+        ctrl.send('submitRequestsDecision', 'reject', 'no', 'rejected');
+        assert.strictEqual(ctrl.get('userHasEnteredReview'), false);
+        assert.strictEqual(ctrl.get('savingAction'), initialValue);
+        assert.ok(stub.calledWithExactly(action, 'withdrawal', 'rejected'), 'correct arguments passed to _saveAction');
     });
 });
 

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.10.0] - 2019-04-09
+### Added
+- Preprint withdrawals
+
 ## [0.9.1] - 2019-03-11
 ### Fixed
 - pass all links instead of just download link to file-renderer component
@@ -34,6 +38,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.7.0] - 2018-09-04
 ### Added
 - Custom dimensions to `trackPage` for Google Analytics
+- Tombstone for withdrawn preprints
+- Withdrawn section to moderation list
+- Ability to withdraw from `preprint-detail` page
 
 ### Fixed
 - Use `name` field for contributors on preprint-detail page

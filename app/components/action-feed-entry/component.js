@@ -6,11 +6,13 @@ const SUBMIT = 'submit';
 const ACCEPT = 'accept';
 const REJECT = 'reject';
 const EDIT_COMMENT = 'edit_comment';
+const WITHDRAW = 'withdraw';
 
 const ICONS = Object.freeze({
     [SUBMIT]: 'fa-hourglass-o',
     [ACCEPT]: 'fa-check-circle-o',
     [REJECT]: 'fa-times-circle-o',
+    [WITHDRAW]: 'fa-times-circle-o',
     [EDIT_COMMENT]: 'fa-comment-o',
 });
 
@@ -19,6 +21,7 @@ const CLASS_NAMES = Object.freeze({
     [ACCEPT]: 'accept-icon',
     [REJECT]: 'reject-icon',
     [EDIT_COMMENT]: 'edit-comment-icon',
+    [WITHDRAW]: 'reject-icon',
 });
 
 /**

@@ -3,20 +3,28 @@
 {{else}}
     {{#link-to 'preprints.provider.preprint-detail' theme.id submission.id}}
         <div data-status={{submission.reviewsState}} local-class="flex-container">
-            <i class="fa fa-lg {{get iconClass submission.reviewsState}}" local-class="{{get iconClass submission.reviewsState}} status-icon"></i>
+            <span class="fa-stack">
+                {{#each icon as |class|}}
+                    <i class="fa fa-lg {{class}} fa-stack-1x" local-class="{{submission.reviewsState}} status-icon"></i>
+                {{/each}}
+            </span>
             <div title={{submission.title}} local-class="submission-info">
                 <div local-class="submission-title">{{submission.title}}</div>
                 <div local-class="submission-body">
                     <div>
-                        {{submittedOnLabel}}
-                        {{#each firstContributors as |contributor| ~}}
-                            <li>{{contributor.users.fullName}}</li>
-                        {{/each}}
-                        {{#if (gt additionalContributors 0)}}
-                            + {{additionalContributors}}
+                        {{#if (not-eq submission.reviewsState 'withdrawn')}}
+                            {{submittedOnLabel}}
+                            {{#each firstContributors as |contributor| ~}}
+                                <li>{{contributor.users.fullName}}</li>
+                            {{/each}}
+                            {{#if (gt additionalContributors 0)}}
+                                + {{additionalContributors}}
+                            {{/if}}
+                        {{else}}
+                            {{withdrawnOnLabel}}
                         {{/if}}
                     </div>
-                    {{#if (not-eq submission.reviewsState 'pending')}}
+                    {{#if (and (not-eq submission.reviewsState 'pending') (not-eq submission.reviewsState 'withdrawn'))}}
                         <div>{{reviewedOnLabel}}</div>
                     {{/if}}
                 </div>
