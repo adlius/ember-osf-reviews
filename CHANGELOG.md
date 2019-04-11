@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.10.0] - 2019-04-09
+### Added
+- Preprint withdrawals
+
 ## [0.9.1] - 2019-03-11
 ### Fixed
 - pass all links instead of just download link to file-renderer component
