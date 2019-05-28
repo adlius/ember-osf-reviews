@@ -176,11 +176,6 @@ export default Controller.extend({
             this.set('isWithdrawn', true);
         }
         this.set('authors', response.get('contributors'));
-        const node = yield response.get('node');
-        if (node && !node.get('public')) {
-            this.transitionToRoute('page-not-found');
-            return;
-        }
         this.set('preprint', response);
         let withdrawalRequest = yield this.get('preprint.requests');
         withdrawalRequest = withdrawalRequest.toArray();
