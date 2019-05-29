@@ -21,10 +21,10 @@
                     {{t recentActivityLanguage documentType=submission.provider.documentType}} {{moment-format submission.dateLastTransitioned "MMMM DD, YYYY"}}
                 {{else}}
                     <a href={{creatorProfile}}>{{creatorName}}</a> {{t recentActivityLanguage documentType=submission.provider.documentType}} {{moment-format labelDate "MMMM DD, YYYY"}}
-                    {{#if isPendingWithdrawal}}
-                        <br>
-                        <a href={{withdrawalRequesterProfile}}>{{withdrawalRequesterName}}</a> {{t requestActivityLanguage documentType=submission.provider.documentType}} {{moment-format withdrawalRequest.dateLastTransitioned "MMMM DD, YYYY"}}
-                    {{/if}}
+                {{/if}}
+                {{#if isPendingWithdrawal}}
+                    <br>
+                    <a href={{withdrawalRequesterProfile}}>{{withdrawalRequesterName}}</a> {{t requestActivityLanguage documentType=submission.provider.documentType}} {{moment-format withdrawalRequest.dateLastTransitioned "MMMM DD, YYYY"}}
                 {{/if}}
             {{/if}}
         </div>
