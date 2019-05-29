@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.10.1] - 2019-05-29
+- fixed ENG-431 - Date withdrawn is incorrect on Reviews App
+- fixed ENG-553 - Preprint detail page on certain preprints shows incorrect state
+
 ## [0.10.0] - 2019-04-09
 ### Added
 - Preprint withdrawals
