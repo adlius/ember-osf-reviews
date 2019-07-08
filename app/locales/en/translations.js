@@ -282,6 +282,7 @@ export default {
                 withdrawn: 'not publicly available',
             },
             withdrawalJustification: 'Reason for withdrawal (optional, will be publicly displayed)',
+            denialJustification: 'Reason for denial (required, not publicly visible)',
             pending: 'pending',
             accepted: 'accepted',
             rejected: 'rejected',
