@@ -112,6 +112,9 @@ const RequestDecisionJustificationValidation = buildValidations({
         description: 'Request decision justification',
         validators: [
             validator('presence', true),
+            validator('length', {
+                min: 20,
+            }),
         ],
         disabled: false,
     },
