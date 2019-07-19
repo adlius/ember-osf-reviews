@@ -3,6 +3,7 @@ import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
+import { validator, buildValidations } from 'ember-cp-validations';
 import latestAction from 'reviews/utils/latest-action';
 
 const PENDING = 'pending';
@@ -106,7 +107,20 @@ const RECENT_ACTIVITY = {
     },
 };
 
-export default Component.extend({
+const RequestDecisionJustificationValidation = buildValidations({
+    requestDecisionJustification: {
+        description: 'Request decision justification',
+        validators: [
+            validator('presence', true),
+            validator('length', {
+                min: 20,
+            }),
+        ],
+        disabled: false,
+    },
+});
+
+export default Component.extend(RequestDecisionJustificationValidation, {
     i18n: service(),
     theme: service(),
 
@@ -131,7 +145,8 @@ export default Component.extend({
     reviewerComment: '',
     decision: ACCEPTED,
     decisionValueToggled: false,
-    withdrawalJustification: alias('withdrawalRequest.comment'),
+    requestDecisionJustification: '',
+    didValidate: false,
 
     reviewsWorkflow: alias('submission.provider.reviewsWorkflow'),
     reviewsCommentsPrivate: alias('submission.provider.reviewsCommentsPrivate'),
@@ -327,6 +342,7 @@ export default Component.extend({
     }),
 
     didInsertElement() {
+        this.set('requestDecisionJustification', this.get('withdrawalRequest.comment'));
         this.get('submission.reviewActions')
             .then(latestAction)
             .then(this._handleActions.bind(this));
@@ -367,8 +383,14 @@ export default Component.extend({
             }
 
             let comment = '';
-            if (trigger === 'accept' && this.get('isPendingWithdrawal')) {
-                comment = this.get('withdrawalJustification').trim();
+            if (this.get('isPendingWithdrawal')) {
+                comment = this.get('requestDecisionJustification').trim();
+                if (trigger === 'reject') {
+                    this.set('didValidate', true);
+                    if (!this.get('validations.isValid')) {
+                        return;
+                    }
+                }
             } else {
                 comment = this.get('reviewerComment').trim();
             }
@@ -386,6 +408,12 @@ export default Component.extend({
         },
         decisionToggled() {
             this.get('setUserEnteredReview')(this.get('decisionChanged'));
+            if (this.get('isPendingWithdrawal') && this.get('decision') === ACCEPTED) {
+                this.set('requestDecisionJustification', this.get('withdrawalRequest.comment'));
+                this.set('validations.disabled', true);
+            } else if (this.get('isPendingWithdrawal') && this.get('decision') === REJECTED) {
+                this.set('requestDecisionJustification', '');
+            }
         },
         commentChanged() {
             this.get('setUserEnteredReview')(this.get('commentEdited'));

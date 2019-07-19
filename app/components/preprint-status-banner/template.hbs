@@ -58,18 +58,25 @@
                                         <p>{{t declineExplanation}}</p>
                                     </span>
                                 </label>
-                                {{#if (eq decision 'accepted')}}
-                                    <label local-class="withdrawal-justification">
+                                <label local-class="withdrawal-justification">
+                                    {{#if (eq decision 'accepted')}}
                                         <span class="p-l-sm">
                                             {{t 'components.preprintStatusBanner.withdrawalJustification'}}
                                         </span>
-                                    </label>
-                                    {{textarea
-                                        value=withdrawalJustification
-                                        rows="8"
-                                        class="form-control"
-                                    }}
-                                {{/if}}
+                                    {{/if}}
+                                    {{#if (eq decision 'rejected')}}
+                                        <span class="p-l-sm">
+                                            {{t 'components.preprintStatusBanner.denialJustification'}}
+                                        </span>
+                                    {{/if}}
+                                </label>
+                                {{validated-input
+                                    inputType='textarea'
+                                    model=this
+                                    valuePath='requestDecisionJustification'
+                                    rows='8'
+                                    showErrorMessage=(and didValidate (eq decision 'rejected'))
+                                }}
                             </form>
                         </div>
                         <div local-class="feedback-footer">
