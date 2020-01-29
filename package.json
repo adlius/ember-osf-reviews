@@ -90,5 +90,9 @@
     "lodash": "^4.17.4",
     "pagination-pager": "^3.0.0",
     "toastr": "^2.1.2"
+  },
+  "volta": {
+    "node": "8.17.0",
+    "yarn": "1.21.1"
   }
 }
