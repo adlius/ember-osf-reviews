@@ -27,7 +27,7 @@
     "@centerforopenscience/osf-style": "1.9.0",
     "@cos-forks/ember-content-placeholders": "https://github.com/cos-forks/ember-content-placeholders#c85cdbeb4b9c206c3f76a92422db76815b2c95bc",
     "autoprefixer": "^9.1.2",
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap-sass": "^3.4.1",
     "broccoli-asset-rev": "^2.4.5",
     "coveralls": "^3.0.0",
     "ember-bootstrap": "^1.0.0-rc.1",
